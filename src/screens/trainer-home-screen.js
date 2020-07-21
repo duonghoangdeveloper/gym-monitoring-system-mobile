@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
@@ -18,14 +17,7 @@ export const TrainerHomeScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}
-        transparent
-        visible={modalVisible}
-      >
+      <Modal animationType="slide" transparent visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello World!</Text>
@@ -34,7 +26,7 @@ export const TrainerHomeScreen = ({ navigation }) => {
               onPress={() => {
                 setModalVisible(!modalVisible);
               }}
-              style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+              style={{ ...styles.openButton, backgroundColor: 'red' }}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
             </TouchableHighlight>

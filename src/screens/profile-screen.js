@@ -122,6 +122,7 @@ export const ProfileScreen = () => {
         <Input label="Role" value={updateUser.role} />
         <ButtonGroup
           buttons={USER_GENDERS}
+          label="Gender"
           onPress={index => {
             setUpdateUser({ ...updateUser, gender: USER_GENDERS[index] });
           }}
@@ -131,6 +132,12 @@ export const ProfileScreen = () => {
         <Divider style={{ backgroundColor: 'black', height: 1 }} />
 
         <Button loading={loading} onPress={handleUpdatePress} title="Update" />
+
+        <Button
+          loading={loading}
+          onPress={handleUpdatePress}
+          title="Change Password"
+        />
       </View>
     </ScrollView>
   );
