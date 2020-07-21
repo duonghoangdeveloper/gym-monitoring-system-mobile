@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
+import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
 import { ProfileScreen } from '../screens/profile-screen';
 import { SettingsScreen } from '../screens/settings-screen';
@@ -34,6 +35,8 @@ export const AppNavigation = () => {
 //  |-- CustomerBottomTabNavigation
 //    |-- CustomerHomeNavigation
 //      |-- CustomerHome
+//    |-- CustomerPaymentNavigation
+//      |-- CustomerPayment
 //    |-- CustomerMenuNavigation
 //      |-- CustomerMenu
 //      |-- ProfileScreen
@@ -111,6 +114,15 @@ const CustomerBottomTabNavigation = () => (
       }}
     />
     <CustomerBottomTabStack.Screen
+      component={CustomerPaymentNavigation}
+      name="Payment"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="home" type="font-awesome" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
       component={CustomerMenuNavigation}
       name="Menu"
       options={{
@@ -127,6 +139,16 @@ const CustomerHomeNavigation = () => (
   <CustomerHomeStack.Navigator>
     <CustomerHomeStack.Screen component={CustomerHomeScreen} name="Home" />
   </CustomerHomeStack.Navigator>
+);
+
+const CustomerPaymentStack = createStackNavigator();
+const CustomerPaymentNavigation = () => (
+  <CustomerPaymentStack.Navigator>
+    <CustomerPaymentStack.Screen
+      component={CustomerPaymentScreen}
+      name="Payment"
+    />
+  </CustomerPaymentStack.Navigator>
 );
 
 const CustomerMenuStack = createStackNavigator();

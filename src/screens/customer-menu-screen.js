@@ -11,7 +11,7 @@ export const CustomerMenuScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Avatar rounded showEditButton size={128} source={avatar} />
+        <Avatar rounded showEditButton size="large" source={avatar} />
         <Text h4 style={styles.name}>
           {displayName || 'Thành viên mới'}
         </Text>

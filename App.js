@@ -7,7 +7,6 @@ import { AppNavigation } from './src/components/app-navigation';
 import { AppReduxWrapper } from './src/components/app-redux-wrapper';
 
 export default function App() {
-  console.log('Hello');
   return (
     <AppApolloWrapper>
       <AppReduxWrapper>
