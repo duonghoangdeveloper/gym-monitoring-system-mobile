@@ -111,6 +111,15 @@ const CustomerBottomTabNavigation = () => (
       }}
     />
     <CustomerBottomTabStack.Screen
+      component={CustomerHomeNavigation}
+      name="Notification"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="home" type="font-awesome" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
       component={CustomerMenuNavigation}
       name="Menu"
       options={{

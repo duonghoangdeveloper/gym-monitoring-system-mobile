@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { SIGN_IN } from '../redux/user/user.types';
