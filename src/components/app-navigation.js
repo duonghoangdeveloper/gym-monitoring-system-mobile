@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux';
 
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
+import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
 import { ProfileScreen } from '../screens/profile-screen';
+import { SandboxScreen } from '../screens/sandbox-screen';
 import { SettingsScreen } from '../screens/settings-screen';
 import { SignInScreen } from '../screens/sign-in-screen';
 import { TrainerHomeScreen } from '../screens/trainer-home-screen';
@@ -24,6 +26,8 @@ export const AppNavigation = () => {
 //    |-- SignIn
 //
 //  |-- TrainerBottomTabNavigation
+//    |-- TrainerSandboxNavigation
+//      |-- SandboxScreen
 //    |-- TrainerHomeNavigation
 //      |-- TrainerHome
 //    |-- TrainerMenuNavigation
@@ -32,8 +36,12 @@ export const AppNavigation = () => {
 //      |-- SettingsScreen
 //
 //  |-- CustomerBottomTabNavigation
+//    |-- CustomerSandboxNavigation
+//      |-- SandboxScreen
 //    |-- CustomerHomeNavigation
 //      |-- CustomerHome
+//    |-- CustomerPaymentNavigation
+//      |-- CustomerPayment
 //    |-- CustomerMenuNavigation
 //      |-- CustomerMenu
 //      |-- ProfileScreen
@@ -62,6 +70,15 @@ const TrainerBottomTabStack = createBottomTabNavigator();
 const TrainerBottomTabNavigation = () => (
   <TrainerBottomTabStack.Navigator>
     <TrainerBottomTabStack.Screen
+      component={TrainerSandboxNavigation}
+      name="Sandbox"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="box" type="font-awesome-5" />
+        ),
+      }}
+    />
+    <TrainerBottomTabStack.Screen
       component={TrainerHomeNavigation}
       name="Home"
       options={{
@@ -80,6 +97,13 @@ const TrainerBottomTabNavigation = () => (
       }}
     />
   </TrainerBottomTabStack.Navigator>
+);
+
+const TrainerSandboxStack = createStackNavigator();
+const TrainerSandboxNavigation = () => (
+  <TrainerSandboxStack.Navigator>
+    <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
+  </TrainerSandboxStack.Navigator>
 );
 
 const TrainerHomeStack = createStackNavigator();
@@ -102,8 +126,26 @@ const CustomerBottomTabStack = createBottomTabNavigator();
 const CustomerBottomTabNavigation = () => (
   <CustomerBottomTabStack.Navigator>
     <CustomerBottomTabStack.Screen
+      component={CustomerSandboxNavigation}
+      name="Sandbox"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="box" type="font-awesome-5" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
       component={CustomerHomeNavigation}
       name="Home"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="home" type="font-awesome" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
+      component={CustomerPaymentNavigation}
+      name="Payment"
       options={{
         tabBarIcon: ({ color }) => (
           <Icon color={color} name="home" type="font-awesome" />
@@ -121,12 +163,28 @@ const CustomerBottomTabNavigation = () => (
     />
   </CustomerBottomTabStack.Navigator>
 );
+const CustomerSandboxStack = createStackNavigator();
+const CustomerSandboxNavigation = () => (
+  <CustomerSandboxStack.Navigator>
+    <CustomerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
+  </CustomerSandboxStack.Navigator>
+);
 
 const CustomerHomeStack = createStackNavigator();
 const CustomerHomeNavigation = () => (
   <CustomerHomeStack.Navigator>
     <CustomerHomeStack.Screen component={CustomerHomeScreen} name="Home" />
   </CustomerHomeStack.Navigator>
+);
+
+const CustomerPaymentStack = createStackNavigator();
+const CustomerPaymentNavigation = () => (
+  <CustomerPaymentStack.Navigator>
+    <CustomerPaymentStack.Screen
+      component={CustomerPaymentScreen}
+      name="Payment"
+    />
+  </CustomerPaymentStack.Navigator>
 );
 
 const CustomerMenuStack = createStackNavigator();
