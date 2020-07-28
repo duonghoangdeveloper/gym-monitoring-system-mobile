@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import {} from '../constants/types';
+// import {} from '../constants/types';
 
-const LoadingComponent = () => (
+export const CommonLoadingComponent = () => (
   <View style={styles.container}>
     <ActivityIndicator />
   </View>
@@ -16,5 +16,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default LoadingComponent;

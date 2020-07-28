@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import {
   Image,
@@ -8,14 +9,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-// import { AddImageIcon, RemoveIcon } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
-import shadowStyle from '../constants/shadows';
-import { textStyleObject } from '../constants/textStyles';
-import { defaultFunction } from '../utils/common';
+import { textStyleObject } from '../constants/text-styles';
 
 /**
  * @implements
@@ -27,73 +24,153 @@ type PropTypes = {
   onAddPress: () => void,
 };
 
-const ImageSelector = ({
-  style,
+export const CommonImageSelector = ({
   data,
-  onRemovePress = defaultFunction,
   onAddPress,
+  onRemovePress,
+  style,
 }: PropTypes) => {
   const handleRemovePress = () => {
     onRemovePress(data.key);
   };
   if (!data || !data.uri) {
     return (
-      <View style={[styles.container, style]}>
-        <TouchableOpacity onPress={onAddPress} style={styles.empty}>
-          {/* <AddImageIcon /> */}
-          <Icon name="add" />
-          <Text style={styles.text}>THÊM HÌNH</Text>
+      <View
+        style={[
+          {
+            height: 100,
+            position: 'relative',
+            width: 100,
+          },
+          style,
+        ]}
+      >
+        <TouchableOpacity
+          onPress={onAddPress}
+          style={{
+            alignItems: 'center',
+            backgroundColor: colors.dark80,
+            borderRadius: 5,
+            flex: 1,
+            justifyContent: 'center',
+          }}
+        >
+          <FontAwesome
+            name="photo"
+            style={{
+              color: 'white',
+              fontSize: 20,
+            }}
+          />
+          <Text
+            style={{
+              ...textStyleObject.bodyTextBold,
+              color: colors.white,
+              fontSize: 12,
+              marginTop: scaleV(8),
+            }}
+          >
+            ADD IMAGE
+          </Text>
         </TouchableOpacity>
       </View>
     );
   }
   return (
-    <View style={[styles.container, style]}>
-      <View style={styles.img}>
+    <View
+      style={[
+        {
+          height: 100,
+          margin: 10,
+          position: 'relative',
+          width: 100,
+        },
+        style,
+      ]}
+    >
+      <View
+        style={{
+          borderColor: colors.white,
+          borderRadius: 5,
+          borderWidth: 3,
+          bottom: 0,
+          // flex: 1,
+          flex: 1,
+          left: 0,
+          position: 'absolute',
+        }}
+      >
         <Image
           resizeMode="contain"
           source={{ uri: data.uri }}
-          style={{ flex: 1 }}
+          style={[
+            {
+              height: 95,
+              overflow: 'hidden',
+              width: 95,
+            },
+            style,
+          ]}
         />
       </View>
 
-      <TouchableOpacity onPress={handleRemovePress} style={styles.remove}>
-        {/* <RemoveIcon /> */}
-        <Icon name="remove" />
-      </TouchableOpacity>
+      <View
+        style={{
+          alignItems: 'center',
+          backgroundColor: colors.primary,
+          borderColor: colors.white,
+          borderRadius: 50,
+          borderWidth: 3,
+          color: colors.white,
+          height: 28,
+          justifyContent: 'center',
+          position: 'absolute',
+          right: -12,
+          top: -12,
+          width: 28,
+        }}
+      >
+        <TouchableOpacity onPress={handleRemovePress}>
+          <FontAwesome
+            name="remove"
+            style={{
+              color: 'white',
+              fontSize: 12,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-export default ImageSelector;
-
-const styles = StyleSheet.create({
-  container: {
-    height: scaleH(130),
-    padding: scaleH(10),
-    width: scaleH(130),
-  },
-  empty: {
-    alignItems: 'center',
-    backgroundColor: colors.dark80,
-    borderRadius: 4,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  img: {
-    borderRadius: 4,
-    flex: 1,
-    ...shadowStyle.ELEVATION_3,
-  },
-  remove: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
-  text: {
-    ...textStyleObject.bodyTextBold,
-    color: colors.white,
-    fontSize: 10,
-    marginTop: scaleV(8),
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     height: 120,
+//     position: 'relative',
+//     width: 120,
+//   },
+//   empty: {
+//     alignItems: 'center',
+//     backgroundColor: colors.dark80,
+//     borderRadius: 4,
+//     flex: 1,
+//     justifyContent: 'center',
+//   },
+//   img: {
+//     borderRadius: 4,
+//     flex: 1,
+//     // ...shadowStyle.ELEVATION_3,
+//   },
+//   remove: {
+//     position: 'absolute',
+//     right: 0,
+//     top: 0,
+//   },
+//   text: {
+//     ...textStyleObject.bodyTextBold,
+//     color: colors.white,
+//     fontSize: 10,
+//     marginTop: scaleV(8),
+//   },
+// });

@@ -1,4 +1,5 @@
 const colors = {
+  current: 'currentColor',
   dark: '#020E19',
   dark20: '#353E47',
   dark40: '#676E75',
@@ -8,10 +9,8 @@ const colors = {
   dark95: '#F3F3F4',
   error: '#FF3F34',
   errorLight: '#FF655D',
-  current: 'currentColor',
   gray: '#f2f2f2',
   highLightBackground: '#d8f3ee',
-  white: '#FFFFFF',
   primary: '#08457E',
   primaryLight: '#396A98',
   secondary: '#7DD8C6',
@@ -19,6 +18,7 @@ const colors = {
   success: '#01A368',
   successLight: '#34B586',
   tintColor: '#77C73B',
+  white: '#FFFFFF',
 };
 
 // [french violet, Medium Orchild, Lawn Green, Dark Orchild, French Lime, Violet RYB]

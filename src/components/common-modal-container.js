@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, StyleProp, View, ViewStyle } from 'react-native';
-import { pure } from 'recompose';
+// import { pure } from 'recompose';
 
 type PropTypes = {
   children: NodeList,
@@ -12,7 +12,7 @@ type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
 };
 
-const ModalContainer = ({
+export const CommonModalContainer = ({
   animationType = 'fade',
   children,
   containerStyle,
@@ -56,5 +56,3 @@ const ModalContainer = ({
     </Modal>
   );
 };
-
-export default ModalContainer;

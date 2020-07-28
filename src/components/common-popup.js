@@ -4,11 +4,11 @@ import { StyleSheet, View } from 'react-native';
 
 import colors from '../constants/colors';
 import { dimension, scaleH } from '../constants/dimensions';
-import ConfirmPopup from './common-confirm-popup';
-import FadedContainer from './common-faded-container';
-import ModalContainer from './common-modal-container';
-import PromptDialog from './common-prompt-dialog';
-import StatusDialog from './common-status-dialog';
+import { CommonConfirmPopup } from './common-confirm-popup';
+import { CommonFadedContainer } from './common-faded-container';
+import { CommonModalContainer } from './common-modal-container';
+import { CommonPromptDialog } from './common-prompt-dialog';
+import { CommonStatusDialog } from './common-status-dialog';
 
 type PropTypes = {
   popupType: String,
@@ -25,18 +25,17 @@ type PropTypes = {
 
 const POPUP_TYPE = ['prompt', 'success', 'error', 'confirm'];
 
-const PopUp = (props: PropTypes) => {
+export const CommonPopUp = (props: PropTypes) => {
   const { grandResponder, modalVisible, onClose, popupType } = props;
   const renderContent = () => {
     switch (popupType) {
       case 'confirm':
-        return <ConfirmPopup {...props} />;
+        return <CommonConfirmPopup {...props} />;
       case 'success':
       case 'error':
-        return <StatusDialog {...props} />;
+        return <CommonStatusDialog {...props} />;
       case 'prompt':
-        return <PromptDialog {...props} />;
-
+        return <CommonPromptDialog {...props} />;
       default:
         return null;
     }
@@ -45,7 +44,7 @@ const PopUp = (props: PropTypes) => {
   if (!POPUP_TYPE.includes(popupType)) return null;
 
   return (
-    <ModalContainer
+    <CommonModalContainer
       grantResponder={grandResponder}
       modalVisible={modalVisible}
       onClose={onClose}
@@ -61,7 +60,7 @@ const PopUp = (props: PropTypes) => {
       >
         {renderContent()}
       </View>
-    </ModalContainer>
+    </CommonModalContainer>
   );
 };
 
@@ -77,5 +76,3 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-
-export default PopUp;

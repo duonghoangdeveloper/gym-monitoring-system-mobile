@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
-  Image,
+  // Image,
   StyleProp,
   StyleSheet,
   View,
   ViewStyle,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
+// import FastImage from 'react-native-fast-image';
 import colors from '../constants/colors';
 
 // import ImageModal from './image-modal/index.tsx';
@@ -25,7 +25,11 @@ const Loading = () => (
   </View>
 );
 
-const ScaleImage = ({ containerStyle, fullImage = true, uri }: PropTypes) => {
+export const CommonScaleImage = ({
+  containerStyle,
+  fullImage = true,
+  uri,
+}: PropTypes) => {
   const [dimension, setDimension] = useState({ height: 200, width: 0 });
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -46,16 +50,16 @@ const ScaleImage = ({ containerStyle, fullImage = true, uri }: PropTypes) => {
 
   return (
     <View onLayout={onLayout} style={containerStyle}>
-      {fullImage ? (
-        // <ImageModal
-        //   onLoadImage={setImageDimension}
-        //   resizeMode="contain"
-        //   source={{ uri }}
-        //   style={{
-        //     height: dimension.height,
-        //     width: dimension.width,
-        //   }}
-        // />
+      {/* {fullImage ? (
+        <ImageModal
+          onLoadImage={setImageDimension}
+          resizeMode="contain"
+          source={{ uri }}
+          style={{
+            height: dimension.height,
+            width: dimension.width,
+          }}
+        />
       ) : (
         <FastImage
           onLoad={e =>
@@ -65,14 +69,12 @@ const ScaleImage = ({ containerStyle, fullImage = true, uri }: PropTypes) => {
           source={{ uri }}
           style={{ height: dimension.height, width: dimension.width }}
         />
-      )}
+      )} */}
 
       {dimension.width === 0 && <Loading />}
     </View>
   );
 };
-
-export default ScaleImage;
 
 const styles = StyleSheet.create({
   container: {

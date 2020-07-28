@@ -1,21 +1,17 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import {
+  Image,
   StyleProp,
-  StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
   ViewStyle,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-// import { EditIcon } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons/FontAwesome5';
 
+import avatar from '../../assets/avatar.png';
 import colors from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
-import { textStyle } from '../constants/textStyles';
-import { defaultFunction } from '../utils/common';
 
 type PropTypes = {
   uri: string,
@@ -23,16 +19,14 @@ type PropTypes = {
   editable?: boolean,
   onAvatarPress?: () => void,
   size?: 'normal' | 'small' | 'xsmall',
-  label?: string,
 };
 
-const Avatar = ({
-  uri,
+export const CommonAvatar = ({
+  uri = avatar,
   style = {},
-  editable = false,
-  onAvatarPress = defaultFunction,
+  editable = true,
+  onAvatarPress,
   size = 'normal',
-  label,
 }: PropTypes) => {
   const getDimension = () => {
     switch (size) {
@@ -50,12 +44,14 @@ const Avatar = ({
   const dimension = getDimension();
   const renderContent = () => (
     <TouchableWithoutFeedback onPress={onAvatarPress}>
-      <FastImage
+      <Image
         resizeMode="cover"
         source={{ uri }}
         style={[
           {
+            borderColor: colors.white,
             borderRadius: scaleH(dimension / 2),
+            borderWidth: 3,
             height: scaleH(dimension),
             overflow: 'hidden',
             width: scaleH(dimension),
@@ -65,18 +61,74 @@ const Avatar = ({
       />
     </TouchableWithoutFeedback>
   );
-  if (!editable) return renderContent();
+  if (!editable)
+    return (
+      <View
+        style={{
+          height: scaleH(dimension),
+          position: 'relative',
+          width: scaleH(dimension),
+        }}
+      >
+        {renderContent()}
+      </View>
+    );
   return (
-    <>
+    <View
+      style={{
+        height: scaleH(dimension),
+        position: 'relative',
+        width: scaleH(dimension),
+      }}
+    >
       <TouchableOpacity onPress={onAvatarPress}>
         {renderContent()}
-        <View style={{ bottom: 0, position: 'absolute', right: 0 }}>
-          {/* <EditIcon /> */}
-          <Icon name="edit" />
+        <View
+          style={{
+            alignItems: 'center',
+            backgroundColor: colors.primary,
+            borderColor: colors.white,
+            borderRadius: scaleH(dimension / 2),
+            borderWidth: 3,
+            bottom: scaleH(dimension / 35),
+            color: colors.white,
+            justifyContent: 'center',
+            padding: scaleH(dimension / 20),
+            position: 'absolute',
+            right: scaleH(dimension / 35),
+          }}
+        >
+          <MaterialIcons
+            name="edit"
+            style={{
+              color: colors.white,
+              fontSize: dimension / 8,
+            }}
+          />
         </View>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
-export default Avatar;
+// const styles = StyleSheet.create({
+//   avatarImage: {
+//     backgroundColor: colors.white,
+//     borderColor: colors.white,
+//     left: 3,
+//     position: 'absolute',
+//     top: 3,
+//   },
+//   container: {
+//     backgroundColor: colors.white,
+//     margin: 10,
+//     position: 'relative',
+//   },
+//   editButton: {
+//     backgroundColor: colors.primary,
+//     borderColor: colors.white,
+//     borderWidth: 3,
+//     color: colors.white,
+//     position: 'absolute',
+//   },
+// });

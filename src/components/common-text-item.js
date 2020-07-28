@@ -1,11 +1,11 @@
+// import { TickIcon } from '../assets/svgs';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
-// import { TickIcon } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '../constants/colors';
 import { dimension, scaleV } from '../constants/dimensions';
-import { textStyleObject } from '../constants/textStyles';
+import { textStyleObject } from '../constants/text-styles';
 
 type PropTypes = {
   content: string,
@@ -13,18 +13,20 @@ type PropTypes = {
   labelStyle: StyleProp<TextStyle>,
 };
 
-const TextItem = ({ content, haveTick = true, labelStyle }: PropTypes) => (
+export const CommonTextItem = ({
+  content,
+  haveTick = true,
+  labelStyle,
+}: PropTypes) => (
   <View style={styles.container}>
     <Text style={[styles.text, labelStyle]}>
       {/* {haveTick && <TickIcon fill={colors.success} />} */}
-      {haveTick && <Icon fill={colors.success} name="check-circle" />}
+      {haveTick && <MaterialIcons fill={colors.success} name="check-circle" />}
       {haveTick && '  '}
       {content}
     </Text>
   </View>
 );
-
-export default TextItem;
 
 const styles = StyleSheet.create({
   container: {

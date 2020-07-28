@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { today } from '../constants/date';
+// import { today } from '../constants/date';
 
 export function getCurrentDayString() {
   return moment().format('YYYY-MM-DD');

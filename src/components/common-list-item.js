@@ -1,3 +1,4 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import {
   StyleProp,
@@ -8,19 +9,18 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-// import { getSvg } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons';
 
+// import { getSvg } from '../assets/svgs';
 import colors from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
-import { textStyle, textStyleObject } from '../constants/textStyles';
-import { defaultFunction } from '../utils/common';
+import { textStyle, textStyleObject } from '../constants/text-styles';
+// import { defaultFunction } from '../utils/common';
 
 type PropTypes = {
   icon?: string,
   label?: string,
   nextIcon?: string,
-  onItemPress?: () => void,
+  // onItemPress?: () => void,
   showSeparator?: boolean,
   type: 'text' | 'toggle' | 'detail',
   detail?: string,
@@ -31,23 +31,32 @@ type PropTypes = {
 };
 
 const ListItem = ({
+  containerStyle,
+  detail,
+  detailStyle,
   icon,
   label = '',
   nextIcon,
-  onItemPress = defaultFunction,
+  // onItemPress,
+  pressable = false,
+  rightIcon,
   showSeparator = false,
   type = 'text',
-  detail,
-  containerStyle,
-  pressable = false,
-  detailStyle,
-  rightIcon,
 }: PropTypes) => {
+  console.log('icon: ', icon);
+  console.log('label: ', label);
+  console.log('nextIcon: ', nextIcon);
+  console.log('showSeparator: ', showSeparator);
+  console.log('type: ', type);
+  console.log('detail: ', detail);
+  console.log('pressable: ', pressable);
+  console.log('rightIcon: ', rightIcon);
+
   const getAction = () => {
     switch (type) {
       case 'text':
         // return getSvg(nextIcon, { fill: colors.dark20 });
-        return <Icon fill={colors.dark20} name={nextIcon} />;
+        return <FontAwesome5 fill={colors.dark20} name={nextIcon} />;
       case 'toggle':
         return <Switch value />;
       case 'detail':
@@ -69,8 +78,7 @@ const ListItem = ({
             >
               {detail}
             </Text>
-            {/* {getSvg(nextIcon, { fill: colors.dark20 })} */}
-            <Icon fill={colors.dark20} name={nextIcon} />
+            <FontAwesome5 fill={colors.dark20} name={nextIcon} />
           </View>
         );
       default:
@@ -80,7 +88,7 @@ const ListItem = ({
   return (
     <TouchableOpacity
       disabled={!pressable}
-      onPress={onItemPress}
+      // onPress={onItemPress}
       style={[
         styles.container,
         showSeparator ? styles.separator : {},
@@ -91,14 +99,14 @@ const ListItem = ({
         {icon && (
           <View style={{ marginEnd: scaleH(16), width: scaleH(16) }}>
             {/* {getSvg(icon, { fill: colors.dark20 })} */}
-            <Icon fill={colors.dark20} name={icon} />
+            <FontAwesome5 fill={colors.dark20} name={icon} />
           </View>
         )}
         <Text style={styles.label}>{label}</Text>
         {rightIcon && (
           <View style={{ marginEnd: scaleH(16), width: scaleH(16) }}>
             {/* {getSvg(rightIcon, { fill: colors.dark20 })} */}
-            <Icon fill={colors.dark20} name={rightIcon} />
+            <FontAwesome5 fill={colors.dark20} name={rightIcon} />
           </View>
         )}
       </View>

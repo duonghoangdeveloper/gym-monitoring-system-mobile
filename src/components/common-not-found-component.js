@@ -3,8 +3,8 @@ import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 
 // import { NotFoundIllustration } from '../assets/svgs/illustration';
 import { dimension } from '../constants/dimensions';
-import { textStyle } from '../constants/textStyles';
-import Button from './common-button';
+import { textStyle } from '../constants/text-styles';
+import { CommonButton } from './common-button';
 
 type PropTypes = {
   title: string,
@@ -14,7 +14,7 @@ type PropTypes = {
   haveBackButton: boolean,
 };
 
-const NotFoundComponent = ({
+export const CommonNotFoundComponent = ({
   containerStyle,
   description,
   haveBackButton = true,
@@ -32,7 +32,7 @@ const NotFoundComponent = ({
     </View>
 
     {haveBackButton && (
-      <Button
+      <CommonButton
         containerStyle={{ marginBottom: dimension.DISTANCE_4 }}
         label="Trở về"
         onPress={onBackPress}
@@ -48,5 +48,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: dimension.DISTANCE_4,
   },
 });
-
-export default NotFoundComponent;

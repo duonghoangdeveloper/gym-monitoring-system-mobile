@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   StyleProp,
@@ -7,12 +8,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
 import colors from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
-import { textStyleObject } from '../constants/textStyles';
-import { defaultFunction } from '../utils/common';
+// import { textStyleObject } from '../constants/text-styles';
+// import { defaultFunction } from '../utils/common';
 
 type PropTypes = {
   activeIndex: number,
@@ -21,10 +21,10 @@ type PropTypes = {
   style?: StyleProp<ViewStyle>,
 };
 
-const ButtonGroup = ({
+export const CommonButtonGroup = ({
   activeIndex,
   labels,
-  onItemPress = defaultFunction,
+  onItemPress,
   style = {},
 }: PropTypes) => {
   const getRadiusStyle = index => {
@@ -79,8 +79,6 @@ const ButtonGroup = ({
   );
 };
 
-export default ButtonGroup;
-
 const styles = StyleSheet.create({
   activeButton: {
     alignItems: 'center',
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeLabel: {
-    ...textStyleObject.bodyText,
+    // ...textStyleObject.bodyText,
     color: colors.white,
   },
   button: {
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   label: {
-    ...textStyleObject.bodyText,
+    // ...textStyleObject.bodyText,
     color: colors.dark20,
   },
 });

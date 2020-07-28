@@ -1,3 +1,4 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import {
   SafeAreaView,
@@ -6,15 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import { ArrowReturnIcon, getSvg } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons';
-import { IconFontAwesome } from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 
+// import { ArrowReturnIcon, ArrowRightIcon, getSvg } from '../assets/svgs';
 import { DEFAULT_HEADER_HEIGHT, PLAT_FORM } from '../constants/app';
 import colors from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
-import { textStyleObject } from '../constants/textStyles';
+import { textStyleObject } from '../constants/text-styles';
 // import { SET_HEADER_HEIGHT } from '../redux/constants';
 
 type PropTypes = {
@@ -42,7 +41,7 @@ export function getHeaderHeight() {
   return headerLayout.height;
 }
 
-const BackTitle = ({
+export const CommonHeader = ({
   backType = 'back',
   haveBack,
   haveRight,
@@ -65,7 +64,7 @@ const BackTitle = ({
     if (headerHeight === DEFAULT_HEADER_HEIGHT) {
       dispatch({
         payload: evt.nativeEvent.layout.height,
-        type: 'set-header-height',
+        // type: SET_HEADER_HEIGHT,
       });
     }
   };
@@ -74,7 +73,6 @@ const BackTitle = ({
       return (
         <TouchableOpacity onPress={onRightPress} style={styles.rightComponent}>
           {/* {getSvg(rightIcon)} */}
-          <Icon name="arrow-right" />
         </TouchableOpacity>
       );
     }
@@ -108,7 +106,7 @@ const BackTitle = ({
         <TouchableOpacity onPress={onBackPress} style={styles.arrow}>
           {backType === 'back' ? (
             // <ArrowReturnIcon fill={colors.dark20} />
-            <IconFontAwesome fill={colors.dark20} name="arrow-left" />
+            <FontAwesome5 fill={colors.dark20} name="arrow-left" />
           ) : null}
         </TouchableOpacity>
       )}
@@ -116,7 +114,7 @@ const BackTitle = ({
       {leftIcon && (
         <TouchableOpacity onPress={onBackPress} style={styles.arrow}>
           {/* {getSvg(leftIcon)} */}
-          <Icon name={leftIcon} />
+          <FontAwesome5 name={leftIcon} />
         </TouchableOpacity>
       )}
       {leftComponent && (
@@ -168,5 +166,3 @@ const styles = StyleSheet.create({
     color: colors.dark20,
   },
 });
-
-export default BackTitle;

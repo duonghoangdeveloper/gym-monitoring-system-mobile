@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 
 import { PLAT_FORM } from '../constants/app';
 
@@ -41,15 +41,15 @@ const pickerOptions = {
   title: 'Select Avatar',
 };
 
-export function selectImage(callback) {
-  ImagePicker.showImagePicker(pickerOptions, response => {
-    if (response.didCancel || response.error) {
-      console.log('error at select image');
-    } else {
-      callback(response);
-    }
-  });
-}
+// export function selectImage(callback) {
+//   ImagePicker.showImagePicker(pickerOptions, response => {
+//     if (response.didCancel || response.error) {
+//       console.log('error at select image');
+//     } else {
+//       callback(response);
+//     }
+//   });
+// }
 
 export function getLineCount(value: string) {
   const arr = [...value];

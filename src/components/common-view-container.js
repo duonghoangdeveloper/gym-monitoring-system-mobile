@@ -1,12 +1,9 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable import/no-duplicates */
-/* eslint-disable camelcase */
 import LottieView from 'lottie-react-native';
 import * as React from 'react';
 import {
   RefreshControl,
   SafeAreaView,
-  ScrollView,
+  // ScrollView,
   StatusBar,
   StyleProp,
   StyleSheet,
@@ -17,9 +14,9 @@ import {
 import { loadingRef } from '../assets/animations';
 import colors from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
-import FadedContainer from './common-faded-container';
-import Header from './common-header';
-import ScrollViewAwareScreenHeight from './common-scroll-view-aware-screen-height';
+import { CommonFadedContainer } from './common-faded-container';
+import { CommonHeader } from './common-header';
+import { CommonScrollViewAwareScreenHeight } from './common-scroll-view-aware-screen-height';
 
 type BackTitleTypes = {
   haveBack: boolean,
@@ -73,7 +70,7 @@ const Container = ({
 }) => {
   if (scrollable) {
     return (
-      <ScrollViewAwareScreenHeight
+      <CommonScrollViewAwareScreenHeight
         containerStyle={[styles.contentContainerStyle, style]}
         keyboardShouldPersistTaps="handled"
         refreshControl={
@@ -84,7 +81,7 @@ const Container = ({
         showsVerticalScrollIndicator={false}
       >
         {children}
-      </ScrollViewAwareScreenHeight>
+      </CommonScrollViewAwareScreenHeight>
     );
   }
   return (
@@ -95,7 +92,7 @@ const Container = ({
 };
 
 // eslint-disable-next-line react/display-name
-const ViewContainer = ({
+export const CommonViewContainer = ({
   backType = 'back',
   children,
   containerStyle,
@@ -148,7 +145,7 @@ const ViewContainer = ({
 
   const renderBackTitle = () =>
     haveBackHeader && (
-      <Header
+      <CommonHeader
         backType={backType}
         haveBack={haveBack}
         haveRight={haveRight}
@@ -207,5 +204,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: dimension.DISTANCE_4,
   },
 });
-
-export default ViewContainer;

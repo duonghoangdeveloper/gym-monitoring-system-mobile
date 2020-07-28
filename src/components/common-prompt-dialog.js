@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 
 import colors from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
-import { textStyle } from '../constants/textStyles';
+import { textStyle } from '../constants/text-styles';
 import { getBehavior } from '../utils/common';
-import Button from './common-button';
-import InputForm from './common-input-form';
+import { CommonButton } from './common-button';
+import { CommonInputForm } from './common-input-form';
 
 type PropTypes = {
   modalVisible: boolean,
@@ -24,7 +24,7 @@ type PropTypes = {
   input?: {},
 };
 
-const PromptDialog = ({
+export const CommonPromptDialog = ({
   onConfirm,
   onDecline,
   title,
@@ -81,7 +81,7 @@ const PromptDialog = ({
             {description}
           </Text>
         )}
-        <InputForm
+        <CommonInputForm
           autoFocus
           // label={description}
           containerStyle={{ width: '100%' }}
@@ -96,13 +96,13 @@ const PromptDialog = ({
         </Text>
 
         <View style={styles.action}>
-          <Button
+          <CommonButton
             label={cancelLabel}
             onPress={onDecline}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
             theme="error"
           />
-          <Button
+          <CommonButton
             label={confirmLabel}
             onPress={handleConfirm}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
@@ -137,5 +137,3 @@ const styles = StyleSheet.create({
     padding: 4,
   },
 });
-
-export default PromptDialog;

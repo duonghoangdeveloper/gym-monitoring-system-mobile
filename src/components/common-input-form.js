@@ -1,3 +1,4 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
   StyleProp,
@@ -10,13 +11,11 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RNPickerSelect from 'react-native-picker-select';
-// import { CalendarIcon } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons/AntDesign';
-import { pure } from 'recompose';
 
+// import { pure } from 'recompose';
 import colors from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
-import { textStyleObject } from '../constants/textStyles';
+import { textStyleObject } from '../constants/text-styles';
 import { defaultFunction } from '../utils/common';
 import { formatDate } from '../utils/date';
 
@@ -30,7 +29,7 @@ type PropTypes = {
   placeholder?: string,
   type: 'textinput' | 'calendar' | 'dropdown',
   dropDownList?: [{ value: string, label: string }],
-  selectedItem: string,
+  // selectedItem: string,
   autoFocus?: boolean,
   error?: string,
   onTextFocus: () => void,
@@ -43,7 +42,7 @@ type PropTypes = {
   returnKeyType?: string,
 };
 
-const InputForm = ({
+export const CommonInputForm = ({
   label,
   value,
   onChangeText,
@@ -112,13 +111,12 @@ const InputForm = ({
             >
               <Text style={styles.text}>{formatDate(value)}</Text>
               {/* <CalendarIcon /> */}
-              <Icon name="calendar" />
+              <FontAwesome5 name="calendar-alt" />
             </TouchableOpacity>
 
             <DateTimePickerModal
               date={new Date(value) || new Date()}
               isVisible={datePickerVisible}
-              // maximumDate={}
               maximumDate={maximumDate}
               minimumDate={minimumDate}
               mode="date"
@@ -170,7 +168,6 @@ const Label = ({ label, minLength }) => {
     </View>
   );
 };
-export default InputForm;
 
 const styles = StyleSheet.create({
   container: {},

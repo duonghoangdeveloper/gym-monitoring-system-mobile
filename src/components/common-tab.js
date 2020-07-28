@@ -3,7 +3,7 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 
 import { scaleH, scaleV } from '../constants/dimensions';
 // import ViewPager from '../react-native-community/viewpager';
-import ButtonGroup from './common-button-group';
+import { CommonButtonGroup } from './common-button-group';
 
 type PropTypes = {
   screens: [React.ReactNode],
@@ -11,7 +11,11 @@ type PropTypes = {
   dots?: [boolean],
 };
 
-const Tab = ({ screens, labels, dots = new Array(5) }: PropTypes) => {
+export const CommonTab = ({
+  screens,
+  labels,
+  dots = new Array(5),
+}: PropTypes) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const viewPagerRef = useRef(null);
 
@@ -30,7 +34,7 @@ const Tab = ({ screens, labels, dots = new Array(5) }: PropTypes) => {
 
   return (
     <>
-      <ButtonGroup
+      <CommonButtonGroup
         activeIndex={activeIndex}
         dots={dots}
         labels={labels}
@@ -60,5 +64,3 @@ const Tab = ({ screens, labels, dots = new Array(5) }: PropTypes) => {
     </>
   );
 };
-
-export default Tab;

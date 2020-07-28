@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-import colors from '../constants/colors';
+// import colors from '../constants/colors';
 import { scaleV } from '../constants/dimensions';
-import shadowStyle from '../constants/shadows';
+// import shadowStyle from '../constants/shadows';
 
 type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
@@ -14,7 +14,7 @@ type PropTypes = {
   grantResponder: boolean,
 };
 
-const FadedContainer = ({
+export const CommonFadedContainer = ({
   children,
   containerStyle,
   duration = 300,
@@ -75,8 +75,6 @@ const FadedContainer = ({
   );
 };
 
-export default FadedContainer;
-
 const styles = StyleSheet.create({
   containerStyle: {
     alignItems: 'center',
@@ -88,6 +86,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: -scaleV(120),
-    ...shadowStyle.ELEVATION_3,
+    // ...shadowStyle.ELEVATION_3,
   },
 });

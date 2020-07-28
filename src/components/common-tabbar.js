@@ -2,7 +2,7 @@ import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import {} from '../constants/types';
+// import {} from '../constants/types';
 
 // layout is stored as module variable
 let tabBarLayout = {
@@ -17,7 +17,7 @@ export function getTabBarHeight() {
   return tabBarLayout.height;
 }
 
-const Tabbar = props => (
+export const CommonTabbar = props => (
   <View
     onLayout={event => {
       tabBarLayout = event.nativeEvent.layout;
@@ -28,5 +28,3 @@ const Tabbar = props => (
 );
 
 const styles = StyleSheet.create({});
-
-export default Tabbar;

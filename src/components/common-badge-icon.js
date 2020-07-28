@@ -1,11 +1,13 @@
+// import { getSvg } from '@assets/svgs';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-// import { getSvg } from '@assets/svgs';
 import { Icon } from 'react-native-vector-icons';
 
-const BadgeIcon = ({ badgeCount, iconProps, name }) => (
+export const CommonBadgeIcon = ({ badgeCount, iconProps, name }) => (
   <View
     style={{
+      // backgroundColor: 'green',
       height: 24,
       margin: 4,
       marginTop: 10,
@@ -13,7 +15,7 @@ const BadgeIcon = ({ badgeCount, iconProps, name }) => (
     }}
   >
     {/* {getSvg(name, iconProps)} */}
-    <Icon name={name} {...iconProps} />
+    <MaterialIcons name={name} {...iconProps} />
     {badgeCount > 0 && (
       <View
         style={{
@@ -40,4 +42,3 @@ const BadgeIcon = ({ badgeCount, iconProps, name }) => (
     )}
   </View>
 );
-export default BadgeIcon;
