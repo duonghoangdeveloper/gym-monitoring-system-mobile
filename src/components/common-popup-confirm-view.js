@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
@@ -16,7 +16,7 @@ type PropTypes = {
   acceptOnly?: boolean,
 };
 
-export const CommonConfirmPopup = ({
+export const CommonPopupConfirmView = ({
   acceptOnly,
   cancelLabel = 'Huỷ',
   confirmLabel = 'Đồng ý',

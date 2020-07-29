@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { CONNECTION_STATUSES, URI } from '../common/constants';
 import { ConnectionStatusContext } from '../common/contexts';
 import { connect, getTokenFromSecureStorage } from '../common/services';
-import { CommonScreenLoading } from './common-screen-loading';
+import { AppScreenLoading } from './app-screen-loading';
 
 const key = 'connection-status';
 
@@ -167,7 +167,7 @@ export const AppApolloWrapper = ({ children }) => {
   }, [connectionStatus]);
 
   if (!client) {
-    return <CommonScreenLoading fullscreen />;
+    return <AppScreenLoading fullscreen />;
   }
 
   return (

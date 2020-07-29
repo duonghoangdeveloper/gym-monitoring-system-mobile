@@ -2,13 +2,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import colors from '../constants/colors';
-import { dimension, scaleH } from '../constants/dimensions';
-import { CommonConfirmPopup } from './common-confirm-popup';
-import { CommonFadedContainer } from './common-faded-container';
+import { colors } from '../constants/colors';
+import { dimension } from '../constants/dimensions';
 import { CommonModalContainer } from './common-modal-container';
-import { CommonPromptDialog } from './common-prompt-dialog';
-import { CommonStatusDialog } from './common-status-dialog';
+import { CommonPopupConfirmView } from './common-popup-confirm-view';
+import { CommonPopupPromptDialogView } from './common-popup-prompt-dialog-view';
+import { CommonPopupStatusDialogView } from './common-popup-status-dialog-view';
 
 type PropTypes = {
   popupType: String,
@@ -27,15 +26,16 @@ const POPUP_TYPE = ['prompt', 'success', 'error', 'confirm'];
 
 export const CommonPopUp = (props: PropTypes) => {
   const { grandResponder, modalVisible, onClose, popupType } = props;
+
   const renderContent = () => {
     switch (popupType) {
       case 'confirm':
-        return <CommonConfirmPopup {...props} />;
+        return <CommonPopupConfirmView {...props} />;
       case 'success':
       case 'error':
-        return <CommonStatusDialog {...props} />;
+        return <CommonPopupStatusDialogView {...props} />;
       case 'prompt':
-        return <CommonPromptDialog {...props} />;
+        return <CommonPopupPromptDialogView {...props} />;
       default:
         return null;
     }
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   containerStyle: {
     alignItems: 'center',
 
-    // backgroundColor: 'white',
     borderRadius: 8,
 
     justifyContent: 'space-between',
