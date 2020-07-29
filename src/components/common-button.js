@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 // import { getSvg } from '../assets/svgs';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
@@ -69,7 +69,7 @@ export const CommonButton = ({
   startColor = colors.primaryLight,
   endColor = colors.primary,
   style,
-  textColor = colors.dark,
+  textColor = colors.white,
   iconOnly = false,
   icon = null,
   leftIcon = null,
@@ -81,6 +81,34 @@ export const CommonButton = ({
 }: PropTypes) => {
   const buttonLabel = label.toUpperCase();
   const colorTheme = getColorTheme(theme, startColor, endColor);
+
+  const renderContent = () => (
+    <>
+      {leftIcon && (
+        <View style={styles.leftIcon}>
+          <FontAwesome5 color={textColor} name={leftIcon} />
+        </View>
+      )}
+      <View style={styles.center}>
+        {label ? (
+          <Text style={[textStyle.label, { color: textColor }]}>
+            {buttonLabel}
+          </Text>
+        ) : (
+          <FontAwesome5
+            color={textColor}
+            name={icon}
+            style={[styles.mainIcon, { color: textColor }]}
+          />
+        )}
+      </View>
+      {rightIcon && (
+        <View style={[styles.rightIcon, { color: textColor }]}>
+          <FontAwesome5 color={textColor} name={rightIcon} />
+        </View>
+      )}
+    </>
+  );
 
   if (gradient) {
     return (
@@ -104,29 +132,7 @@ export const CommonButton = ({
             buttonType === 'popup' ? styles.popupButton : {},
           ]}
         >
-          {leftIcon && (
-            <View style={styles.leftIcon}>
-              <FontAwesome5 color={textColor} name={leftIcon} />
-            </View>
-          )}
-          <View style={styles.center}>
-            {label ? (
-              <Text style={[textStyle.label, { color: textColor }]}>
-                {buttonLabel}
-              </Text>
-            ) : (
-              <FontAwesome5
-                color={textColor}
-                name={icon}
-                style={[styles.mainIcon, { color: textColor }]}
-              />
-            )}
-          </View>
-          {rightIcon && (
-            <View style={[styles.rightIcon, { color: textColor }]}>
-              <FontAwesome5 color={textColor} name={rightIcon} />
-            </View>
-          )}
+          {renderContent()}
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -138,31 +144,7 @@ export const CommonButton = ({
       onPress={onPress}
       style={[{ alignSelf: 'stretch' }, containerStyle]}
     >
-      <View style={[styles.container, style]}>
-        {leftIcon && (
-          <View style={styles.leftIcon}>
-            <FontAwesome5 color={textColor} name={leftIcon} />
-          </View>
-        )}
-        <View style={styles.center}>
-          {label ? (
-            <Text style={[textStyle.label, { color: textColor }]}>
-              {buttonLabel}
-            </Text>
-          ) : (
-            <FontAwesome5
-              color={textColor}
-              name={icon}
-              style={[styles.mainIcon, { color: textColor }]}
-            />
-          )}
-        </View>
-        {rightIcon && (
-          <View style={[styles.rightIcon, { color: textColor }]}>
-            <FontAwesome5 color={textColor} name={rightIcon} />
-          </View>
-        )}
-      </View>
+      <View style={[styles.container, style]}>{renderContent()}</View>
     </TouchableOpacity>
   );
 };

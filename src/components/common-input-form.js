@@ -12,12 +12,12 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RNPickerSelect from 'react-native-picker-select';
 
+import { defaultFunction } from '../common/common';
+import { formatDate } from '../common/date';
 // import { pure } from 'recompose';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
-import { defaultFunction } from '../utils/common';
-import { formatDate } from '../utils/date';
 
 type PropTypes = {
   label: string,

@@ -12,10 +12,8 @@ import {
 } from 'react-native';
 
 import { loadingRef } from '../assets/animations';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
-import { CommonFadedContainer } from './common-faded-container';
-import { CommonHeader } from './common-header';
 import { CommonScrollViewAwareScreenHeight } from './common-scroll-view-aware-screen-height';
 
 type BackTitleTypes = {
@@ -93,12 +91,12 @@ const Container = ({
 
 // eslint-disable-next-line react/display-name
 export const CommonViewContainer = ({
-  backType = 'back',
+  // backType = 'back',
   children,
   containerStyle,
-  haveBack = true,
-  haveBackHeader = false,
-  haveRight,
+  // haveBack = true,
+  // haveBackHeader = false,
+  // haveRight,
   leftComponent,
   leftIcon,
   loading = false,
@@ -143,22 +141,22 @@ export const CommonViewContainer = ({
 
   // </FadedContainer>
 
-  const renderBackTitle = () =>
-    haveBackHeader && (
-      <CommonHeader
-        backType={backType}
-        haveBack={haveBack}
-        haveRight={haveRight}
-        leftComponent={leftComponent}
-        leftIcon={leftIcon}
-        onBackPress={onBackPress}
-        onRightPress={onRightPress}
-        rightComponent={rightComponent}
-        rightIcon={rightIcon}
-        title={title}
-        type={backType}
-      />
-    );
+  // const renderBackTitle = () =>
+  //   haveBackHeader && (
+  //     <CommonHeader
+  //       backType={backType}
+  //       haveBack={haveBack}
+  //       haveRight={haveRight}
+  //       leftComponent={leftComponent}
+  //       leftIcon={leftIcon}
+  //       onBackPress={onBackPress}
+  //       onRightPress={onRightPress}
+  //       rightComponent={rightComponent}
+  //       rightIcon={rightIcon}
+  //       title={title}
+  //       type={backType}
+  //     />
+  //   );
 
   return (
     <SafeAreaViewFlex
@@ -170,7 +168,7 @@ export const CommonViewContainer = ({
         barStyle="dark-content"
         translucent
       />
-      {renderBackTitle()}
+      {/* {renderBackTitle()} */}
       <Container
         onRefresh={onRefresh}
         refreshable={refreshable}

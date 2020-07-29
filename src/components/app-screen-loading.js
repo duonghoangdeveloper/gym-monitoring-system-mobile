@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { CommonLoadingComponent } from './common-loading-component';
 
-export const CommonScreenLoading = () => (
+export const AppScreenLoading = () => (
   <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
     <CommonLoadingComponent />
-    <Text>Loading</Text>
+    {/* <Text>Loading</Text> */}
   </View>
 );

@@ -23,7 +23,6 @@ export const CommonNotFoundComponent = ({
 }: PropTypes) => (
   <View style={[styles.container, containerStyle]}>
     <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-      {/* <NotFoundIllustration /> */}
       <Text>NotFoundIllustration</Text>
       <Text style={textStyle.widgetItem}>{title}</Text>
       <Text style={[textStyle.bodyText, { marginTop: dimension.DISTANCE_2 }]}>

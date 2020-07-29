@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 // import FastImage from 'react-native-fast-image';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 
 // import ImageModal from './image-modal/index.tsx';
 

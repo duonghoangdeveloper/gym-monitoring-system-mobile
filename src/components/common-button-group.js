@@ -9,10 +9,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
 // import { textStyleObject } from '../constants/text-styles';
-// import { defaultFunction } from '../utils/common';
+// import { defaultFunction } from '../common/services';
 
 type PropTypes = {
   activeIndex: number,
