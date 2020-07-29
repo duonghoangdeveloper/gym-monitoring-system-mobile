@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
 // import {colors} from '../constants/colors';
-import { dimension, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
 
@@ -47,7 +47,7 @@ export const CommonPopupStatusDialogView = ({
       <View
         style={{
           alignSelf: 'center',
-          marginTop: dimension.DISTANCE_2,
+          marginTop: DIMENSIONS.DISTANCE_2,
           width: '80%',
         }}
       >
@@ -59,7 +59,7 @@ export const CommonPopupStatusDialogView = ({
       <CommonButton
         label={confirmLabel}
         onPress={onConfirm}
-        style={{ borderRadius: 4, marginTop: dimension.DISTANCE_3 }}
+        style={{ borderRadius: 4, marginTop: DIMENSIONS.DISTANCE_3 }}
         theme={getTheme()}
       />
     </>

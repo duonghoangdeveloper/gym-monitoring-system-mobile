@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 
 import { loadingRef } from '../assets/animations';
-import { colors } from '../constants/colors';
-import { dimension, scaleH, scaleV } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { CommonScrollViewAwareScreenHeight } from './common-scroll-view-aware-screen-height';
 
 type BackTitleTypes = {
@@ -195,10 +195,10 @@ const styles = StyleSheet.create({
     top: 0,
   },
   containerStyle: {
-    backgroundColor: colors.white,
+    backgroundColor: COLORS.white,
     flex: 1,
   },
   contentContainerStyle: {
-    paddingHorizontal: dimension.DISTANCE_4,
+    paddingHorizontal: DIMENSIONS.DISTANCE_4,
   },
 });

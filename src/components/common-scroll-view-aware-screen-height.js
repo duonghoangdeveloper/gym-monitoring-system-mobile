@@ -46,7 +46,7 @@ export const CommonScrollViewAwareScreenHeight = ({
 
     if (
       contentHeight.current <=
-      dimension.SCREEN_HEIGHT - headerHeight - tabbarHeight
+      DIMENSIONS.SCREEN_HEIGHT - headerHeight - tabbarHeight
     ) {
       setFlex(true);
     }

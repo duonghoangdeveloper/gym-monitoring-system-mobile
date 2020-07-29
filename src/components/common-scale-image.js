@@ -7,9 +7,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import ImageModal from 'react-native-image-modal';
 
 // import FastImage from 'react-native-fast-image';
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 
 // import ImageModal from './image-modal/index.tsx';
 
@@ -30,7 +32,7 @@ export const CommonScaleImage = ({
   fullImage = true,
   uri,
 }: PropTypes) => {
-  const [dimension, setDimension] = useState({ height: 200, width: 0 });
+  const [DIMENSIONS, setDimension] = useState({ height: 460, width: 450 });
   const [containerWidth, setContainerWidth] = useState(0);
 
   const onLayout = event => {
@@ -40,7 +42,7 @@ export const CommonScaleImage = ({
   };
 
   const setImageDimension = (width, height) => {
-    if (dimension.width === 0) {
+    if (DIMENSIONS.width === 0) {
       setDimension({
         height: (containerWidth * height) / width,
         width: containerWidth,
@@ -50,14 +52,14 @@ export const CommonScaleImage = ({
 
   return (
     <View onLayout={onLayout} style={containerStyle}>
-      {/* {fullImage ? (
+      {fullImage ? (
         <ImageModal
           onLoadImage={setImageDimension}
           resizeMode="contain"
           source={{ uri }}
           style={{
-            height: dimension.height,
-            width: dimension.width,
+            height: DIMENSIONS.height,
+            width: DIMENSIONS.width,
           }}
         />
       ) : (
@@ -67,11 +69,11 @@ export const CommonScaleImage = ({
           }
           resizeMode="contain"
           source={{ uri }}
-          style={{ height: dimension.height, width: dimension.width }}
+          style={{ height: DIMENSIONS.height, width: DIMENSIONS.width }}
         />
-      )} */}
+      )}
 
-      {dimension.width === 0 && <Loading />}
+      {DIMENSIONS.width === 0 && <Loading />}
     </View>
   );
 };
@@ -79,7 +81,7 @@ export const CommonScaleImage = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: colors.dark80,
+    backgroundColor: COLORS.dark80,
     height: 200,
     justifyContent: 'center',
     width: '100%',

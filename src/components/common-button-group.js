@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
 // import { textStyleObject } from '../constants/text-styles';
 // import { defaultFunction } from '../common/services';
@@ -50,7 +50,7 @@ export const CommonButtonGroup = ({
     if (index === activeIndex) {
       return (
         <LinearGradient
-          colors={[colors.primaryLight, colors.primary]}
+          colors={[COLORS.primaryLight, COLORS.primary]}
           end={{ x: 0.5, y: 1 }}
           key={index}
           locations={[0, 1]}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   activeLabel: {
     // ...textStyleObject.bodyText,
-    color: colors.white,
+    color: COLORS.white,
   },
   button: {
     alignItems: 'center',
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignSelf: 'stretch',
-    borderColor: colors.dark60,
+    borderColor: COLORS.dark80,
     borderRadius: 4,
     borderWidth: 1,
     flexDirection: 'row',
@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
   },
   label: {
     // ...textStyleObject.bodyText,
-    color: colors.dark20,
+    color: COLORS.dark20,
   },
 });
