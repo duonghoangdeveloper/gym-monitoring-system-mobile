@@ -2,7 +2,7 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
-// import { CommonAvatar } from '../components/common-avatar';
+import { CommonAvatar } from '../components/common-avatar';
 // import { CommonBadgeIcon } from '../components/common-badge-icon';
 // import { CommonButton } from '../components/common-button';
 // import { CommonButtonGroup } from '../components/common-button-group';
@@ -29,14 +29,7 @@ export const SandboxScreen = () => {
           padding: 20,
         }}
       >
-        <Text
-          style={{
-            color: colors.dark,
-            fontSize: 12,
-          }}
-        >
-          {title}
-        </Text>
+      <CommonAvatar uri="https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=BgIS-97W8jUAX-hAElE&_nc_ht=scontent.fsgn2-1.fna&oh=ddde834e4e34e9baa4c76aa36aa93f06&oe=5F478B03"/>
 
         {/* <View stye={{ borderColor: 'black', borderWidth: 3 }}> */}
 
