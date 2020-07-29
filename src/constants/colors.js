@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
   current: 'currentColor',
   dark: '#020E19',
   dark20: '#353E47',
@@ -23,7 +23,7 @@ const colors = {
 
 // [french violet, Medium Orchild, Lawn Green, Dark Orchild, French Lime, Violet RYB]
 // preference: https://coolors.co/8814c7-c75eff-6ced26-9b41cc-9fff6b-790eb3
-const COLOR_PALETTE = [
+export const COLOR_PALETTE = [
   '#8814C7',
   '#C75EFF',
   '#6CED26',
@@ -31,7 +31,3 @@ const COLOR_PALETTE = [
   '#9FFF6B',
   '#790EB3',
 ];
-
-export { COLOR_PALETTE };
-
-export default colors;

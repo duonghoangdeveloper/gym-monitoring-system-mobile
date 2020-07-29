@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import avatar from '../../assets/avatar.png';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
 
 type PropTypes = {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { dimension, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { getBehavior } from '../utils/common';
@@ -24,7 +24,7 @@ type PropTypes = {
   input?: {},
 };
 
-export const CommonPromptDialog = ({
+export const CommonPopupPromptDialogView = ({
   onConfirm,
   onDecline,
   title,

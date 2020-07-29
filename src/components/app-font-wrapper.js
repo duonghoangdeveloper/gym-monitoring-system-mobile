@@ -16,13 +16,13 @@ const customFonts = {
 export const AppFontWrapper = ({ children }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  const loadFontsAsync = async () => {
+  const loadFonts = async () => {
     await Font.loadAsync(customFonts);
     setFontsLoaded(true);
   };
 
   useEffect(() => {
-    loadFontsAsync();
+    loadFonts();
   }, []);
 
   if (!fontsLoaded) {
