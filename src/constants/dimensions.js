@@ -3,17 +3,13 @@ import { Dimensions, Platform } from 'react-native';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-const lineHeight = Platform.select({ android: 0.5, ios: 0.25 });
+export const lineHeight = Platform.select({ android: 0.5, ios: 0.25 });
 
-function scaleV(d) {
-  return Math.round((d * SCREEN_HEIGHT) / 812);
-}
+export const scaleV = d => Math.round((d * SCREEN_HEIGHT) / 812);
 
-function scaleH(d) {
-  return Math.round((d * SCREEN_WIDTH) / 375);
-}
+export const scaleH = d => Math.round((d * SCREEN_WIDTH) / 375);
 
-const dimension = {
+export const dimension = {
   BORDER_RADIUS: 4,
   DISTANCE_1: 4,
   DISTANCE_2: 8,
@@ -32,5 +28,3 @@ const dimension = {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 };
-
-export { lineHeight, scaleV, scaleH, dimension };

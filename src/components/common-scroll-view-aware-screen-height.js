@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 
 import { dimension } from '../constants/dimensions';
 // import {} from '../constants/types';
-import { getHeaderHeight } from './common-header';
 import { getTabBarHeight } from './common-tabbar';
 
 type PropTypes = {

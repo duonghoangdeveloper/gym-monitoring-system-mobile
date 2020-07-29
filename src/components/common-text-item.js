@@ -3,7 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { dimension, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
 
