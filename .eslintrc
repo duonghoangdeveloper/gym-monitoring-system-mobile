@@ -9,6 +9,7 @@
     "no-use-before-define": "off",
     "import/no-cycle": "off",
     "no-plusplus": "off",
+    "no-shadow":"off",
     "sort-imports": "off",
     "simple-import-sort/sort": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",

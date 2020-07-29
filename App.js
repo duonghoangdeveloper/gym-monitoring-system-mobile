@@ -1,27 +1,22 @@
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { AppApolloWrapper } from './src/components/app-apollo-wrapper';
+import { AppFontWrapper } from './src/components/app-font-wrapper';
 import { AppNavigation } from './src/components/app-navigation';
 import { AppReduxWrapper } from './src/components/app-redux-wrapper';
 
 export default function App() {
-  console.log('Hello');
   return (
     <AppApolloWrapper>
       <AppReduxWrapper>
-        <AppNavigation />
+        <AppFontWrapper>
+          <AppNavigation />
+        </AppFontWrapper>
       </AppReduxWrapper>
     </AppApolloWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    flex: 1,
-    justifyContent: 'center',
-  },
-});

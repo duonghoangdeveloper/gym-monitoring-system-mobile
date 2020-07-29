@@ -1,3 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -5,10 +7,15 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
+import { AboutScreen } from '../screens/about-screen';
+import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
+import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
+import { WarningHistoryScreen } from '../screens/customer-warning-history-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
 import { ProfileScreen } from '../screens/profile-screen';
+import { SandboxScreen } from '../screens/sandbox-screen';
 import { SettingsScreen } from '../screens/settings-screen';
 import { SignInScreen } from '../screens/sign-in-screen';
 import { TrainerHomeScreen } from '../screens/trainer-home-screen';
@@ -24,6 +31,8 @@ export const AppNavigation = () => {
 //    |-- SignIn
 //
 //  |-- TrainerBottomTabNavigation
+//    |-- TrainerSandboxNavigation
+//      |-- SandboxScreen
 //    |-- TrainerHomeNavigation
 //      |-- TrainerHome
 //    |-- TrainerMenuNavigation
@@ -32,8 +41,12 @@ export const AppNavigation = () => {
 //      |-- SettingsScreen
 //
 //  |-- CustomerBottomTabNavigation
+//    |-- CustomerSandboxNavigation
+//      |-- SandboxScreen
 //    |-- CustomerHomeNavigation
 //      |-- CustomerHome
+//    |-- CustomerPaymentNavigation
+//      |-- CustomerPayment
 //    |-- CustomerMenuNavigation
 //      |-- CustomerMenu
 //      |-- ProfileScreen
@@ -62,6 +75,15 @@ const TrainerBottomTabStack = createBottomTabNavigator();
 const TrainerBottomTabNavigation = () => (
   <TrainerBottomTabStack.Navigator>
     <TrainerBottomTabStack.Screen
+      component={TrainerSandboxNavigation}
+      name="Sandbox"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="box" type="font-awesome-5" />
+        ),
+      }}
+    />
+    <TrainerBottomTabStack.Screen
       component={TrainerHomeNavigation}
       name="Home"
       options={{
@@ -80,6 +102,13 @@ const TrainerBottomTabNavigation = () => (
       }}
     />
   </TrainerBottomTabStack.Navigator>
+);
+
+const TrainerSandboxStack = createStackNavigator();
+const TrainerSandboxNavigation = () => (
+  <TrainerSandboxStack.Navigator>
+    <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
+  </TrainerSandboxStack.Navigator>
 );
 
 const TrainerHomeStack = createStackNavigator();
@@ -102,6 +131,15 @@ const CustomerBottomTabStack = createBottomTabNavigator();
 const CustomerBottomTabNavigation = () => (
   <CustomerBottomTabStack.Navigator>
     <CustomerBottomTabStack.Screen
+      component={CustomerSandboxNavigation}
+      name="Sandbox"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="box" type="font-awesome-5" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
       component={CustomerHomeNavigation}
       name="Home"
       options={{
@@ -111,11 +149,20 @@ const CustomerBottomTabNavigation = () => (
       }}
     />
     <CustomerBottomTabStack.Screen
-      component={CustomerHomeNavigation}
-      name="Notification"
+      component={CustomerWarningNavigation}
+      name="Warning"
       options={{
         tabBarIcon: ({ color }) => (
-          <Icon color={color} name="home" type="font-awesome" />
+          <Icon color={color} name="file-text-o" type="font-awesome" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
+      component={CustomerPaymentNavigation}
+      name="Payment"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Ionicons color={color} name="logo-usd" size={24} />
         ),
       }}
     />
@@ -130,6 +177,12 @@ const CustomerBottomTabNavigation = () => (
     />
   </CustomerBottomTabStack.Navigator>
 );
+const CustomerSandboxStack = createStackNavigator();
+const CustomerSandboxNavigation = () => (
+  <CustomerSandboxStack.Navigator>
+    <CustomerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
+  </CustomerSandboxStack.Navigator>
+);
 
 const CustomerHomeStack = createStackNavigator();
 const CustomerHomeNavigation = () => (
@@ -138,6 +191,25 @@ const CustomerHomeNavigation = () => (
   </CustomerHomeStack.Navigator>
 );
 
+const CustomerPaymentStack = createStackNavigator();
+const CustomerPaymentNavigation = () => (
+  <CustomerPaymentStack.Navigator>
+    <CustomerPaymentStack.Screen
+      component={CustomerPaymentScreen}
+      name="Payment"
+    />
+  </CustomerPaymentStack.Navigator>
+);
+
+const CustomerWarningHistoryStack = createStackNavigator();
+const CustomerWarningNavigation = () => (
+  <CustomerWarningHistoryStack.Navigator>
+    <CustomerPaymentStack.Screen
+      component={WarningHistoryScreen}
+      name="Warning"
+    />
+  </CustomerWarningHistoryStack.Navigator>
+);
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (
   <CustomerMenuStack.Navigator>
@@ -145,5 +217,10 @@ const CustomerMenuNavigation = () => (
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={FeedbackScreen} name="Feedback" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
+    <CustomerMenuStack.Screen
+      component={ChangePasswordScreen}
+      name="ChangePassword"
+    />
   </CustomerMenuStack.Navigator>
 );

@@ -1,4 +1,5 @@
 import { useApolloClient } from '@apollo/react-hooks';
+import AsyncStorage from '@react-native-community/async-storage';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
@@ -11,6 +12,7 @@ import {
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { TOKEN_KEY } from '../common/constants';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { SIGN_IN } from '../redux/user/user.types';
 
@@ -32,6 +34,11 @@ export const SignInScreen = ({ navigation }) => {
               token
               data {
                 _id
+                username
+                displayName
+                gender
+                email
+                phone
                 role
               }
             }
@@ -52,6 +59,7 @@ export const SignInScreen = ({ navigation }) => {
           },
           type: SIGN_IN,
         });
+        AsyncStorage.setItem(TOKEN_KEY, result.data.signIn.token);
         // navigation.navigate('Home');
       } else {
         setLoading(false);
