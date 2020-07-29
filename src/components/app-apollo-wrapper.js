@@ -6,7 +6,7 @@ import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import React, { useEffect, useState } from 'react';
 
-import { CONNECTION_STATUSES, URI } from '../common/constants';
+import { CONNECTION_STATUSES, URI } from '../constants/app';
 import { ConnectionStatusContext } from '../common/contexts';
 import { connect, getTokenFromSecureStorage } from '../common/services';
 import { AppScreenLoading } from './app-screen-loading';

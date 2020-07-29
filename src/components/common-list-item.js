@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 
 // import { getSvg } from '../assets/svgs';
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
 import { textStyle, textStyleObject } from '../constants/text-styles';
-// import { defaultFunction } from '../common/common';
+// import { defaultFunction } from '../common/services';
 
 type PropTypes = {
-  icon?: string,
+  icon?: React.ReactNode,
   label?: string,
   nextIcon?: string,
   onItemPress?: () => void,
@@ -27,10 +27,10 @@ type PropTypes = {
   pressable?: boolean,
   containerStyle: StyleProp<ViewStyle>,
   detailStyle: StyleProp<ViewStyle>,
-  rightIcon?: string,
+  rightIcon?: React.ReactNode,
 };
 
-export const ListItem = ({
+export const CommonListItem = ({
   containerStyle,
   detail,
   detailStyle,
@@ -43,22 +43,16 @@ export const ListItem = ({
   showSeparator = false,
   type = 'text',
 }: PropTypes) => {
-  console.log('icon: ', icon);
-  console.log('label: ', label);
-  console.log('nextIcon: ', nextIcon);
-  console.log('showSeparator: ', showSeparator);
-  console.log('type: ', type);
-  console.log('detail: ', detail);
-  console.log('pressable: ', pressable);
-  console.log('rightIcon: ', rightIcon);
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [enabled, setEnabled] = useState(false);
+
   const getAction = () => {
     switch (type) {
       case 'text':
-        return <FontAwesome5 fill={colors.dark20} name={nextIcon} />;
+        return <FontAwesome5 fill={COLORS.dark20} name={nextIcon} />;
       case 'toggle':
-        return <Switch onValueChange={toggleSwitch} value={isEnabled} />;
+        return (
+          <Switch onValueChange={() => setEnabled(!enabled)} value={enabled} />
+        );
       case 'detail':
         return (
           <View
@@ -78,7 +72,7 @@ export const ListItem = ({
             >
               {detail}
             </Text>
-            <FontAwesome5 fill={colors.dark20} name={nextIcon} />
+            <FontAwesome5 fill={COLORS.dark20} name={nextIcon} />
           </View>
         );
       default:
@@ -97,16 +91,14 @@ export const ListItem = ({
     >
       <View style={styles.labelContainer}>
         {icon && (
-          <View style={{ marginEnd: scaleH(16), width: scaleH(16) }}>
-            {/* {getSvg(icon, { fill: colors.dark20 })} */}
-            <FontAwesome5 fill={colors.dark20} name={icon} />
+          <View style={{ marginEnd: scaleH(12), width: scaleH(16) }}>
+            {icon}
           </View>
         )}
         <Text style={styles.label}>{label}</Text>
         {rightIcon && (
           <View style={{ marginEnd: scaleH(16), width: scaleH(16) }}>
-            {/* {getSvg(rightIcon, { fill: colors.dark20 })} */}
-            <FontAwesome5 fill={colors.dark20} name={rightIcon} />
+            {rightIcon}
           </View>
         )}
       </View>
@@ -118,26 +110,22 @@ export const ListItem = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-
     alignSelf: 'stretch',
-
     flexDirection: 'row',
-
     justifyContent: 'space-between',
-
     paddingHorizontal: scaleH(8),
     // minHeight: scaleH(60),
     paddingVertical: scaleH(16),
   },
   detail: {
     ...textStyleObject.bodyText,
-    color: colors.dark20,
+    color: COLORS.dark20,
     flex: 1,
     textAlign: 'right',
   },
   label: {
     ...textStyleObject.bodyTextBold,
-    color: colors.dark20,
+    color: COLORS.dark20,
     marginEnd: 12,
   },
   labelContainer: {
@@ -145,7 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   separator: {
-    borderBottomColor: colors.dark90,
+    borderBottomColor: COLORS.dark80,
     borderBottomWidth: 1,
   },
 });

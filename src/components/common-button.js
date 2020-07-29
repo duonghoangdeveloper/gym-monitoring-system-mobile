@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 
 // import { getSvg } from '../assets/svgs';
-import { colors } from '../constants/colors';
-import { scaleH } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleH } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
 type PropTypes = {
@@ -36,23 +36,23 @@ const getColorTheme = (theme, startColor, endColor) => {
   switch (theme) {
     case 'primary':
       return {
-        endColor: colors.primary,
-        startColor: colors.primaryLight,
+        endColor: COLORS.primary,
+        startColor: COLORS.primaryLight,
       };
     case 'secondary':
       return {
-        endColor: colors.secondary,
-        startColor: colors.secondaryLight,
+        endColor: COLORS.secondary,
+        startColor: COLORS.secondaryLight,
       };
     case 'success':
       return {
-        endColor: colors.success,
-        startColor: colors.successLight,
+        endColor: COLORS.success,
+        startColor: COLORS.successLight,
       };
     case 'error':
       return {
-        endColor: colors.error,
-        startColor: colors.errorLight,
+        endColor: COLORS.error,
+        startColor: COLORS.errorLight,
       };
     default:
       return {
@@ -66,10 +66,10 @@ export const CommonButton = ({
   onPress,
   label = '',
   gradient = true,
-  startColor = colors.primaryLight,
-  endColor = colors.primary,
+  startColor = COLORS.primaryLight,
+  endColor = COLORS.primary,
   style,
-  textColor = colors.white,
+  textColor = COLORS.white,
   iconOnly = false,
   icon = null,
   leftIcon = null,
@@ -120,7 +120,7 @@ export const CommonButton = ({
         <LinearGradient
           colors={
             disable
-              ? [colors.primary, colors.primaryLight]
+              ? [COLORS.primary, COLORS.primaryLight]
               : [colorTheme.startColor, colorTheme.endColor]
           }
           end={{ x: 0.5, y: 1 }}
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: 'grey',
-    borderRadius: scaleH(22),
+    borderRadius: DIMENSIONS.BORDER_RADIUS,
     flexDirection: 'row',
     height: scaleH(44),
     justifyContent: 'space-between',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   mainLabel: {},
   popupButton: {
-    borderRadius: 8,
+    borderRadius: DIMENSIONS.BORDER_RADIUS,
   },
   rightIcon: {
     alignItems: 'center',

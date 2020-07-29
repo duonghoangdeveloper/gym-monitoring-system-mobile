@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import avatar from '../../assets/avatar.png';
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { scaleH } from '../constants/dimensions';
 
 type PropTypes = {
@@ -49,7 +49,7 @@ export const CommonAvatar = ({
         source={{ uri }}
         style={[
           {
-            borderColor: colors.white,
+            borderColor: COLORS.white,
             borderRadius: scaleH(dimension / 2),
             borderWidth: 3,
             height: scaleH(dimension),
@@ -86,12 +86,12 @@ export const CommonAvatar = ({
         <View
           style={{
             alignItems: 'center',
-            backgroundColor: colors.primary,
-            borderColor: colors.white,
+            backgroundColor: COLORS.primary,
+            borderColor: COLORS.white,
             borderRadius: scaleH(dimension / 2),
             borderWidth: 3,
             bottom: scaleH(dimension / 35),
-            color: colors.white,
+            color: COLORS.white,
             justifyContent: 'center',
             padding: scaleH(dimension / 20),
             position: 'absolute',
@@ -101,7 +101,7 @@ export const CommonAvatar = ({
           <MaterialIcons
             name="edit"
             style={{
-              color: colors.white,
+              color: COLORS.white,
               fontSize: dimension / 8,
             }}
           />
@@ -113,22 +113,22 @@ export const CommonAvatar = ({
 
 // const styles = StyleSheet.create({
 //   avatarImage: {
-//     backgroundColor: colors.white,
-//     borderColor: colors.white,
+//     backgroundColor: COLORS.white,
+//     borderColor: COLORS.white,
 //     left: 3,
 //     position: 'absolute',
 //     top: 3,
 //   },
 //   container: {
-//     backgroundColor: colors.white,
+//     backgroundColor: COLORS.white,
 //     margin: 10,
 //     position: 'relative',
 //   },
 //   editButton: {
-//     backgroundColor: colors.primary,
-//     borderColor: colors.white,
+//     backgroundColor: COLORS.primary,
+//     borderColor: COLORS.white,
 //     borderWidth: 3,
-//     color: colors.white,
+//     color: COLORS.white,
 //     position: 'absolute',
 //   },
 // });

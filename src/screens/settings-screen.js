@@ -6,7 +6,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Avatar, Icon, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
-import { TOKEN_KEY } from '../common/constants';
+import { TOKEN_KEY } from '../constants/app';
 import { SIGN_OUT } from '../redux/user/user.types';
 
 export const SettingsScreen = ({ navigation }) => {
@@ -37,8 +37,8 @@ export const SettingsScreen = ({ navigation }) => {
   return (
     <View>
       <View>
-        {list.map(({ leftIcon, onPress, title, to }) => (
-          <TouchableOpacity onPress={() => navigation.navigate(to)}>
+        {list.map(({ leftIcon, onPress, title, to }, i) => (
+          <TouchableOpacity key={i} onPress={() => navigation.navigate(to)}>
             <ListItem
               bottomDivider
               leftAvatar={
