@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
 
@@ -33,7 +33,7 @@ export const CommonImageSelector = ({
   const handleRemovePress = () => {
     onRemovePress(data.key);
   };
-  if (!data?.uri) {
+  if (!data ?.uri) {
     return (
       <View
         style={[
@@ -49,7 +49,7 @@ export const CommonImageSelector = ({
           onPress={onAddPress}
           style={{
             alignItems: 'center',
-            backgroundColor: colors.dark80,
+            backgroundColor: COLORS.dark80,
             borderRadius: 5,
             flex: 1,
             justifyContent: 'center',
@@ -65,7 +65,7 @@ export const CommonImageSelector = ({
           <Text
             style={{
               ...textStyleObject.bodyTextBold,
-              color: colors.white,
+              color: COLORS.white,
               fontSize: 12,
               marginTop: scaleV(8),
             }}
@@ -90,7 +90,7 @@ export const CommonImageSelector = ({
     >
       <View
         style={{
-          borderColor: colors.white,
+          borderColor: COLORS.white,
           borderRadius: 5,
           borderWidth: 3,
           bottom: 0,
@@ -117,11 +117,11 @@ export const CommonImageSelector = ({
       <View
         style={{
           alignItems: 'center',
-          backgroundColor: colors.primary,
-          borderColor: colors.white,
+          backgroundColor: COLORS.primary,
+          borderColor: COLORS.white,
           borderRadius: 50,
           borderWidth: 3,
-          color: colors.white,
+          color: COLORS.white,
           height: 28,
           justifyContent: 'center',
           position: 'absolute',
@@ -152,7 +152,7 @@ export const CommonImageSelector = ({
 //   },
 //   empty: {
 //     alignItems: 'center',
-//     backgroundColor: colors.dark80,
+//     backgroundColor: COLORS.dark80,
 //     borderRadius: 4,
 //     flex: 1,
 //     justifyContent: 'center',
@@ -169,7 +169,7 @@ export const CommonImageSelector = ({
 //   },
 //   text: {
 //     ...textStyleObject.bodyTextBold,
-//     color: colors.white,
+//     color: COLORS.white,
 //     fontSize: 10,
 //     marginTop: scaleV(8),
 //   },

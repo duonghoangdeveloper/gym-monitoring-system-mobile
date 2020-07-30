@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { dimension } from '../constants/dimensions';
 import { CommonModalContainer } from './common-modal-container';
 import { CommonPopupConfirmView } from './common-popup-confirm-view';
@@ -55,7 +55,7 @@ export const CommonPopUp = (props: PropTypes) => {
           styles.containerStyle,
           popupType === 'prompt'
             ? { width: '90%' }
-            : { backgroundColor: colors.white },
+            : { backgroundColor: COLORS.white },
         ]}
       >
         {renderContent()}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
 
     justifyContent: 'space-between',
-    padding: dimension.DISTANCE_3,
+    padding: DIMENSIONS.DISTANCE_3,
     width: '80%',
   },
 });

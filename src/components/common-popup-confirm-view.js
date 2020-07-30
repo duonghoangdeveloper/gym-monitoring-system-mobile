@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors } from '../constants/colors';
-import { dimension, scaleH, scaleV } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
 
@@ -50,9 +50,9 @@ export const CommonPopupConfirmView = ({
           onPress={onDecline}
           style={{
             flex: 1,
-            margin: dimension.DISTANCE_3,
+            margin: DIMENSIONS.DISTANCE_3,
           }}
-          textColor={colors.white}
+          textColor={COLORS.white}
         />
         <CommonButton
           containerStyle={{ flex: 1 }}
@@ -61,9 +61,9 @@ export const CommonPopupConfirmView = ({
           onPress={onConfirm}
           style={{
             flex: 1,
-            margin: dimension.DISTANCE_3,
+            margin: DIMENSIONS.DISTANCE_3,
           }}
-          textColor={colors.white}
+          textColor={COLORS.white}
         />
       </View>
     );
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: dimension.DISTANCE_3,
+    marginTop: DIMENSIONS.DISTANCE_3,
   },
   item: {
     marginEnd: 4,

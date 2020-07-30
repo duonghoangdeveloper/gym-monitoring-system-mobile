@@ -1,5 +1,6 @@
 // import { AppLoading } from 'expo';
-import React from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { color } from 'react-native-reanimated';
 
@@ -8,29 +9,68 @@ import { CommonBadgeIcon } from '../components/common-badge-icon';
 import { CommonButton } from '../components/common-button';
 import { CommonButtonGroup } from '../components/common-button-group';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonIcon } from '../components/common-icon';
 import { CommonImageSelector } from '../components/common-image-selector';
+import { CommonInputForm } from '../components/common-input-form';
+import { CommonListItem } from '../components/common-list-item';
 import { CommonLoadingComponent } from '../components/common-loading-component';
 import { CommonModalContainer } from '../components/common-modal-container';
 import { CommonNotFoundComponent } from '../components/common-not-found-component';
+// import { CommonAvatar } from '../components/common-avatar';
+// import { CommonBadgeIcon } from '../components/common-badge-icon';
+// import { CommonButton } from '../components/common-button';
+// import { CommonButtonGroup } from '../components/common-button-group';
+// import { CommonConfirmPopup } from '../components/common-confirm-popup';
+// import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+// import { CommonFadedContainer } from '../components/common-faded-container';
+// import { CommonImageSelector } from '../components/common-image-selector';
+// import { CommonLoadingComponent } from '../components/common-loading-component';
+// import { CommonModalContainer } from '../components/common-modal-container';
+// import { CommonNotFoundComponent } from '../components/common-not-found-component';
+// import { CommonTextItem } from '../components/common-text-item';
+import { CommonScaleImage } from '../components/common-scale-image';
 import { CommonTextItem } from '../components/common-text-item';
-import { colors } from '../constants/colors';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS } from '../constants/dimensions';
 
 export const SandboxScreen = () => {
-  const title = 'Sand box';
+  const title = 'Sandsasadsds box';
+  const dataSelector = [
+    {
+      key: '1',
+      label: 'Tommy Wiseau',
+      value: 1,
+    },
+    {
+      key: '2',
+      label: 'Arnold Schwarzenneger',
+      value: 2,
+    },
+    {
+      key: '3',
+      label: 'Donald Glover',
+      value: 3,
+    },
+    {
+      key: '4',
+      label: 'Emma Stone',
+      value: 4,
+    },
+  ];
   return (
     <ScrollView>
       <View
         style={{
-          alignItems: 'center',
+          alignItems: 'stretch',
           // backgroundColor: 'black',
           flex: 1,
           justifyContent: 'center',
-          padding: 20,
+          padding: DIMENSIONS.DISTANCE_2,
         }}
       >
         <Text
           style={{
-            color: colors.dark,
+            color: COLORS.dark,
             fontSize: 12,
           }}
         >
@@ -54,7 +94,7 @@ export const SandboxScreen = () => {
           buttonType="popup"
           containerStyle
           disable={false}
-          endColor={colors.primary}
+          endColor={COLORS.primary}
           gradient
           icon="home"
           iconOnly={false}
@@ -62,9 +102,9 @@ export const SandboxScreen = () => {
           leftIcon="home"
           // onPress
           rightIcon="home"
-          startColor={colors.primaryLight}
+          startColor={COLORS.primaryLight}
           style
-          textColor={colors.gray}
+          textColor={COLORS.gray}
           theme="primary"
         />
         <CommonButtonGroup
@@ -95,7 +135,31 @@ export const SandboxScreen = () => {
         {/* <CommonNotFoundComponent /> */}
         {/* <CommonTextItem /> */}
         {/* </View> */}
+        <CommonInputForm
+          dropDownList={dataSelector}
+          label="aaaa"
+          placeholder="Drop down"
+          type="dropdown"
+        />
+        <CommonInputForm label="Input" placeholder="enter name" />
+        <CommonInputForm label="Calender" type="calendar" />
+        <CommonListItem
+          detail={<CommonIcon name="angle-right" />}
+          icon={<CommonIcon name="music" />}
+          label="daaaa"
+          pressable="true"
+          showSeparator
+          type="detail"
+        />
+        <CommonListItem
+          detail="adsd"
+          label="daaaa"
+          showSeparator
+          type="detail"
+        />
+        <CommonListItem detail="adsd" label="daaaa" type="toggle" />
       </View>
+      {/* <CommonScaleImage uri="https://unsplash.it/400/400?image=1" /> */}
     </ScrollView>
   );
 };
@@ -142,7 +206,7 @@ export const SandboxScreen = () => {
 // buttonType="popup"
 // containerStyle
 // disable={false}
-// endColor={colors.primary}
+// endColor={COLORS.primary}
 // gradient
 // icon="home"
 // iconOnly={false}
@@ -150,9 +214,9 @@ export const SandboxScreen = () => {
 // leftIcon="home"
 // // onPress
 // rightIcon="home"
-// startColor={colors.primaryLight}
+// startColor={COLORS.primaryLight}
 // style
-// textColor={colors.gray}
+// textColor={COLORS.gray}
 // theme="primary"
 // />
 

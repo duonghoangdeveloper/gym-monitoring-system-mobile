@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { colors } from '../constants/colors';
-import { dimension, scaleH, scaleV } from '../constants/dimensions';
+import { getBehavior } from '../common/services';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
-import { getBehavior } from '../utils/common';
 import { CommonButton } from './common-button';
 import { CommonInputForm } from './common-input-form';
 
@@ -68,7 +68,7 @@ export const CommonPopupPromptDialogView = ({
       <View
         style={{
           alignSelf: 'stretch',
-          backgroundColor: colors.white,
+          backgroundColor: COLORS.white,
           borderRadius: 4,
           padding: scaleH(16),
         }}
@@ -76,7 +76,7 @@ export const CommonPopupPromptDialogView = ({
         <Text style={textStyle.widgetItem}>{title}</Text>
         {description && (
           <Text
-            style={[textStyle.bodyText, { marginTop: dimension.DISTANCE_2 }]}
+            style={[textStyle.bodyText, { marginTop: DIMENSIONS.DISTANCE_2 }]}
           >
             {description}
           </Text>
@@ -91,7 +91,7 @@ export const CommonPopupPromptDialogView = ({
           value={text}
           {...input}
         />
-        <Text style={[textStyle.bodyText, { color: colors.error }]}>
+        <Text style={[textStyle.bodyText, { color: COLORS.error }]}>
           {error}
         </Text>
 
