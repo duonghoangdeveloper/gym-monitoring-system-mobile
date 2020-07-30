@@ -1,3 +1,3 @@
-const loadingRef = require('./loading2.json');
+const loadingRef = require('./loading.json');
 
 export { loadingRef };

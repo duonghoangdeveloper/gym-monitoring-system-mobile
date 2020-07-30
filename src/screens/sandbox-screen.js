@@ -1,20 +1,19 @@
 // import { AppLoading } from 'expo';
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 import { CommonAvatar } from '../components/common-avatar';
-// import { CommonBadgeIcon } from '../components/common-badge-icon';
-// import { CommonButton } from '../components/common-button';
-// import { CommonButtonGroup } from '../components/common-button-group';
-// import { CommonConfirmPopup } from '../components/common-confirm-popup';
-// import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-// import { CommonFadedContainer } from '../components/common-faded-container';
-// import { CommonImageSelector } from '../components/common-image-selector';
-// import { CommonLoadingComponent } from '../components/common-loading-component';
-// import { CommonModalContainer } from '../components/common-modal-container';
-// import { CommonNotFoundComponent } from '../components/common-not-found-component';
-// import { CommonTextItem } from '../components/common-text-item';
-import colors from '../constants/colors';
+import { CommonBadgeIcon } from '../components/common-badge-icon';
+import { CommonButton } from '../components/common-button';
+import { CommonButtonGroup } from '../components/common-button-group';
+import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonImageSelector } from '../components/common-image-selector';
+import { CommonLoadingComponent } from '../components/common-loading-component';
+import { CommonModalContainer } from '../components/common-modal-container';
+import { CommonNotFoundComponent } from '../components/common-not-found-component';
+import { CommonTextItem } from '../components/common-text-item';
+import { colors } from '../constants/colors';
 
 export const SandboxScreen = () => {
   const title = 'Sand box';
@@ -29,10 +28,72 @@ export const SandboxScreen = () => {
           padding: 20,
         }}
       >
-      <CommonAvatar uri="https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=BgIS-97W8jUAX-hAElE&_nc_ht=scontent.fsgn2-1.fna&oh=ddde834e4e34e9baa4c76aa36aa93f06&oe=5F478B03"/>
-
+        <Text
+          style={{
+            color: colors.dark,
+            fontSize: 12,
+          }}
+        >
+          {title}
+        </Text>
         {/* <View stye={{ borderColor: 'black', borderWidth: 3 }}> */}
 
+        <CommonAvatar
+          editable
+          label="string"
+          // onAvatarPress
+          size="xxsmall"
+          uri="https://reactnative.dev/img/tiny_logo.png"
+        />
+        <CommonBadgeIcon
+          badgeCount={5}
+          // iconProps={[(style = { fontSize: 12 })]}
+          name="home"
+        />
+        <CommonButton
+          buttonType="popup"
+          containerStyle
+          disable={false}
+          endColor={colors.primary}
+          gradient
+          icon="home"
+          iconOnly={false}
+          label="test"
+          leftIcon="home"
+          // onPress
+          rightIcon="home"
+          startColor={colors.primaryLight}
+          style
+          textColor={colors.gray}
+          theme="primary"
+        />
+        <CommonButtonGroup
+          activeIndex={0}
+          labels={['A', 'B', 'C', 'D']}
+          onItemPress={n => console.log(n)}
+          style
+        />
+
+        <CommonImageSelector
+          data={{
+            key: 'avatar',
+            // uri: 'https://reactnative.dev/img/tiny_logo.png',
+          }}
+          // style
+          // onRemovePress
+          onAddPress={() => console.log(123)}
+        />
+        <CommonLoadingComponent />
+        {/* <CommonModalContainer modalVisible>
+          <CommonButtonGroup
+            activeIndex={0}
+            labels={['A', 'B', 'C', 'D']}
+            onItemPress={n => console.log(n)}
+            style
+          />
+        </CommonModalContainer> */}
+        {/* <CommonNotFoundComponent /> */}
+        {/* <CommonTextItem /> */}
         {/* </View> */}
       </View>
     </ScrollView>
@@ -102,7 +163,7 @@ export const SandboxScreen = () => {
 // style
 // />
 
-// <CommonConfirmPopup
+// <CommonPopupConfirmView
 //   acceptOnly={false}
 //   acceptOnly
 //   cancelLabel="Deny"

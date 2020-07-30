@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 
 // import { getSvg } from '../assets/svgs';
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
 import { textStyle, textStyleObject } from '../constants/text-styles';
-// import { defaultFunction } from '../utils/common';
+// import { defaultFunction } from '../common/common';
 
 type PropTypes = {
   icon?: string,

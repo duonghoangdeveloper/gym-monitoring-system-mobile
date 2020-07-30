@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import colors from '../constants/colors';
+import { colors } from '../constants/colors';
 import { scaleH, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
 
@@ -33,7 +33,7 @@ export const CommonImageSelector = ({
   const handleRemovePress = () => {
     onRemovePress(data.key);
   };
-  if (!data || !data.uri) {
+  if (!data?.uri) {
     return (
       <View
         style={[
@@ -59,7 +59,7 @@ export const CommonImageSelector = ({
             name="photo"
             style={{
               color: 'white',
-              fontSize: 20,
+              fontSize: 24,
             }}
           />
           <Text

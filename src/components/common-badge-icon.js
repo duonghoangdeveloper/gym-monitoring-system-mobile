@@ -20,11 +20,8 @@ export const CommonBadgeIcon = ({ badgeCount, iconProps, name }) => (
       <View
         style={{
           alignItems: 'center',
-
           backgroundColor: 'red',
-
           borderRadius: 6,
-
           height: 12,
 
           justifyContent: 'center',

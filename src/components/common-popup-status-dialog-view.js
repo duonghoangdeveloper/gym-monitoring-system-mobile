@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 // import { ErrorTickIcon, SuccessTickIcon } from '../assets/svgs';
 import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
-// import colors from '../constants/colors';
+// import {colors} from '../constants/colors';
 import { dimension, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
@@ -16,7 +16,7 @@ type PropTypes = {
   popupType: 'success' | 'error',
 };
 
-export const CommonStatusDialog = ({
+export const CommonPopupStatusDialogView = ({
   confirmLabel = 'Ok',
   description,
   onConfirm,
