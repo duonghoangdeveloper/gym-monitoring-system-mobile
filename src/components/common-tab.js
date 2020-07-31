@@ -38,11 +38,10 @@ export const CommonTab = ({
         style={{
           marginHorizontal: -scaleH(20),
           marginTop: scaleV(20),
+          width: scaleH(311),
         }}
       >
-        <View key={activeIndex} style={{ paddingHorizontal: scaleH(20) }}>
-          {screens[activeIndex]}
-        </View>
+        <View key={activeIndex}>{screens[activeIndex]}</View>
       </View>
     </>
   );

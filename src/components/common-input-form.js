@@ -27,6 +27,7 @@ type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
   textInputStyle: StyleProp<ViewStyle>,
   placeholder?: string,
+  rightIcon: string,
   type: 'textinput' | 'calendar' | 'dropdown',
   dropDownList?: [{ value: string, label: string }],
   // selectedItem: string,
@@ -47,6 +48,7 @@ export const CommonInputForm = ({
   value,
   onChangeText,
   multiline,
+  rightIcon,
   containerStyle,
   textInputStyle,
   placeholder,
@@ -93,6 +95,7 @@ export const CommonInputForm = ({
             onFocus={handleTextInputFocus}
             placeholder={placeholder}
             returnKeyType={returnKeyType}
+            rightIcon={rightIcon}
             secureTextEntry={secureTextEntry}
             style={[
               styles.textInput,
@@ -205,14 +208,16 @@ const styles = StyleSheet.create({
     height: scaleH(160),
     overflow: 'hidden',
   },
-
   error: {
     borderColor: COLORS.error,
   },
+
   label: {
     ...textStyleObject.label,
     color: COLORS.dark20,
-    marginBottom: scaleV(4),
+    marginBottom: scaleV(12),
+    marginLeft: scaleH(10),
+    marginTop: scaleV(12),
   },
   selectedContainer: {
     alignSelf: 'stretch',
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.BORDER_RADIUS,
     borderWidth: 1,
     height: scaleH(44),
-    paddingHorizontal: scaleH(8),
+    paddingHorizontal: scaleH(12),
     ...textStyleObject.bodyText,
     backgroundColor: COLORS.white,
     borderColor: COLORS.dark80,

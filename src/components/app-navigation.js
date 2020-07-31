@@ -6,6 +6,7 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
+import { COLORS } from '../constants/colors';
 import { AboutScreen } from '../screens/about-screen';
 import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { ChooseStaffScreen } from '../screens/choose-staff-screen';
@@ -122,7 +123,17 @@ const TrainerHomeNavigation = () => (
 
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
-  <TrainerMenuStack.Navigator>
+  <TrainerMenuStack.Navigator
+    options={{
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
@@ -188,14 +199,34 @@ const CustomerSandboxNavigation = () => (
 
 const CustomerHomeStack = createStackNavigator();
 const CustomerHomeNavigation = () => (
-  <CustomerHomeStack.Navigator>
+  <CustomerHomeStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerHomeStack.Screen component={CustomerHomeScreen} name="Home" />
   </CustomerHomeStack.Navigator>
 );
 
 const CustomerPaymentStack = createStackNavigator();
 const CustomerPaymentNavigation = () => (
-  <CustomerPaymentStack.Navigator>
+  <CustomerPaymentStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerPaymentStack.Screen
       component={CustomerPaymentScreen}
       name="Payment"
@@ -205,7 +236,17 @@ const CustomerPaymentNavigation = () => (
 
 const CustomerWarningHistoryStack = createStackNavigator();
 const CustomerWarningNavigation = () => (
-  <CustomerWarningHistoryStack.Navigator>
+  <CustomerWarningHistoryStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerPaymentStack.Screen
       component={WarningHistoryScreen}
       name="Warning"
@@ -223,7 +264,17 @@ const CustomerFeedbackNavigation = () => (
 
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (
-  <CustomerMenuStack.Navigator>
+  <CustomerMenuStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerMenuStack.Screen component={CustomerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={FeedbackScreen} name="Feedback" />
@@ -231,7 +282,7 @@ const CustomerMenuNavigation = () => (
     <CustomerMenuStack.Screen component={AboutScreen} name="About" />
     <CustomerMenuStack.Screen
       component={ChangePasswordScreen}
-      name="ChangePassword"
+      name="Change Password"
     />
     <CustomerMenuStack.Screen
       component={FeedbackGymScreen}
