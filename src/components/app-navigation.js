@@ -270,7 +270,7 @@ const CustomerMenuNavigation = () => (
     <CustomerMenuStack.Screen component={AboutScreen} name="About" />
     <CustomerMenuStack.Screen
       component={ChangePasswordScreen}
-      name="ChangePassword"
+      name="Change Password"
     />
   </CustomerMenuStack.Navigator>
 );

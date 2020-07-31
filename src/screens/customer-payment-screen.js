@@ -1,42 +1,12 @@
 // import { AppLoading } from 'expo';
-import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { color } from 'react-native-reanimated';
 
-import { CommonAvatar } from '../components/common-avatar';
-// import { CommonBadgeIcon } from '../components/common-badge-icon';
-// import { CommonButton } from '../components/common-button';
-// import { CommonButtonGroup } from '../components/common-button-group';
-// import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-// import { CommonIcon } from '../components/common-icon';
-// import { CommonImageSelector } from '../components/common-image-selector';
-// import { CommonInputForm } from '../components/common-input-form';
-// import { CommonListItem } from '../components/common-list-item';
-// import { CommonLoadingComponent } from '../components/common-loading-component';
-// import { CommonModalContainer } from '../components/common-modal-container';
-// import { CommonNotFoundComponent } from '../components/common-not-found-component';
-// import { CommonAvatar } from '../components/common-avatar';
-// import { CommonBadgeIcon } from '../components/common-badge-icon';
-// import { CommonButton } from '../components/common-button';
-// import { CommonButtonGroup } from '../components/common-button-group';
-// import { CommonConfirmPopup } from '../components/common-confirm-popup';
-// import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-// import { CommonFadedContainer } from '../components/common-faded-container';
-// import { CommonImageSelector } from '../components/common-image-selector';
-// import { CommonLoadingComponent } from '../components/common-loading-component';
-// import { CommonModalContainer } from '../components/common-modal-container';
-// import { CommonNotFoundComponent } from '../components/common-not-found-component';
-// import { CommonTextItem } from '../components/common-text-item';
-// import { CommonScaleImage } from '../components/common-scale-image';
-import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { CommonTab } from '../components/common-tab';
-import { CommonTabbar } from '../components/common-tabbar';
-import { CommonTextItem } from '../components/common-text-item';
 import { CustomerPaymentDetailScreen } from '../components/customer-payment-detail';
 import { CustomerPaymentHistoryScreen } from '../components/customer-payment-history';
-import { colors } from '../constants/colors';
-import { dimension } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS } from '../constants/dimensions';
 
 export const CustomerPaymentScreen = () => {
   const title = 'Sandsasadsds box';

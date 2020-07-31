@@ -72,7 +72,7 @@ const list = [
   {
     icon: 'lock',
     label: 'Change password',
-    to: 'ChangePassword',
+    to: 'Change Password',
   },
   {
     icon: 'info-circle',
