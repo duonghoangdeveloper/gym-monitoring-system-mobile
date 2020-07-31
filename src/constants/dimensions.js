@@ -9,7 +9,7 @@ export const scaleV = d => Math.round((d * SCREEN_HEIGHT) / 812);
 
 export const scaleH = d => Math.round((d * SCREEN_WIDTH) / 375);
 
-export const dimension = {
+export const DIMENSIONS = {
   BORDER_RADIUS: 4,
   DISTANCE_1: 4,
   DISTANCE_2: 8,

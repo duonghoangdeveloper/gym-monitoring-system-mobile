@@ -45,16 +45,19 @@ export const CustomerMenuScreen = ({ navigation }) => {
 
 const list = [
   {
+    key: 'profile',
     leftIcon: <Icon name="user" type="font-awesome" />,
     title: 'Profile',
     to: 'Profile',
   },
   {
+    key: 'feedback',
     leftIcon: <Icon name="comments-o" type="font-awesome" />,
     title: 'Feedback',
     to: 'Feedback',
   },
   {
+    key: 'settings',
     leftIcon: <Icon name="cog" type="font-awesome" />,
     title: 'Settings',
     to: 'Settings',

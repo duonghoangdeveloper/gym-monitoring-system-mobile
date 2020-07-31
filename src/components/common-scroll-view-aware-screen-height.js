@@ -1,3 +1,4 @@
+import isNil from 'lodash.isnil';
 import React, { useRef, useState } from 'react';
 import {
   ScrollView,
@@ -8,8 +9,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { dimension } from '../constants/dimensions';
-// import {} from '../constants/types';
+import { DIMENSIONS } from '../constants/dimensions';
 import { getTabBarHeight } from './common-tabbar';
 
 type PropTypes = {
@@ -29,11 +29,12 @@ export const CommonScrollViewAwareScreenHeight = ({
   refreshControl,
   refreshable,
   refreshing,
-  showsVerticalScrollIndicator = false,
+  showsVerticalScrollIndicator = true,
 }: PropTypes) => {
   const [isFlex, setFlex] = useState(false);
   const contentHeight = useRef(0);
-  const headerHeight = useSelector(state => state.app.headerHeight);
+  const headerHeight = useSelector(state => state.app?.headerHeight);
+
   const tabbarHeight = getTabBarHeight();
 
   const onLayout = e => {
@@ -46,7 +47,7 @@ export const CommonScrollViewAwareScreenHeight = ({
 
     if (
       contentHeight.current <=
-      dimension.SCREEN_HEIGHT - headerHeight - tabbarHeight
+      DIMENSIONS.SCREEN_HEIGHT - headerHeight - tabbarHeight
     ) {
       setFlex(true);
     }

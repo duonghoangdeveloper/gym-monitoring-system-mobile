@@ -1,3 +1,4 @@
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -5,10 +6,16 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
+import { AboutScreen } from '../screens/about-screen';
+import { ChangePasswordScreen } from '../screens/change-password-screen';
+import { ChooseStaffScreen } from '../screens/choose-staff-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
 import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
+import { WarningHistoryScreen } from '../screens/customer-warning-history-screen';
+import { FeedbackGymScreen } from '../screens/feedback-gym-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
+import { FeedbackStaffScreen } from '../screens/feedback-staff-screen';
 import { ProfileScreen } from '../screens/profile-screen';
 import { SandboxScreen } from '../screens/sandbox-screen';
 import { SettingsScreen } from '../screens/settings-screen';
@@ -144,11 +151,20 @@ const CustomerBottomTabNavigation = () => (
       }}
     />
     <CustomerBottomTabStack.Screen
+      component={CustomerWarningNavigation}
+      name="Warning"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <Icon color={color} name="file-text-o" type="font-awesome" />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
       component={CustomerPaymentNavigation}
       name="Payment"
       options={{
         tabBarIcon: ({ color }) => (
-          <Icon color={color} name="home" type="font-awesome" />
+          <Ionicons color={color} name="logo-usd" size={24} />
         ),
       }}
     />
@@ -187,6 +203,24 @@ const CustomerPaymentNavigation = () => (
   </CustomerPaymentStack.Navigator>
 );
 
+const CustomerWarningHistoryStack = createStackNavigator();
+const CustomerWarningNavigation = () => (
+  <CustomerWarningHistoryStack.Navigator>
+    <CustomerPaymentStack.Screen
+      component={WarningHistoryScreen}
+      name="Warning"
+    />
+  </CustomerWarningHistoryStack.Navigator>
+);
+
+const CustomerFeedbackStack = createStackNavigator();
+const CustomerFeedbackNavigation = () => (
+  <CustomerFeedbackStack.Navigator>
+    <FeedbackScreen.Screen component={FeedbackScreen} name="Feedback" />
+    <FeedbackScreen.Screen component={FeedbackGymScreen} name="FeedbackGym" />
+  </CustomerFeedbackStack.Navigator>
+);
+
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (
   <CustomerMenuStack.Navigator>
@@ -194,5 +228,30 @@ const CustomerMenuNavigation = () => (
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={FeedbackScreen} name="Feedback" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
+    <CustomerMenuStack.Screen
+      component={ChangePasswordScreen}
+      name="ChangePassword"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackGymScreen}
+      name="Feedback Gym"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Manager"
+    />
+    <CustomerMenuStack.Screen
+      component={ChooseStaffScreen}
+      name="Choose Trainer"
+    />
+    <CustomerMenuStack.Screen
+      component={ChooseStaffScreen}
+      name="Choose Manager"
+    />
   </CustomerMenuStack.Navigator>
 );
