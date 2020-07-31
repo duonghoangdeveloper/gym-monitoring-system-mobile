@@ -11,6 +11,7 @@ export const scaleH = d => Math.round((d * SCREEN_WIDTH) / 375);
 
 export const DIMENSIONS = {
   BORDER_RADIUS: 4,
+  BORDER_RADIUS_CIRCLE: 30,
   DISTANCE_1: 4,
   DISTANCE_2: 8,
   DISTANCE_3: 16,

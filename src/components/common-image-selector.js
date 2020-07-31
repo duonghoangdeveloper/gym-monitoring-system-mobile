@@ -33,7 +33,7 @@ export const CommonImageSelector = ({
   const handleRemovePress = () => {
     onRemovePress(data.key);
   };
-  if (!data ?.uri) {
+  if (!data?.uri) {
     return (
       <View
         style={[

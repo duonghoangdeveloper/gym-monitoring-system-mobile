@@ -28,7 +28,7 @@ type PropTypes = {
   rightIcon?: string,
   disable?: boolean,
   buttonType?: 'normal' | 'popup',
-  containerStyle?: StyleProp<ViewStyle>,
+  // containerStyle?: StyleProp<ViewStyle>,
   theme?: 'primary' | 'secondary' | 'success' | 'error' | 'none',
 };
 
@@ -70,13 +70,12 @@ export const CommonButton = ({
   endColor = COLORS.primary,
   style,
   textColor = COLORS.white,
-  iconOnly = false,
   icon = null,
   leftIcon = null,
   rightIcon = null,
   disable = false,
   buttonType = 'normal',
-  containerStyle,
+  // containerStyle,
   theme = 'primary',
 }: PropTypes) => {
   const buttonLabel = label.toUpperCase();
@@ -112,11 +111,7 @@ export const CommonButton = ({
 
   if (gradient) {
     return (
-      <TouchableOpacity
-        disabled={disable}
-        onPress={onPress}
-        style={[{ alignSelf: 'stretch' }, containerStyle]}
-      >
+      <TouchableOpacity disabled={disable} onPress={onPress}>
         <LinearGradient
           colors={
             disable
@@ -139,12 +134,19 @@ export const CommonButton = ({
   }
 
   return (
-    <TouchableOpacity
-      disabled={disable}
-      onPress={onPress}
-      style={[{ alignSelf: 'stretch' }, containerStyle]}
-    >
-      <View style={[styles.container, style]}>{renderContent()}</View>
+    <TouchableOpacity disabled={disable} onPress={onPress}>
+      <View
+        style={
+          ({ backgroundColor: 'gray' },
+          [
+            styles.container,
+            style,
+            buttonType === 'popup' ? styles.popupButton : {},
+          ])
+        }
+      >
+        {renderContent()}
+      </View>
     </TouchableOpacity>
   );
 };
@@ -160,19 +162,24 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     alignSelf: 'stretch',
-    backgroundColor: 'grey',
     borderRadius: DIMENSIONS.BORDER_RADIUS,
     flexDirection: 'row',
+    // justifyContent: 'center',
     height: scaleH(44),
     justifyContent: 'space-between',
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   leftIcon: {
     alignItems: 'center',
-    // zIndex: 100,
-    // backgroundColor: 'red',
     bottom: 0,
     justifyContent: 'center',
+    // alignItems: 'center',
+    // bottom: 0,
+    // justifyContent: 'center',
+    // left: scaleH(16),
+    // position: 'absolute',
+    // top: 0,
     left: scaleH(16),
     position: 'absolute',
     top: 0,
@@ -186,6 +193,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     position: 'absolute',
+    // alignItems: 'center',
+    // bottom: 0,
+    // justifyContent: 'center',
+    // position: 'absolute',
+    // right: scaleH(16),
+    // top: 0,
     right: scaleH(16),
     top: 0,
   },

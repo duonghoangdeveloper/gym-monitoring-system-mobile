@@ -1,9 +1,8 @@
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import { AboutScreen } from '../screens/about-screen';
@@ -11,8 +10,9 @@ import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
 import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
-import { WarningHistoryScreen } from '../screens/customer-warning-history-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
+import { NotificationDetailScreen } from '../screens/notification-detail-screen';
+import { NotificationScreen } from '../screens/notification-screen';
 import { ProfileScreen } from '../screens/profile-screen';
 import { SandboxScreen } from '../screens/sandbox-screen';
 import { SettingsScreen } from '../screens/settings-screen';
@@ -34,6 +34,9 @@ export const AppNavigation = () => {
 //      |-- SandboxScreen
 //    |-- TrainerHomeNavigation
 //      |-- TrainerHome
+//    |-- TrainerNotificationNavigation
+//      |-- NotificationScreen
+//        |-- NotificationDetailScreen
 //    |-- TrainerMenuNavigation
 //      |-- TrainerMenu
 //      |-- ProfileScreen
@@ -44,6 +47,9 @@ export const AppNavigation = () => {
 //      |-- SandboxScreen
 //    |-- CustomerHomeNavigation
 //      |-- CustomerHome
+//    |-- CustomerNotificationNavigation
+//      |-- NotificationScreen
+//        |-- NotificationDetailScreen
 //    |-- CustomerPaymentNavigation
 //      |-- CustomerPayment
 //    |-- CustomerMenuNavigation
@@ -77,27 +83,28 @@ const TrainerBottomTabNavigation = () => (
       component={TrainerSandboxNavigation}
       name="Sandbox"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="box" type="font-awesome-5" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="box" />,
       }}
     />
     <TrainerBottomTabStack.Screen
       component={TrainerHomeNavigation}
       name="Home"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="home" type="font-awesome" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
+      }}
+    />
+    <TrainerBottomTabStack.Screen
+      component={TrainerNotificationNavigation}
+      name="Notification"
+      options={{
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
       }}
     />
     <TrainerBottomTabStack.Screen
       component={TrainerMenuNavigation}
       name="Menu"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="bars" type="font-awesome" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bars" />,
       }}
     />
   </TrainerBottomTabStack.Navigator>
@@ -116,7 +123,19 @@ const TrainerHomeNavigation = () => (
     <TrainerHomeStack.Screen component={TrainerHomeScreen} name="Home" />
   </TrainerHomeStack.Navigator>
 );
-
+const TrainerNotificationStack = createStackNavigator();
+const TrainerNotificationNavigation = () => (
+  <TrainerNotificationStack.Navigator>
+    <TrainerNotificationStack.Screen
+      component={NotificationScreen}
+      name="Notification"
+    />
+    <TrainerNotificationStack.Screen
+      component={NotificationDetailScreen}
+      name="NotificationDetail"
+    />
+  </TrainerNotificationStack.Navigator>
+);
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
   <TrainerMenuStack.Navigator>
@@ -133,27 +152,21 @@ const CustomerBottomTabNavigation = () => (
       component={CustomerSandboxNavigation}
       name="Sandbox"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="box" type="font-awesome-5" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="box" />,
       }}
     />
     <CustomerBottomTabStack.Screen
       component={CustomerHomeNavigation}
       name="Home"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="home" type="font-awesome" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
       }}
     />
     <CustomerBottomTabStack.Screen
-      component={CustomerWarningNavigation}
-      name="Warning"
+      component={CustomerNotificationNavigation}
+      name="Notification"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="file-text-o" type="font-awesome" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
       }}
     />
     <CustomerBottomTabStack.Screen
@@ -161,7 +174,7 @@ const CustomerBottomTabNavigation = () => (
       name="Payment"
       options={{
         tabBarIcon: ({ color }) => (
-          <Ionicons color={color} name="logo-usd" size={24} />
+          <FontAwesome5 color={color} name="dollar-sign" />
         ),
       }}
     />
@@ -169,9 +182,7 @@ const CustomerBottomTabNavigation = () => (
       component={CustomerMenuNavigation}
       name="Menu"
       options={{
-        tabBarIcon: ({ color }) => (
-          <Icon color={color} name="bars" type="font-awesome" />
-        ),
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bars" />,
       }}
     />
   </CustomerBottomTabStack.Navigator>
@@ -200,14 +211,18 @@ const CustomerPaymentNavigation = () => (
   </CustomerPaymentStack.Navigator>
 );
 
-const CustomerWarningHistoryStack = createStackNavigator();
-const CustomerWarningNavigation = () => (
-  <CustomerWarningHistoryStack.Navigator>
+const CustomerNotificationStack = createStackNavigator();
+const CustomerNotificationNavigation = () => (
+  <CustomerNotificationStack.Navigator>
     <CustomerPaymentStack.Screen
-      component={WarningHistoryScreen}
-      name="Warning"
+      component={NotificationScreen}
+      name="Notification"
     />
-  </CustomerWarningHistoryStack.Navigator>
+    <CustomerNotificationStack.Screen
+      component={NotificationDetailScreen}
+      name="NotificationDetail"
+    />
+  </CustomerNotificationStack.Navigator>
 );
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (

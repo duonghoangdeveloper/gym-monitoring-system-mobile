@@ -1,6 +1,7 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Avatar, Icon, ListItem, Text } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Avatar, ListItem, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
@@ -27,11 +28,10 @@ export const CustomerMenuScreen = ({ navigation }) => {
                 </View>
               }
               rightIcon={
-                <Icon
+                <FontAwesome
                   name="chevron-right"
                   size={16}
                   style={styles.rightIcon}
-                  type="font-awesome"
                 />
               }
               title={title}
@@ -45,17 +45,17 @@ export const CustomerMenuScreen = ({ navigation }) => {
 
 const list = [
   {
-    leftIcon: <Icon name="user" type="font-awesome" />,
+    leftIcon: <FontAwesome name="user" />,
     title: 'Profile',
     to: 'Profile',
   },
   {
-    leftIcon: <Icon name="comments-o" type="font-awesome" />,
+    leftIcon: <FontAwesome name="comments-o" />,
     title: 'Feedback',
     to: 'Feedback',
   },
   {
-    leftIcon: <Icon name="cog" type="font-awesome" />,
+    leftIcon: <FontAwesome name="cog" />,
     title: 'Settings',
     to: 'Settings',
   },

@@ -38,7 +38,7 @@ export const CommonPopupPromptDialogView = ({
 }: PropTypes) => {
   const [text, setText] = useState(defaultValue);
   const [error, setError] = useState('');
-  const headerHeight = useSelector(state => state.app.headerHeight);
+  // const headerHeight = useSelector(state => state.app.headerHeight);
 
   const handleConfirm = () => {
     if (regex) {
@@ -55,7 +55,7 @@ export const CommonPopupPromptDialogView = ({
   return (
     <KeyboardAvoidingView
       {...getBehavior()}
-      keyboardVerticalOffset={headerHeight + 80}
+      keyboardVerticalOffset={120120}
       style={{
         alignItems: 'center',
         height: 420,
