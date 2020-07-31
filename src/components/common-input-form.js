@@ -27,6 +27,7 @@ type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
   textInputStyle: StyleProp<ViewStyle>,
   placeholder?: string,
+  rightIcon: string,
   type: 'textinput' | 'calendar' | 'dropdown',
   dropDownList?: [{ value: string, label: string }],
   // selectedItem: string,
@@ -47,6 +48,7 @@ export const CommonInputForm = ({
   value,
   onChangeText,
   multiline,
+  rightIcon,
   containerStyle,
   textInputStyle,
   placeholder,
@@ -92,6 +94,7 @@ export const CommonInputForm = ({
             onFocus={handleTextInputFocus}
             placeholder={placeholder}
             returnKeyType={returnKeyType}
+            rightIcon={rightIcon}
             secureTextEntry={secureTextEntry}
             style={[
               styles.textInput,
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     borderRadius: dimension.BORDER_RADIUS,
     borderWidth: 1,
     flexDirection: 'row',
-    height: scaleH(39.03),
+    height: scaleH(40),
     justifyContent: 'space-between',
     paddingHorizontal: scaleH(8),
     width: scaleH(311),
@@ -196,7 +199,7 @@ const styles = StyleSheet.create({
 
     borderColor: colors.dark60,
     flexDirection: 'row',
-    height: scaleH(39.03),
+    height: scaleH(40),
     justifyContent: 'space-between',
     paddingHorizontal: scaleH(16),
   },
@@ -211,15 +214,24 @@ const styles = StyleSheet.create({
     height: scaleH(160),
     overflow: 'hidden',
   },
-
   error: {
     borderColor: colors.error,
   },
+
   label: {
     ...textStyleObject.label,
     color: colors.dark20,
-    marginBottom: scaleV(4),
+    fontSize: scaleV(14),
+    lineHeight: scaleV(24),
+    marginBottom: scaleV(15),
     marginLeft: scaleV(21),
+    paddingTop: scaleV(15),
+  },
+  rightIcon: {
+    ...textStyleObject.bodyText,
+    color: colors.dark20,
+    flex: 1,
+    textAlign: 'right',
   },
   selectedContainer: {
     alignSelf: 'stretch',
@@ -239,7 +251,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderRadius: 4,
     borderWidth: 1,
-    height: scaleH(39.03),
+    height: scaleH(40),
     paddingHorizontal: scaleH(8),
     width: scaleH(311),
     ...textStyleObject.bodyText,

@@ -1,9 +1,11 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Avatar, Icon, ListItem, Text } from 'react-native-elements';
+import { Avatar, Icon, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
+import { ListItem } from '../components/common-list-item';
 
 export const CustomerMenuScreen = ({ navigation }) => {
   const displayName = useSelector(state => state.user.me.displayName);
@@ -16,25 +18,24 @@ export const CustomerMenuScreen = ({ navigation }) => {
           {displayName || 'Thành viên mới'}
         </Text>
       </View>
-      <View>
-        {list.map(({ leftIcon, title, to }) => (
+
+      <View style={{ width: 351 }}>
+        {list.map(({ icon, label, to }) => (
           <TouchableOpacity onPress={() => navigation.navigate(to)}>
             <ListItem
-              bottomDivider
-              leftAvatar={
-                <View size={16} style={styles.leftIcon}>
-                  {leftIcon}
-                </View>
-              }
-              rightIcon={
-                <Icon
-                  name="chevron-right"
-                  size={16}
+              detail={
+                <Ionicons
+                  color="black"
+                  name="ios-arrow-forward"
+                  size={18}
                   style={styles.rightIcon}
                   type="font-awesome"
                 />
               }
-              title={title}
+              icon={icon}
+              label={label}
+              showSeparator="true"
+              type="detail"
             />
           </TouchableOpacity>
         ))}
@@ -45,18 +46,18 @@ export const CustomerMenuScreen = ({ navigation }) => {
 
 const list = [
   {
-    leftIcon: <Icon name="user" type="font-awesome" />,
-    title: 'Profile',
+    icon: 'user-edit',
+    label: 'Profile',
     to: 'Profile',
   },
   {
-    leftIcon: <Icon name="comments-o" type="font-awesome" />,
-    title: 'Feedback',
+    icon: 'pen-alt',
+    label: 'Feedback',
     to: 'Feedback',
   },
   {
-    leftIcon: <Icon name="cog" type="font-awesome" />,
-    title: 'Settings',
+    icon: 'cog',
+    label: 'Settings',
     to: 'Settings',
   },
 ];
@@ -69,8 +70,14 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  container: { flex: 1 },
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    flex: 1,
 
+    // justifyContent: 'center',
+  },
+  icon: { fontSize: 40 },
   leftIcon: {
     // alignItems: 'flex-start',
     width: 24,

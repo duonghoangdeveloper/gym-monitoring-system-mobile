@@ -97,9 +97,13 @@ export const ListItem = ({
     >
       <View style={styles.labelContainer}>
         {icon && (
-          <View style={{ marginEnd: scaleH(16), width: scaleH(16) }}>
+          <View style={{ marginEnd: scaleH(10), width: scaleH(16) }}>
             {/* {getSvg(icon, { fill: colors.dark20 })} */}
-            <FontAwesome5 fill={colors.dark20} name={icon} />
+            <FontAwesome5
+              fill={colors.dark20}
+              name={icon}
+              style={{ fontSize: scaleH(13) }}
+            />
           </View>
         )}
         <Text style={styles.label}>{label}</Text>

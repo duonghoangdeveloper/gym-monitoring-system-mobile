@@ -1,12 +1,14 @@
 import { useApolloClient } from '@apollo/react-hooks';
+import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import gql from 'graphql-tag';
 import React from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Avatar, Icon, ListItem } from 'react-native-elements';
+import { Avatar, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import { TOKEN_KEY } from '../common/constants';
+import { ListItem } from '../components/common-list-item';
 import { SIGN_OUT } from '../redux/user/user.types';
 
 export const SettingsScreen = ({ navigation }) => {
@@ -35,51 +37,52 @@ export const SettingsScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <View>
-        {list.map(({ leftIcon, onPress, title, to }) => (
+    <View style={styles.container}>
+      <View style={{ width: 351 }}>
+        {list.map(({ icon, label, onItemPress, to }) => (
           <TouchableOpacity onPress={() => navigation.navigate(to)}>
             <ListItem
-              bottomDivider
-              leftAvatar={
-                <View size={16} style={styles.leftIcon}>
-                  {leftIcon}
-                </View>
-              }
-              rightIcon={
-                <Icon
-                  name="chevron-right"
-                  size={16}
+              detail={
+                <Ionicons
+                  color="black"
+                  name="ios-arrow-forward"
+                  size={18}
                   style={styles.rightIcon}
                   type="font-awesome"
                 />
               }
-              title={title}
+              icon={icon}
+              label={label}
+              onItemPress="onItemPress"
+              showSeparator="true"
+              type="detail"
             />
           </TouchableOpacity>
         ))}
       </View>
 
-      <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+      <View style={{}}>
         <Button onPress={handleSignOutPress} title="Sign out" />
       </View>
     </View>
   );
 };
+
 const list = [
   {
-    leftIcon: <Icon name="lock" type="font-awesome" />,
-    title: 'Change password',
+    icon: 'lock',
+    label: 'Change password',
     to: 'ChangePassword',
   },
   {
-    leftIcon: <Icon name="info-circle" type="font-awesome" />,
-    title: 'About gym',
+    icon: 'info-circle',
+    label: 'About gym',
     to: 'About',
   },
   {
-    leftIcon: <Icon name="sign-out" type="font-awesome" />,
-    title: 'Sign out',
+    icon: 'sign-out-alt',
+    label: 'Sign out',
+    onItemPress: 'handleSignOutPress',
     to: 'Settings',
   },
 ];
@@ -91,7 +94,13 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  container: { flex: 1 },
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    flex: 1,
+
+    // justifyContent: 'center',
+  },
 
   leftIcon: {
     // alignItems: 'flex-start',
