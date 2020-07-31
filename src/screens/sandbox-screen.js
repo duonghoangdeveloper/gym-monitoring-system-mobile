@@ -16,18 +16,6 @@ import { CommonListItem } from '../components/common-list-item';
 import { CommonLoadingComponent } from '../components/common-loading-component';
 import { CommonModalContainer } from '../components/common-modal-container';
 import { CommonNotFoundComponent } from '../components/common-not-found-component';
-// import { CommonAvatar } from '../components/common-avatar';
-// import { CommonBadgeIcon } from '../components/common-badge-icon';
-// import { CommonButton } from '../components/common-button';
-// import { CommonButtonGroup } from '../components/common-button-group';
-// import { CommonConfirmPopup } from '../components/common-confirm-popup';
-// import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-// import { CommonFadedContainer } from '../components/common-faded-container';
-// import { CommonImageSelector } from '../components/common-image-selector';
-// import { CommonLoadingComponent } from '../components/common-loading-component';
-// import { CommonModalContainer } from '../components/common-modal-container';
-// import { CommonNotFoundComponent } from '../components/common-not-found-component';
-// import { CommonTextItem } from '../components/common-text-item';
 import { CommonScaleImage } from '../components/common-scale-image';
 import { CommonTab } from '../components/common-tab';
 import { CommonTextItem } from '../components/common-text-item';
@@ -60,26 +48,8 @@ export const SandboxScreen = () => {
     },
   ];
   return (
-    <ScrollView>
-      <View
-        style={{
-          alignItems: 'stretch',
-          // backgroundColor: 'black',
-          flex: 1,
-          justifyContent: 'center',
-          padding: DIMENSIONS.DISTANCE_2,
-        }}
-      >
-        <Text
-          style={{
-            color: COLORS.dark,
-            fontSize: 12,
-          }}
-        >
-          {title}
-        </Text>
-        {/* <View stye={{ borderColor: 'black', borderWidth: 3 }}> */}
-
+    <View>
+      <ScrollView>
         <CommonAvatar
           editable
           label="string"
@@ -159,9 +129,8 @@ export const SandboxScreen = () => {
           type="detail"
         />
         <CommonListItem detail="adsd" label="daaaa" type="toggle" />
-      </View>
-      {/* <CommonScaleImage uri="https://unsplash.it/400/400?image=1" /> */}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

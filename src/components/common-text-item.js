@@ -18,15 +18,15 @@ export const CommonTextItem = ({
   haveTick = true,
   labelStyle,
 }: PropTypes) => (
-    <View style={styles.container}>
-      <Text style={[styles.text, labelStyle]}>
-        {/* {haveTick && <TickIcon fill={COLORS.success} />} */}
-        {haveTick && <MaterialIcons fill={COLORS.success} name="check-circle" />}
-        {haveTick && '  '}
-        {content}
-      </Text>
-    </View>
-  );
+  <View style={styles.container}>
+    <Text style={[styles.text, labelStyle]}>
+      {/* {haveTick && <TickIcon fill={COLORS.success} />} */}
+      {haveTick && <MaterialIcons fill={COLORS.success} name="check-circle" />}
+      {haveTick && '  '}
+      {content}
+    </Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
