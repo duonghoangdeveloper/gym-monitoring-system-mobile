@@ -29,12 +29,14 @@ import { CommonNotFoundComponent } from '../components/common-not-found-componen
 // import { CommonNotFoundComponent } from '../components/common-not-found-component';
 // import { CommonTextItem } from '../components/common-text-item';
 import { CommonScaleImage } from '../components/common-scale-image';
+import { CommonTab } from '../components/common-tab';
 import { CommonTextItem } from '../components/common-text-item';
 import { COLORS } from '../constants/colors';
 import { DIMENSIONS } from '../constants/dimensions';
 
 export const SandboxScreen = () => {
   const title = 'Sandsasadsds box';
+
   const dataSelector = [
     {
       key: '1',
@@ -113,7 +115,6 @@ export const SandboxScreen = () => {
           onItemPress={n => console.log(n)}
           style
         />
-
         <CommonImageSelector
           data={{
             key: 'avatar',
