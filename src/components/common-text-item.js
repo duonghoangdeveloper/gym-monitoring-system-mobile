@@ -3,8 +3,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
-import { colors } from '../constants/colors';
-import { dimension, scaleV } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
 
 type PropTypes = {
@@ -18,15 +18,15 @@ export const CommonTextItem = ({
   haveTick = true,
   labelStyle,
 }: PropTypes) => (
-  <View style={styles.container}>
-    <Text style={[styles.text, labelStyle]}>
-      {/* {haveTick && <TickIcon fill={colors.success} />} */}
-      {haveTick && <MaterialIcons fill={colors.success} name="check-circle" />}
-      {haveTick && '  '}
-      {content}
-    </Text>
-  </View>
-);
+    <View style={styles.container}>
+      <Text style={[styles.text, labelStyle]}>
+        {/* {haveTick && <TickIcon fill={COLORS.success} />} */}
+        {haveTick && <MaterialIcons fill={COLORS.success} name="check-circle" />}
+        {haveTick && '  '}
+        {content}
+      </Text>
+    </View>
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   text: {
     ...textStyleObject.bodyText,
-    color: colors.dark20,
-    marginTop: scaleV(dimension.DISTANCE_3),
+    color: COLORS.dark20,
+    marginTop: scaleV(DIMENSIONS.DISTANCE_3),
   },
 });

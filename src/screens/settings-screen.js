@@ -8,7 +8,7 @@ import { Avatar, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import { TOKEN_KEY } from '../common/constants';
-import { ListItem } from '../components/common-list-item';
+import { CommonListItem } from '../components/common-list-item';
 import { SIGN_OUT } from '../redux/user/user.types';
 
 export const SettingsScreen = ({ navigation }) => {
@@ -41,7 +41,7 @@ export const SettingsScreen = ({ navigation }) => {
       <View style={{ width: 351 }}>
         {list.map(({ icon, label, onItemPress, to }) => (
           <TouchableOpacity onPress={() => navigation.navigate(to)}>
-            <ListItem
+            <CommonListItem
               detail={
                 <Ionicons
                   color="black"

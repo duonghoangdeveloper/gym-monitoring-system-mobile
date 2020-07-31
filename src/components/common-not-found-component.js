@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 
 // import { NotFoundIllustration } from '../assets/svgs/illustration';
-import { dimension } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
 
@@ -25,14 +25,14 @@ export const CommonNotFoundComponent = ({
     <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
       <Text>NotFoundIllustration</Text>
       <Text style={textStyle.widgetItem}>{title}</Text>
-      <Text style={[textStyle.bodyText, { marginTop: dimension.DISTANCE_2 }]}>
+      <Text style={[textStyle.bodyText, { marginTop: DIMENSIONS.DISTANCE_2 }]}>
         {description}
       </Text>
     </View>
 
     {haveBackButton && (
       <CommonButton
-        containerStyle={{ marginBottom: dimension.DISTANCE_4 }}
+        containerStyle={{ marginBottom: DIMENSIONS.DISTANCE_4 }}
         label="Trở về"
         onPress={onBackPress}
         theme="secondary"
@@ -44,6 +44,6 @@ export const CommonNotFoundComponent = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: dimension.DISTANCE_4,
+    paddingHorizontal: DIMENSIONS.DISTANCE_4,
   },
 });

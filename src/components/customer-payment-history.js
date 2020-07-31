@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { Button, Tab, Text, View } from 'react-native';
 
-import { ListItem } from './common-list-item';
+import { CommonListItem } from './common-list-item';
 
 export const CustomerPaymentHistoryScreen = ({ navigation }) => (
   <View>
     {list.map(({ detail, label }) => (
-      <ListItem
+      <CommonListItem
         detail={detail}
         label={label}
         showSeparator="true"

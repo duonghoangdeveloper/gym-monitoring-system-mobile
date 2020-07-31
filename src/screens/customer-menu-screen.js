@@ -5,7 +5,7 @@ import { Avatar, Icon, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
-import { ListItem } from '../components/common-list-item';
+import { CommonListItem } from '../components/common-list-item';
 
 export const CustomerMenuScreen = ({ navigation }) => {
   const displayName = useSelector(state => state.user.me.displayName);
@@ -22,7 +22,7 @@ export const CustomerMenuScreen = ({ navigation }) => {
       <View style={{ width: 351 }}>
         {list.map(({ icon, label, to }) => (
           <TouchableOpacity onPress={() => navigation.navigate(to)}>
-            <ListItem
+            <CommonListItem
               detail={
                 <Ionicons
                   color="black"

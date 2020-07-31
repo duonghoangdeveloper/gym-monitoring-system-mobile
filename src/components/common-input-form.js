@@ -12,12 +12,12 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RNPickerSelect from 'react-native-picker-select';
 
-import { defaultFunction } from '../common/common';
 import { formatDate } from '../common/date';
-// import { pure } from 'recompose';
-import { colors } from '../constants/colors';
-import { dimension, scaleH, scaleV } from '../constants/dimensions';
+import { defaultFunction } from '../common/services';
+import { COLORS } from '../constants/colors';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyleObject } from '../constants/text-styles';
+import { CommonIcon } from './common-icon';
 
 type PropTypes = {
   label: string,
@@ -65,9 +65,10 @@ export const CommonInputForm = ({
   minimumDate,
   returnKeyType,
 }: PropTypes) => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    defaultValue ? new Date(defaultValue) : new Date()
+  );
   const [inputHover, setInputHover] = useState(false);
-
   const [pickerValue, setPickerValue] = useState(defaultValue);
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -100,7 +101,7 @@ export const CommonInputForm = ({
               styles.textInput,
               textInputStyle,
               multiline ? { paddingTop: scaleV(16) } : {},
-              inputHover ? { borderColor: colors.primary } : {},
+              inputHover ? { borderColor: COLORS.primary } : {},
               error ? styles.error : {},
             ]}
             textAlignVertical="top"
@@ -114,12 +115,10 @@ export const CommonInputForm = ({
               style={styles.contentContainer}
             >
               <Text style={styles.text}>{formatDate(value || date)}</Text>
-              {/* <CalendarIcon /> */}
-              <FontAwesome5 name="calendar-alt" />
+              <CommonIcon name="calendar" />
             </TouchableOpacity>
 
             <DateTimePickerModal
-              // date={new Date(value) || new Date()}
               date={date}
               isVisible={datePickerVisible}
               maximumDate={maximumDate}
@@ -128,7 +127,6 @@ export const CommonInputForm = ({
               onCancel={() => setDatePickerVisible(false)}
               onConfirm={newDate => {
                 setDate(newDate);
-                console.log(newDate);
                 setDatePickerVisible(false);
                 if (typeof onChangeText === 'function') {
                   onChangeText(newDate);
@@ -143,8 +141,6 @@ export const CommonInputForm = ({
             items={dropDownList}
             onValueChange={text => {
               setPickerValue(text);
-              // onChangeText(text);
-              // setPickerValue(text);
             }}
             placeholder={{ label: placeholder }}
             style={{
@@ -183,55 +179,45 @@ const styles = StyleSheet.create({
   container: {},
   contentContainer: {
     alignItems: 'center',
-    backgroundColor: colors.white,
-    borderColor: colors.dark60,
-    borderRadius: dimension.BORDER_RADIUS,
+    backgroundColor: COLORS.white,
+    borderColor: COLORS.dark80,
+    borderRadius: DIMENSIONS.BORDER_RADIUS,
     borderWidth: 1,
     flexDirection: 'row',
-    height: scaleH(40),
+    height: scaleH(44),
     justifyContent: 'space-between',
     paddingHorizontal: scaleH(8),
-    width: scaleH(311),
   },
   dropDownItem: {
     alignItems: 'center',
     borderBottomWidth: 1,
-
-    borderColor: colors.dark60,
+    borderColor: COLORS.dark80,
     flexDirection: 'row',
-    height: scaleH(40),
+    height: scaleH(44),
     justifyContent: 'space-between',
     paddingHorizontal: scaleH(16),
   },
   dropDownList: {
     backgroundColor: 'white',
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: DIMENSIONS.BORDER_RADIUS,
+    borderBottomRightRadius: DIMENSIONS.BORDER_RADIUS,
     borderBottomWidth: 1,
-    borderColor: colors.dark60,
+    borderColor: COLORS.dark80,
     borderEndWidth: 1,
     borderStartWidth: 1,
     height: scaleH(160),
     overflow: 'hidden',
   },
   error: {
-    borderColor: colors.error,
+    borderColor: COLORS.error,
   },
 
   label: {
     ...textStyleObject.label,
-    color: colors.dark20,
-    fontSize: scaleV(14),
-    lineHeight: scaleV(24),
-    marginBottom: scaleV(15),
-    marginLeft: scaleV(21),
-    paddingTop: scaleV(15),
-  },
-  rightIcon: {
-    ...textStyleObject.bodyText,
-    color: colors.dark20,
-    flex: 1,
-    textAlign: 'right',
+    color: COLORS.dark20,
+    marginBottom: scaleV(12),
+    marginLeft: scaleH(10),
+    marginTop: scaleV(12),
   },
   selectedContainer: {
     alignSelf: 'stretch',
@@ -242,21 +228,20 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     ...textStyleObject.bodyText,
-    color: colors.white,
+    color: COLORS.white,
   },
   text: {
     ...textStyleObject.bodyText,
-    color: colors.dark20,
+    color: COLORS.dark20,
   },
   textInput: {
-    borderRadius: 4,
+    borderRadius: DIMENSIONS.BORDER_RADIUS,
     borderWidth: 1,
-    height: scaleH(40),
-    paddingHorizontal: scaleH(8),
-    width: scaleH(311),
+    height: scaleH(44),
+    paddingHorizontal: scaleH(12),
     ...textStyleObject.bodyText,
-    backgroundColor: colors.white,
-    borderColor: colors.dark60,
-    color: colors.dark20,
+    backgroundColor: COLORS.white,
+    borderColor: COLORS.dark80,
+    color: COLORS.dark20,
   },
 });

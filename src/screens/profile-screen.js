@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
-import { USER_GENDERS } from '../common/constants';
+import { USER_GENDERS } from '../constants/app';
 import { UPDATE_PROFILE } from '../redux/user/user.types';
 
 export const ProfileScreen = () => {
@@ -132,12 +132,6 @@ export const ProfileScreen = () => {
         <Divider style={{ backgroundColor: 'black', height: 1 }} />
 
         <Button loading={loading} onPress={handleUpdatePress} title="Update" />
-
-        <Button
-          loading={loading}
-          onPress={handleUpdatePress}
-          title="Change Password"
-        />
       </View>
     </ScrollView>
   );

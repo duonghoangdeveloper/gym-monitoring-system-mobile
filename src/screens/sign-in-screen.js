@@ -12,8 +12,8 @@ import {
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TOKEN_KEY } from '../common/constants';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { TOKEN_KEY } from '../constants/app';
 import { SIGN_IN } from '../redux/user/user.types';
 
 export const SignInScreen = ({ navigation }) => {

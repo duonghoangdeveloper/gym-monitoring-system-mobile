@@ -15,7 +15,7 @@ import { Icon } from 'react-native-elements';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { CommonInputForm } from '../components/common-input-form';
-import { scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 
 export const ChangePasswordScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -24,9 +24,12 @@ export const ChangePasswordScreen = ({ navigation }) => {
     <>
       <View
         style={{
-          alignItems: 'center',
+          alignItems: 'stretch',
           backgroundColor: 'white',
+
           flex: 1,
+          padding: DIMENSIONS.PADDING,
+
           // justifyContent: 'center',
         }}
       >
@@ -47,27 +50,34 @@ export const ChangePasswordScreen = ({ navigation }) => {
             </TouchableOpacity>
           }
           secureTextEntry={!visible}
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
+
+            // justifyContent: 'center',
+          }}
         />
-        <View>
-          <CommonInputForm
-            label="New Password"
-            placeholder="Enter new password"
-            rightIcon={
-              <TouchableOpacity
-                onPress={() => setVisible(!visible)}
-                style={(styles.passwordVisibleToggleButton, styles.showButton)}
-              >
-                <Icon
-                  color="#7f7f7f"
-                  name={visible ? 'eye' : 'eye-slash'}
-                  size={20}
-                  type="font-awesome-5"
-                />
-              </TouchableOpacity>
-            }
-            secureTextEntry={!visible}
-          />
-        </View>
+
+        <CommonInputForm
+          label="New Password"
+          placeholder="Enter new password"
+          rightIcon={
+            <TouchableOpacity
+              onPress={() => setVisible(!visible)}
+              style={(styles.passwordVisibleToggleButton, styles.showButton)}
+            >
+              <Icon
+                color="#7f7f7f"
+                name={visible ? 'eye' : 'eye-slash'}
+                size={20}
+                type="font-awesome-5"
+              />
+            </TouchableOpacity>
+          }
+          secureTextEntry={!visible}
+        />
+
         <CommonInputForm
           label="Confirm Password"
           placeholder="Enter confirm new password"
@@ -85,6 +95,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             </TouchableOpacity>
           }
           secureTextEntry={!visible}
+          style={{ marginTop: scaleV(10) }}
         />
       </View>
       <View
@@ -101,6 +112,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
             alignItems: 'center',
             marginBottom: scaleV(30),
             marginLeft: scaleH(32),
+
             width: scaleH(311),
           }}
         />

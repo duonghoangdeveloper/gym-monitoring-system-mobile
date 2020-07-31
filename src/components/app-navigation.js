@@ -1,5 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,7 +6,7 @@ import React from 'react';
 import { Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
-import { COLORS } from '../common/constants';
+import { COLORS } from '../constants/colors';
 import { AboutScreen } from '../screens/about-screen';
 import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
@@ -200,7 +199,7 @@ const CustomerHomeNavigation = () => (
   <CustomerHomeStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: COLORS.primary,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -217,7 +216,7 @@ const CustomerPaymentNavigation = () => (
   <CustomerPaymentStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: COLORS.primary,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -237,7 +236,7 @@ const CustomerWarningNavigation = () => (
   <CustomerWarningHistoryStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: COLORS.primary,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -256,7 +255,7 @@ const CustomerMenuNavigation = () => (
   <CustomerMenuStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: COLORS.PRIMARY,
+        backgroundColor: COLORS.primary,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
