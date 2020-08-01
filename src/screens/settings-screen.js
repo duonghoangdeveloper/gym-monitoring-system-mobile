@@ -17,6 +17,7 @@ export const SettingsScreen = ({ navigation }) => {
 
   const handleSignOutPress = async () => {
     try {
+      console.log('asdas');
       await client.mutate({
         mutation: gql`
           mutation {
