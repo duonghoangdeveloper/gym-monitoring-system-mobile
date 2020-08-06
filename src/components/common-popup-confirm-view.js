@@ -33,9 +33,9 @@ export const CommonPopupConfirmView = ({
     if (!cancelLabel) {
       return (
         <CommonButton
-          label={confirmLabel}
           onPress={onConfirm}
           style={{ borderRadius: 4, marginTop: scaleV(16) }}
+          title={confirmLabel}
         />
       );
     }
@@ -44,7 +44,6 @@ export const CommonPopupConfirmView = ({
         <CommonButton
           containerStyle={{ flex: 1 }}
           gradient={false}
-          label={cancelLabel}
           onPress={onDecline}
           style={{
             borderColor: COLORS.primary,
@@ -55,11 +54,11 @@ export const CommonPopupConfirmView = ({
             // padding: DIMENSIONS.PADDING_CONTENT,
           }}
           textColor={COLORS.primary}
+          title={cancelLabel}
         />
         <CommonButton
           containerStyle={{ flex: 1 }}
           gradient
-          label={confirmLabel}
           onPress={onConfirm}
           style={{
             borderColor: COLORS.primary,
@@ -69,6 +68,7 @@ export const CommonPopupConfirmView = ({
             marginHorizontal: DIMENSIONS.DISTANCE_3,
             // padding: DIMENSIONS.PADDING_CONTENT,
           }}
+          title={confirmLabel}
           // textColor={COLORS.white}
         />
       </View>

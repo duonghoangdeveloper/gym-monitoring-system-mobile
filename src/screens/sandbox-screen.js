@@ -1,12 +1,13 @@
 // import { AppLoading } from 'expo';
 // import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 // import { color } from 'react-native-reanimated';
 // import { CommonAvatar } from '../components/common-avatar';
 // import { CommonBadgeIcon } from '../components/common-badge-icon';
-// import { CommonButton } from '../components/common-button';
+import { CommonButton } from '../components/common-button';
 // import { NotificationItem } from '../components/notification-item';
 // import { CommonButtonGroup } from '../components/common-button-group';
 // import { CommonConfirmPopup } from '../components/common-confirm-popup';
@@ -16,7 +17,7 @@ import { ScrollView, Text, View } from 'react-native';
 // import { CommonImageSelector } from '../components/common-image-selector';
 // import { CommonInputForm } from '../components/common-input-form';
 // import { CommonListItem } from '../components/common-list-item';
-// import { CommonLoadingComponent } from '../components/common-loading-component';
+import { CommonLoadingComponent } from '../components/common-loading-component';
 // import { CommonModalContainer } from '../components/common-modal-container';
 // import { CommonNotFoundComponent } from '../components/common-not-found-component';
 // import { CommonScaleImage } from '../components/common-scale-image';
@@ -55,18 +56,16 @@ export const SandboxScreen = () => {
         >
           {title}
         </Text>
-        {/* <View stye={{ borderColor: 'black', borderWidth: 3 }}> */}
-        {/* 
-        <NotificationItem
-          // cancelLabel
-          // confirmLabel
-          content={content1}
-          // onConfirm
-          // onDecline
-          // onPress={() => navigation.navigate('NotificationDetail')}
-          type="detail"
-        /> */}
-        {/* </View> */}
+
+        <CommonButton
+          icon={<FontAwesome5 color="white" name="home" />}
+          // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
+          leftIcon={<CommonLoadingComponent />}
+          // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
+          // shape="rectangle"
+          // style={{ width: 380 }}
+          title="Click Me"
+        />
       </View>
     </ScrollView>
   );

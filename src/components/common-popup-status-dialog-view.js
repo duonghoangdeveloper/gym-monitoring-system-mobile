@@ -55,10 +55,10 @@ export const CommonPopupStatusDialogView = ({
       </View>
 
       <CommonButton
-        label={confirmLabel}
         onPress={onConfirm}
         style={{ borderRadius: 4, marginTop: DIMENSIONS.DISTANCE_3 }}
         theme={getTheme()}
+        title={confirmLabel}
       />
     </>
   );

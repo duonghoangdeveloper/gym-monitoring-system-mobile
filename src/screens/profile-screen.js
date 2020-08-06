@@ -26,7 +26,6 @@ export const ProfileScreen = () => {
   const handleUpdatePress = async () => {
     setLoading(true);
     try {
-      console.log('123');
       const result = await client.mutate({
         mutation: gql`
           mutation UpdateProfile(
@@ -63,7 +62,6 @@ export const ProfileScreen = () => {
           username: updateUser.username,
         },
       });
-      console.log('result: ', result);
       dispatch({
         payload: {
           me: updateUser,

@@ -97,16 +97,16 @@ export const CommonPopupPromptDialogView = ({
 
         <View style={styles.action}>
           <CommonButton
-            label={cancelLabel}
             onPress={onDecline}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
             theme="error"
+            title={cancelLabel}
           />
           <CommonButton
-            label={confirmLabel}
             onPress={handleConfirm}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
             theme="success"
+            title={confirmLabel}
           />
         </View>
       </View>
