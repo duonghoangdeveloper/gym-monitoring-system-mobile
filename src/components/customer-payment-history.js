@@ -4,102 +4,81 @@ import moment from 'moment';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Button, ListView, Tab, Text, View } from 'react-native';
 
+import {
+  DATE_FORMAT,
+  DATE_TIME_FORMAT,
+  TIME_FORMAT,
+} from '../common/constants';
 import { CommonListItem } from './common-list-item';
 
 export const CustomerPaymentHistoryScreen = ({ navigation }) => {
   const client = useApolloClient();
   const [payments, setPayment] = useState([]);
   const [total, setTotal] = useState(0);
-  // const fetchPaymentsData = async () => {
-  //   try {
-  //     const result = await client.query({
-  //       query: gql`
-  //         query {
-  //           payments {
-  //             data {
-  //               package {
-  //                 name
-  //                 price
-  //                 period
-  //                 createdAt
-  //               }
-  //             }
-  //             total
-  //           }
-  //         }
-  //       `,
-  //       variables: {
-  //         total,
-  //       },
-  //     });
-
-  //     const fetchedPaymentsData = result?.data?.payments?.data ?? [];
-  //     const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
-  //     setPayment(
-  //       fetchedPaymentsData.map(payments => ({
-  //         key: payments._id,
-  //         ...payments,
-  //       }))
-  //     );
-
-  //     setTotal(fetchedPaymentsTotal);
-  //   } catch (e) {
-  //     // Do something
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchPaymentsData();
-  // });
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await client.query({
-          query: gql`
-            query {
-              payments {
-                data {
-                  _id
-                  customer {
-                    username
-                  }
-
-                  package {
-                    name
-                    price
-                    period
-                    createdAt
-                  }
+  // const [packages, setPackage] = useState([]);
+  const fetchPaymentsData = async () => {
+    try {
+      const result = await client.query({
+        query: gql`
+          query {
+            payments {
+              data {
+                _id
+                createdAt
+                package {
+                  name
+                  price
+                  period
                 }
-                total
               }
+              total
             }
-          `,
-          variables: {
-            total,
-          },
-        });
+          }
+        `,
+        variables: {
+          total,
+        },
+      });
 
-        const fetchedFeedbacks = result?.data?.payments?.data ?? [];
-        setPayment(
-          fetchedFeedbacks.map((payment, index) => ({
-            key: payment._id,
-            no: index + 1,
-            ...payment,
-          }))
-        );
-      } catch (e) {
-        // Do something
-      }
-    })();
+      const fetchedPaymentsData = result?.data?.payments?.data ?? [];
+      const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
+      // console.log('fetchedPaymentsTotal: ', fetchedPaymentsTotal);
+      // const fetchedPackageData =
+      //   result?.data?.payments?.data?.package?.data ?? [];
+      // console.log(fetchedPackageData);
+      // setPackage(
+      //   fetchedPackageData.map(packages => ({
+      //     key: packages._id,
+      //     ...packages,
+      //     date: moment(packages.createdAt).format(DATE_TIME_FORMAT),
+      //   }))
+      // );
+      setPayment(
+        fetchedPaymentsData.map(payment => ({
+          key: payment._id,
+          ...payment,
+          date: moment(payment.createdAt).format(DATE_TIME_FORMAT),
+        }))
+      );
+
+      setTotal(fetchedPaymentsTotal);
+    } catch (e) {
+      // Do something
+    }
+  };
+  useEffect(() => {
+    fetchPaymentsData();
   }, []);
-  console.log(payments._id);
+  // payments.forEach(p =>
+  //   console.log(moment(p.createdAt).format(DATE_TIME_FORMAT))
+  // );
   return (
     <>
       <View>
-        {list.map(({ detail, label }) => (
+        {payments.map(payment => (
           <CommonListItem
-            detail={detail}
-            label={label}
+            detail={payment.date}
+            label={payment.package.name}
             showSeparator="true"
             type="detail"
           />
@@ -108,29 +87,3 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
     </>
   );
 };
-const list = [
-  {
-    detail: '22/10/2020',
-    label: 'Package 1',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 2',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 3',
-  },
-  {
-    detail: '22/10/2020',
-    label: 'Package 4',
-  },
-  {
-    detail: '22/10/2020',
-    label: 'Package 1',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 1',
-  },
-];

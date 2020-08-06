@@ -5,6 +5,7 @@ import { Avatar, Icon, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
+import { CommonAvatar } from '../components/common-avatar';
 import { CommonListItem } from '../components/common-list-item';
 
 export const CustomerMenuScreen = ({ navigation }) => {
@@ -13,7 +14,13 @@ export const CustomerMenuScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Avatar rounded showEditButton size="large" source={avatar} />
+        <CommonAvatar
+          editable="false"
+          label="string"
+          // onAvatarPress
+          size="xxsmall"
+          uri="https://reactnative.dev/img/tiny_logo.png"
+        />
         <Text h4 style={styles.name}>
           {displayName || 'Thành viên mới'}
         </Text>
@@ -47,16 +54,19 @@ export const CustomerMenuScreen = ({ navigation }) => {
 const list = [
   {
     icon: 'user-edit',
+    key: 'profile',
     label: 'Profile',
     to: 'Profile',
   },
   {
     icon: 'pen-alt',
+    key: 'feedback',
     label: 'Feedback',
     to: 'Feedback',
   },
   {
     icon: 'cog',
+    key: 'settings',
     label: 'Settings',
     to: 'Settings',
   },

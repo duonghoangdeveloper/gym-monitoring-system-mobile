@@ -17,7 +17,7 @@ export const SettingsScreen = ({ navigation }) => {
 
   const handleSignOutPress = async () => {
     try {
-      console.log('asdas');
+      // console.log('asdas');
       await client.mutate({
         mutation: gql`
           mutation {
@@ -41,7 +41,14 @@ export const SettingsScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={{ width: 351 }}>
         {list.map(({ icon, label, onItemPress, to }) => (
-          <TouchableOpacity onPress={() => navigation.navigate(to)}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(to);
+              if (onItemPress === 'handleSignOutPress') {
+                handleSignOutPress();
+              }
+            }}
+          >
             <CommonListItem
               detail={
                 <Ionicons
@@ -54,16 +61,12 @@ export const SettingsScreen = ({ navigation }) => {
               }
               icon={icon}
               label={label}
-              onItemPress="onItemPress"
+              onPress={handleSignOutPress}
               showSeparator="true"
               type="detail"
             />
           </TouchableOpacity>
         ))}
-      </View>
-
-      <View style={{}}>
-        <Button onPress={handleSignOutPress} title="Sign out" />
       </View>
     </View>
   );
@@ -72,16 +75,19 @@ export const SettingsScreen = ({ navigation }) => {
 const list = [
   {
     icon: 'lock',
+    key: 'changePassword',
     label: 'Change password',
     to: 'Change Password',
   },
   {
     icon: 'info-circle',
+    key: 'about',
     label: 'About gym',
     to: 'About',
   },
   {
     icon: 'sign-out-alt',
+    key: 'signOut',
     label: 'Sign out',
     onItemPress: 'handleSignOutPress',
     to: 'Settings',

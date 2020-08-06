@@ -41,9 +41,7 @@ export const CommonTab = ({
           width: scaleH(311),
         }}
       >
-        <View key={activeIndex} style={{}}>
-          {screens[activeIndex]}
-        </View>
+        <View key={activeIndex}>{screens[activeIndex]}</View>
       </View>
     </>
   );
