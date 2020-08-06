@@ -69,8 +69,18 @@ const renderNavigation = role => {
 
 const AuthStack = createStackNavigator();
 const AuthStackNavigation = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen component={SignInScreen} name="SignIn" />
+  <AuthStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
+    <AuthStack.Screen component={SignInScreen} name="Sign In" />
   </AuthStack.Navigator>
 );
 

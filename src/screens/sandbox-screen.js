@@ -24,7 +24,7 @@ import { DIMENSIONS } from '../constants/dimensions';
 
 export const SandboxScreen = () => {
   const title = 'Sandsasadsds box';
-
+  const [pickerValue, setPickerValue] = useState('Arnold Schwarzenneger');
   const dataSelector = [
     {
       key: '1',
@@ -44,9 +44,10 @@ export const SandboxScreen = () => {
     {
       key: '4',
       label: 'Emma Stone',
-      value: 4,
+      value: 9,
     },
   ];
+
   return (
     <View>
       <ScrollView>
@@ -109,8 +110,13 @@ export const SandboxScreen = () => {
         <CommonInputForm
           dropDownList={dataSelector}
           label="aaaa"
+          onValueChange={text => {
+            console.log(text);
+            setPickerValue(text);
+          }}
           placeholder="Drop down"
           type="dropdown"
+          value="AAAA"
         />
         <CommonInputForm label="Input" placeholder="enter name" />
         <CommonInputForm label="Calender" type="calendar" />

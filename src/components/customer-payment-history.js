@@ -1,43 +1,72 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { Button, Tab, Text, View } from 'react-native';
+import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
+import { DATE_TIME_FORMAT } from '../common/constants';
 import { CommonListItem } from './common-list-item';
 
-export const CustomerPaymentHistoryScreen = ({ navigation }) => (
-  <View>
-    {list.map(({ detail, label }) => (
-      <CommonListItem
-        detail={detail}
-        label={label}
-        showSeparator="true"
-        type="detail"
-      />
-    ))}
-  </View>
-);
-const list = [
-  {
-    detail: '22/10/2020',
-    label: 'Package 1',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 2',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 3',
-  },
-  {
-    detail: '22/10/2020',
-    label: 'Package 4',
-  },
-  {
-    detail: '22/10/2020',
-    label: 'Package 1',
-  },
-  {
-    detail: '22/10/2019',
-    label: 'Package 1',
-  },
-];
+export const CustomerPaymentHistoryScreen = ({ navigation }) => {
+  const client = useApolloClient();
+  const [payments, setPayment] = useState([]);
+  const [total, setTotal] = useState(0);
+  const fetchPaymentsData = async () => {
+    try {
+      const result = await client.query({
+        query: gql`
+          query {
+            payments {
+              data {
+                _id
+                createdAt
+                package {
+                  name
+                  price
+                  period
+                }
+              }
+              total
+            }
+          }
+        `,
+        variables: {
+          total,
+        },
+      });
+
+      const fetchedPaymentsData = result?.data?.payments?.data ?? [];
+      const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
+
+      setPayment(
+        fetchedPaymentsData.map(payment => ({
+          key: payment._id,
+          ...payment,
+          date: moment(payment.createdAt).format(DATE_TIME_FORMAT),
+        }))
+      );
+
+      setTotal(fetchedPaymentsTotal);
+    } catch (e) {
+      // Do something
+    }
+  };
+  useEffect(() => {
+    fetchPaymentsData();
+  }, []);
+
+  return (
+    <>
+      <View>
+        {payments.map(payment => (
+          <CommonListItem
+            detail={payment.date}
+            label={payment.package.name}
+            showSeparator="true"
+            type="detail"
+          />
+        ))}
+      </View>
+    </>
+  );
+};
