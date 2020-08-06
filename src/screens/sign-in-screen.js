@@ -8,12 +8,16 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { Button, Icon, Input, Text } from 'react-native-elements';
+import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonInputForm } from '../components/common-input-form';
 import { TOKEN_KEY } from '../constants/app';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { SIGN_IN } from '../redux/user/user.types';
 
 export const SignInScreen = ({ navigation }) => {
@@ -23,7 +27,6 @@ export const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const handleSignInPress = async () => {
     setLoading(true);
     try {
@@ -74,69 +77,76 @@ export const SignInScreen = ({ navigation }) => {
 
   return (
     <CommonDismissKeyboardWrapper>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={styles.container}
+      <View
+        style={{
+          alignItems: 'stretch',
+          backgroundColor: 'white',
+          flex: 1,
+          padding: DIMENSIONS.PADDING,
+
+          // justifyContent: 'center',
+        }}
       >
-        <Text h3 style={styles.title}>
-          Sign In
-        </Text>
-        <Input
-          leftIcon={
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          style={styles.container}
+        >
+          <Text h3 style={styles.title}>
+            Sign In
+          </Text>
+
+          <CommonInputForm
+            label="Username"
+            onChangeText={text => setUsername(text)}
+            placeholder="Enter username"
+            style={{
+              alignItems: 'center',
+              backgroundColor: 'black',
+              flex: 1,
+
+              // justifyContent: 'center',
+            }}
+            value={username}
+          />
+
+          <CommonInputForm
+            label="Password"
+            // error={error}
+            onChangeText={setPassword}
+            placeholder="Enter password"
+            secureTextEntry={!visible}
+            value={password}
+          />
+
+          <TouchableOpacity
+            onPress={() => setVisible(!visible)}
+            style={styles.passwordVisibleToggleButton}
+          >
             <Icon
               color="#7f7f7f"
-              name="user"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
+              name={visible ? 'eye' : 'eye-slash'}
+              size={18}
+              type="font-awesome-5"
             />
-          }
-          onChangeText={setUsername}
-          placeholder="Enter username"
-          value={username}
-        />
-        <Input
-          leftIcon={
-            <Icon
-              color="#7f7f7f"
-              name="lock"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
-            />
-          }
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          rightIcon={
-            <TouchableOpacity
-              onPress={() => setVisible(!visible)}
-              style={styles.passwordVisibleToggleButton}
-            >
-              <Icon
-                color="#7f7f7f"
-                name={visible ? 'eye' : 'eye-slash'}
-                size={20}
-                type="font-awesome-5"
-              />
-            </TouchableOpacity>
-          }
-          secureTextEntry={!visible}
-          type="password"
-        />
-        <Button
-          containerStyle={styles.signInButton}
-          loading={loading}
-          onPress={handleSignInPress}
-          title="Sign in"
-        />
-      </KeyboardAvoidingView>
+          </TouchableOpacity>
+
+          {/* <Divider style={{ backgroundColor: 'white', height: 40 }} /> */}
+          <CommonButton
+            label="Sign in"
+            loading={loading}
+            onPress={handleSignInPress}
+            style={{ marginTop: scaleV(40) }}
+          />
+          {/* <Divider style={{ backgroundColor: 'white', height: 100 }} /> */}
+        </KeyboardAvoidingView>
+      </View>
     </CommonDismissKeyboardWrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: 'stretch',
     flex: 1,
     justifyContent: 'center',
     padding: 12,
@@ -148,8 +158,15 @@ const styles = StyleSheet.create({
 
   passwordVisibleToggleButton: {
     alignItems: 'flex-end',
-    flex: 1,
+    // backgroundColor: 'black',
+    bottom: scaleV(55),
+    height: scaleH(44),
     justifyContent: 'center',
+    left: scaleH(270),
+    marginBottom: scaleV(-50),
+
+    paddingHorizontal: scaleH(8),
+    // justifyContent: 'center',
     width: 40,
   },
 
@@ -164,5 +181,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     marginBottom: 24,
+    marginLeft: scaleH(100),
   },
 });

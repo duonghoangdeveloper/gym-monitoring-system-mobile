@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View } from 'react-native';
 
 import { scaleH, scaleV } from '../constants/dimensions';
-// import ViewPager from '../react-native-community/viewpager';
 import { CommonButtonGroup } from './common-button-group';
 
 type PropTypes = {
@@ -21,14 +20,7 @@ export const CommonTab = ({
 
   const onTabPress = index => {
     if (index !== activeIndex) {
-      viewPagerRef.current.setPage(index);
       setActiveIndex(index);
-    }
-  };
-  const handlePageSelected = e => {
-    const { position } = e.nativeEvent;
-    if (position !== activeIndex) {
-      setActiveIndex(position);
     }
   };
 
@@ -40,26 +32,16 @@ export const CommonTab = ({
         labels={labels}
         onItemPress={onTabPress}
       />
-      {/* <ViewPager */}
       <View
         initialPage={0}
-        onPageSelected={handlePageSelected}
         ref={ref => (viewPagerRef.current = ref)}
         style={{
-          flex: 1,
           marginHorizontal: -scaleH(20),
           marginTop: scaleV(20),
+          width: scaleH(311),
         }}
       >
-        {screens.map((screen, index) => (
-          <View
-            key={index.toString()}
-            style={{ paddingHorizontal: scaleH(20) }}
-          >
-            {screen}
-          </View>
-        ))}
-        {/* </ViewPager> */}
+        <View key={activeIndex}>{screens[activeIndex]}</View>
       </View>
     </>
   );

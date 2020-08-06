@@ -5,12 +5,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { COLORS } from '../constants/colors';
 import { AboutScreen } from '../screens/about-screen';
 import { ChangePasswordScreen } from '../screens/change-password-screen';
+import { ChooseStaffScreen } from '../screens/choose-staff-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
 import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
+import { FeedbackGymScreen } from '../screens/feedback-gym-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
+import { FeedbackStaffScreen } from '../screens/feedback-staff-screen';
 import { NotificationDetailScreen } from '../screens/notification-detail-screen';
 import { NotificationScreen } from '../screens/notification-screen';
 import { ProfileScreen } from '../screens/profile-screen';
@@ -71,8 +75,18 @@ const renderNavigation = role => {
 
 const AuthStack = createStackNavigator();
 const AuthStackNavigation = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen component={SignInScreen} name="SignIn" />
+  <AuthStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
+    <AuthStack.Screen component={SignInScreen} name="Sign In" />
   </AuthStack.Navigator>
 );
 
@@ -138,7 +152,17 @@ const TrainerNotificationNavigation = () => (
 );
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
-  <TrainerMenuStack.Navigator>
+  <TrainerMenuStack.Navigator
+    options={{
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
@@ -196,14 +220,34 @@ const CustomerSandboxNavigation = () => (
 
 const CustomerHomeStack = createStackNavigator();
 const CustomerHomeNavigation = () => (
-  <CustomerHomeStack.Navigator>
+  <CustomerHomeStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerHomeStack.Screen component={CustomerHomeScreen} name="Home" />
   </CustomerHomeStack.Navigator>
 );
 
 const CustomerPaymentStack = createStackNavigator();
 const CustomerPaymentNavigation = () => (
-  <CustomerPaymentStack.Navigator>
+  <CustomerPaymentStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerPaymentStack.Screen
       component={CustomerPaymentScreen}
       name="Payment"
@@ -224,9 +268,28 @@ const CustomerNotificationNavigation = () => (
     />
   </CustomerNotificationStack.Navigator>
 );
+
+const CustomerFeedbackStack = createStackNavigator();
+const CustomerFeedbackNavigation = () => (
+  <CustomerFeedbackStack.Navigator>
+    <FeedbackScreen.Screen component={FeedbackScreen} name="Feedback" />
+    <FeedbackScreen.Screen component={FeedbackGymScreen} name="FeedbackGym" />
+  </CustomerFeedbackStack.Navigator>
+);
+
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (
-  <CustomerMenuStack.Navigator>
+  <CustomerMenuStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
     <CustomerMenuStack.Screen component={CustomerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={FeedbackScreen} name="Feedback" />
@@ -234,7 +297,27 @@ const CustomerMenuNavigation = () => (
     <CustomerMenuStack.Screen component={AboutScreen} name="About" />
     <CustomerMenuStack.Screen
       component={ChangePasswordScreen}
-      name="ChangePassword"
+      name="Change Password"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackGymScreen}
+      name="Feedback Gym"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
+    <CustomerMenuStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Manager"
+    />
+    <CustomerMenuStack.Screen
+      component={ChooseStaffScreen}
+      name="Choose Trainer"
+    />
+    <CustomerMenuStack.Screen
+      component={ChooseStaffScreen}
+      name="Choose Manager"
     />
   </CustomerMenuStack.Navigator>
 );

@@ -8,6 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { Icon, Input } from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -26,7 +27,8 @@ type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
   textInputStyle: StyleProp<ViewStyle>,
   placeholder?: string,
-  type: 'textinput' | 'calendar' | 'dropdown',
+
+  type: 'textinput' | 'calendar' | 'dropdown' | 'password',
   dropDownList?: [{ value: string, label: string }],
   // selectedItem: string,
   autoFocus?: boolean,
@@ -40,12 +42,13 @@ type PropTypes = {
   minimumDate?: Date,
   returnKeyType?: string,
 };
-
+// const [visible, setVisible] = useState(false);
 export const CommonInputForm = ({
   label,
   value,
   onChangeText,
   multiline,
+  rightIcon,
   containerStyle,
   textInputStyle,
   placeholder,
@@ -67,7 +70,7 @@ export const CommonInputForm = ({
   );
   const [inputHover, setInputHover] = useState(false);
   const [pickerValue, setPickerValue] = useState(defaultValue);
-
+  const [visible, setVisible] = useState(false);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const handleTextInputFocus = () => {
     setInputHover(true);
@@ -92,6 +95,7 @@ export const CommonInputForm = ({
             onFocus={handleTextInputFocus}
             placeholder={placeholder}
             returnKeyType={returnKeyType}
+            rightIcon={rightIcon}
             secureTextEntry={secureTextEntry}
             style={[
               styles.textInput,
@@ -103,6 +107,7 @@ export const CommonInputForm = ({
             textAlignVertical="top"
           />
         );
+
       case 'calendar':
         return (
           <>
@@ -137,6 +142,9 @@ export const CommonInputForm = ({
             items={dropDownList}
             onValueChange={text => {
               setPickerValue(text);
+              if (typeof onChangeText === 'function') {
+                onChangeText(text);
+              }
             }}
             placeholder={{ label: placeholder }}
             style={{
@@ -204,14 +212,16 @@ const styles = StyleSheet.create({
     height: scaleH(160),
     overflow: 'hidden',
   },
-
   error: {
     borderColor: COLORS.error,
   },
+
   label: {
     ...textStyleObject.label,
     color: COLORS.dark20,
-    marginBottom: scaleV(4),
+    marginBottom: scaleV(12),
+    marginLeft: scaleH(10),
+    marginTop: scaleV(12),
   },
   selectedContainer: {
     alignSelf: 'stretch',
@@ -232,7 +242,8 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.BORDER_RADIUS,
     borderWidth: 1,
     height: scaleH(44),
-    paddingHorizontal: scaleH(8),
+    paddingHorizontal: scaleH(12),
+    paddingVertical: scaleV(12),
     ...textStyleObject.bodyText,
     backgroundColor: COLORS.white,
     borderColor: COLORS.dark80,

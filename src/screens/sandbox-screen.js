@@ -1,7 +1,7 @@
 // import { AppLoading } from 'expo';
 // import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 // import { color } from 'react-native-reanimated';
@@ -23,6 +23,7 @@ import { CommonLoadingComponent } from '../components/common-loading-component';
 // import { CommonScaleImage } from '../components/common-scale-image';
 // import { CommonTextItem } from '../components/common-text-item';
 // import { CommonPopUp } from '../components/common-popup';
+// import { CommonTab } from '../components/common-tab';
 import { COLORS } from '../constants/colors';
 // import { DIMENSIONS } from '../constants/dimensions';
 

@@ -33,6 +33,8 @@ export const ALL_ROLES = [
   'SYSTEM_ADMIN',
 ];
 
-export const USER_GENDERS = ['MALE', 'FEMALE', 'OTHER'];
-
-export const DATE_FORMAT = 'DD/MM/YYYY';
+export const USER_GENDERS = [
+  { key: '1', label: 'MALE', value: 'MALE' },
+  { key: '2', label: 'FEMALE', value: 'FEMALE' },
+  { key: '3', label: 'OTHER', value: 'OTHER' },
+];

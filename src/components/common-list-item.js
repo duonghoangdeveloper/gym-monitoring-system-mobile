@@ -91,8 +91,13 @@ export const CommonListItem = ({
     >
       <View style={styles.labelContainer}>
         {icon && (
-          <View style={{ marginEnd: scaleH(12), width: scaleH(16) }}>
-            {icon}
+          <View style={{ marginEnd: scaleH(10), width: scaleH(16) }}>
+            {/* {getSvg(icon, { fill: colors.dark20 })} */}
+            <FontAwesome5
+              fill={COLORS.dark20}
+              name={icon}
+              style={{ fontSize: scaleH(13) }}
+            />
           </View>
         )}
         <Text style={styles.label}>{label}</Text>
