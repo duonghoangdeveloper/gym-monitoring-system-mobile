@@ -1,6 +1,6 @@
 export const URI =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-    ? 'http://192.168.1.42:7777'
+    ? 'http://192.168.1.28:7777'
     : 'https://gym-monitoring-system.herokuapp.com';
 
 export const TOKEN_KEY = 'gym-monitoring-system-token';
@@ -32,3 +32,4 @@ export const ALL_ROLES = [
 export const USER_GENDERS = ['MALE', 'FEMALE', 'OTHER'];
 
 export const DATE_FORMAT = 'DD/MM/YYYY';
+export const PAGE_SIZE = 10;

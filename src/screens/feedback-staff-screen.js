@@ -1,67 +1,114 @@
-import React from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import React, { useState } from 'react';
 import {
-  Dimensions,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
-  TextBox,
-  TouchableOpacity,
   View,
 } from 'react-native';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { CommonInputForm } from '../components/common-input-form';
-import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { CommonTextItem } from '../components/common-text-item';
-import { COLORS } from '../constants/colors';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 
-export const FeedbackStaffScreen = ({ navigation }) => (
-  <CommonDismissKeyboardWrapper>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={{
-        alignItems: 'center',
-        flex: 1,
-        padding: 12,
-      }}
-    >
-      <View style={styles.container}>
-        <View style={styles.avatar}>
-          <CommonAvatar
-            editable={false}
-            uri="https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=9dpn--hlWcIAX_zCIaK&_nc_ht=scontent.fsgn2-1.fna&oh=9b432da36bc728831cdf878fd7b98acf&oe=5F478B03"
-          />
-          <Text h4 style={styles.name}>
-            {'Trin'}
-          </Text>
+export const FeedbackStaffScreen = ({ navigation, route }) => {
+  const user = route.params.staff;
+  const client = useApolloClient();
+  const [content, setContent] = useState('');
+  const [alert, setAlert] = useState(false);
+
+  const feedbackStaff = async (staffIds, content) => {
+    try {
+      if (content.length >= 1 && content.length <= 1000) {
+        await client.mutate({
+          mutation: gql`
+            mutation CreateFeedback($staffIds: [ID!]!, $content: String!) {
+              createFeedback(data: { staffIds: $staffIds, content: $content }) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            content,
+            staffIds,
+          },
+        });
+
+        setAlert(true);
+        setTimeout(function() {
+          setAlert(false);
+        }, 1500);
+      } else {
+        console.log('ERROR');
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+  return (
+    <CommonDismissKeyboardWrapper>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          padding: 12,
+        }}
+      >
+        <AwesomeAlert
+          message="I have a message for you!"
+          show={alert}
+          title="AwesomeAlert"
+        />
+        <View style={styles.container}>
+          <View style={styles.avatar}>
+            {user.avatar ? (
+              <CommonAvatar editable={false} uri={user.avatar} />
+            ) : (
+              <CommonAvatar
+                editable={false}
+                uri="https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg"
+              />
+            )}
+            <Text h4 style={styles.name}>
+              {user.displayName}
+            </Text>
+          </View>
+          <View style={styles.inputView}>
+            <CommonTextItem
+              content="Chúng tôi cần cải thiện điều gì?"
+              haveTick={false}
+            />
+            <CommonInputForm
+              onChangeText={text => setContent(text)}
+              style={{
+                height: DIMENSIONS.MULTI_TEXT_HEIGHT,
+              }}
+            />
+          </View>
+          <View style={styles.view}>
+            <CommonTextItem
+              content="Ý kiến đóng góp của bạn rất quý giá đối với chúng tôi"
+              haveTick={false}
+              labelStyle={styles.text}
+            />
+            <CommonButton
+              label="SEND YOUR FEEDBACK"
+              onPress={() => feedbackStaff([user._id], content)}
+              style={styles.button}
+            />
+          </View>
         </View>
-        <View style={styles.inputView}>
-          <CommonTextItem
-            content="Chúng tôi cần cải thiện điều gì?"
-            haveTick={false}
-          />
-          <CommonInputForm
-            style={{
-              height: DIMENSIONS.MULTI_TEXT_HEIGHT,
-            }}
-          />
-        </View>
-        <View style={styles.view}>
-          <CommonTextItem
-            content="Ý kiến đóng góp của bạn rất quý giá đối với chúng tôi"
-            haveTick={false}
-            labelStyle={styles.text}
-          />
-          <CommonButton label="SEND YOUR FEEDBACK" style={styles.button} />
-        </View>
-      </View>
-    </KeyboardAvoidingView>
-  </CommonDismissKeyboardWrapper>
-);
+      </KeyboardAvoidingView>
+    </CommonDismissKeyboardWrapper>
+  );
+};
 
 const styles = StyleSheet.create({
   avatar: {
