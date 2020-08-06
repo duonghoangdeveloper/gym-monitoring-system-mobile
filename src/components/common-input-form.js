@@ -142,7 +142,6 @@ export const CommonInputForm = ({
           <RNPickerSelect
             items={dropDownList}
             onValueChange={text => {
-              console.log(text);
               setPickerValue(text);
               if (typeof onChangeText === 'function') {
                 onChangeText(text);

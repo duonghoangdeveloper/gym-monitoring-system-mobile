@@ -33,32 +33,8 @@ export const ALL_ROLES = [
   'SYSTEM_ADMIN',
 ];
 
-const dataSelector = [
-  {
-    key: '1',
-    label: 'Tommy Wiseau',
-    value: 1,
-  },
-  {
-    key: '2',
-    label: 'Arnold Schwarzenneger',
-    value: 2,
-  },
-  {
-    key: '3',
-    label: 'Donald Glover',
-    value: 3,
-  },
-  {
-    key: '4',
-    label: 'Emma Stone',
-    value: 4,
-  },
-];
 export const USER_GENDERS = [
   { key: '1', label: 'MALE', value: 'MALE' },
   { key: '2', label: 'FEMALE', value: 'FEMALE' },
   { key: '3', label: 'OTHER', value: 'OTHER' },
 ];
-
-export const DATE_FORMAT = 'DD/MM/YYYY';

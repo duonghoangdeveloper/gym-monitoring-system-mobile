@@ -61,7 +61,7 @@ export const CommonAvatar = ({
       />
     </TouchableWithoutFeedback>
   );
-  if (editable === 'false')
+  if (!editable)
     return (
       <View
         style={{
