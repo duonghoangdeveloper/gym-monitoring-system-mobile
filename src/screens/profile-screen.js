@@ -2,18 +2,10 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
-import {
-  Avatar,
-  Button,
-  ButtonGroup,
-  Divider,
-  Input,
-} from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
-import avatar from '../../assets/avatar.png';
 import { CommonAvatar } from '../components/common-avatar';
-import { CommonBadgeIcon } from '../components/common-badge-icon';
 import { CommonButton } from '../components/common-button';
 import { CommonInputForm } from '../components/common-input-form';
 import { CommonView } from '../components/common-view';
@@ -30,6 +22,7 @@ export const ProfileScreen = () => {
   );
 
   const handleUpdatePress = async () => {
+    console.log(updateUser);
     setLoading(true);
     try {
       const result = await client.mutate({
@@ -69,7 +62,6 @@ export const ProfileScreen = () => {
         },
       });
       console.log('result: ', result);
-
       dispatch({
         payload: {
           me: updateUser,
@@ -82,26 +74,18 @@ export const ProfileScreen = () => {
     }
     setLoading(false);
   };
-  console.log(updateUser.gender);
+
   return (
     <ScrollView style={styles.scrollView}>
-      <CommonView
-        style={
-          {
-            // justifyContent: 'center',
-          }
-        }
-      >
+      <CommonView>
         <View style={styles.avatarContainer}>
           <CommonAvatar
             editable
             label="string"
-            // onAvatarPress
             size="xxsmall"
             uri="https://reactnative.dev/img/tiny_logo.png"
           />
         </View>
-        {/* <Divider style={{ backgroundColor: 'white', height: 50 }} /> */}
         <CommonInputForm
           label="Username"
           onChangeText={text => {
@@ -112,8 +96,6 @@ export const ProfileScreen = () => {
             alignItems: 'center',
             backgroundColor: 'white',
             flex: 1,
-
-            // justifyContent: 'center',
           }}
           value={updateUser.username}
         />
@@ -127,8 +109,6 @@ export const ProfileScreen = () => {
             alignItems: 'center',
             backgroundColor: 'white',
             flex: 1,
-
-            // justifyContent: 'center',
           }}
           value={updateUser.displayName}
         />
@@ -142,8 +122,6 @@ export const ProfileScreen = () => {
             alignItems: 'center',
             backgroundColor: 'white',
             flex: 1,
-
-            // justifyContent: 'center',
           }}
           value={updateUser.email}
         />
@@ -157,58 +135,22 @@ export const ProfileScreen = () => {
             alignItems: 'center',
             backgroundColor: 'white',
             flex: 1,
-
-            // justifyContent: 'center',
           }}
           value={updateUser.phone}
         />
-        <CommonInputForm
-          label="Phone"
-          onChangeText={text => {
-            setUpdateUser({ ...updateUser, phone: text });
-          }}
-          placeholder="Enter your phone"
-          style={{
-            alignItems: 'center',
-            backgroundColor: 'white',
-            flex: 1,
 
-            // justifyContent: 'center',
-          }}
-          value={updateUser.phone}
-        />
-        {/* <CommonInputForm
-          label="Gender"
-          onChangeText={text => {
-            setUpdateUser({ ...updateUser, gender: text });
-          }}
-          placeholder="Enter your phone"
-          style={{
-            alignItems: 'center',
-            backgroundColor: 'white',
-            flex: 1,
-
-            // justifyContent: 'center',
-          }}
-          value={updateUser.gender}
-        /> */}
         <CommonInputForm
-          // defaultValue={updateUser.gender}
+          defaultValue={updateUser.gender}
           dropDownList={USER_GENDERS}
           label="Gender"
-          onValueChange={text => {
-            setUpdateUser({ ...updateUser, gender: text });
-          }}
+          onChangeText={text => setUpdateUser({ ...updateUser, gender: text })}
           placeholder="Choose gender"
           style={{
             alignItems: 'center',
             backgroundColor: 'white',
             flex: 1,
-
-            // justifyContent: 'center',
           }}
           type="dropdown"
-          value={updateUser.gender}
         />
 
         <Divider style={{ backgroundColor: 'white', height: 40 }} />
@@ -231,11 +173,8 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    // padding: 30,
-    // alignItems: 'stretch',
     backgroundColor: 'white',
     flex: 1,
-    // padding: DIMENSIONS.PADDING,
   },
   view: {
     alignItems: 'center',

@@ -1,21 +1,16 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import moment from 'moment';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Button, Tab, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
-import {
-  DATE_FORMAT,
-  DATE_TIME_FORMAT,
-  TIME_FORMAT,
-} from '../common/constants';
+import { DATE_FORMAT } from '../common/constants';
 import { CommonListItem } from './common-list-item';
 
 export const CustomerPaymentDetailScreen = ({ navigation }) => {
   const client = useApolloClient();
   const [payments, setPayment] = useState([]);
   const [total, setTotal] = useState(0);
-  // const [totalPrice, setTotalPrice] = useState(0);
   const fetchPaymentsData = async () => {
     try {
       const result = await client.query({
@@ -68,7 +63,6 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
   payments.forEach(p => (sumPeriod += p.package.period));
   let dateCreate = new Date();
   payments.forEach(p => (dateCreate = p.customer.createdAt));
-  // console.log(dateCreate);
   const expiredDateTemp = new Date(dateCreate).setDate(
     new Date(dateCreate).getDate() + sumPeriod * 30
   );
