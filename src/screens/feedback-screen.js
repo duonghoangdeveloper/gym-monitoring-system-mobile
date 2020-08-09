@@ -1,57 +1,69 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 
+import { CommonListItem } from '../components/common-list-item';
+
 export const FeedbackScreen = ({ navigation }) => (
   <View style={styles.container}>
-    {list.map(({ key, leftIcon, title, to }) => (
-      <TouchableOpacity onPress={() => navigation.navigate(to, { name: key })}>
-        <ListItem
-          bottomDivider
-          leftAvatar={
-            <View size={16} style={styles.leftIcon}>
-              {leftIcon}
-            </View>
-          }
-          rightIcon={
-            <Icon
-              key={key}
-              name="chevron-right"
-              size={16}
-              style={styles.rightIcon}
-              type="font-awesome"
-            />
-          }
-          title={title}
-        />
-      </TouchableOpacity>
-    ))}
+    <View style={{ width: 351 }}>
+      {list.map(({ icon, key, label, to }) => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(to, { name: key });
+          }}
+        >
+          <CommonListItem
+            detail={
+              <Ionicons
+                color="black"
+                name="ios-arrow-forward"
+                size={18}
+                style={styles.rightIcon}
+                type="font-awesome"
+              />
+            }
+            icon={icon}
+            label={label}
+            showSeparator="true"
+            type="detail"
+          />
+        </TouchableOpacity>
+      ))}
+    </View>
   </View>
 );
 
 const list = [
   {
+    icon: 'pen-alt',
     key: 'gym',
-    leftIcon: <Icon name="user" type="font-awesome" />,
-    title: 'Feedback Gym',
+    label: 'Feedback Gym',
     to: 'Feedback Gym',
   },
   {
+    icon: 'pen-alt',
     key: 'trainer',
-    leftIcon: <Icon name="comments-o" type="font-awesome" />,
-    title: 'Feedback Trainer',
+    label: 'Feedback Trainer',
     to: 'Choose Trainer',
   },
   {
+    icon: 'pen-alt',
     key: 'manager',
-    leftIcon: <Icon name="comments-o" type="font-awesome" />,
-    title: 'Feedback Manager',
+    label: 'Feedback Manager',
     to: 'Choose Manager',
   },
 ];
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    flex: 1,
+    marginBottom: 24,
+    padding: 24,
+  },
 
   leftIcon: {
     // alignItems: 'flex-start',

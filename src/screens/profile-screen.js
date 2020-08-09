@@ -2,17 +2,15 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
-import {
-  Avatar,
-  Button,
-  ButtonGroup,
-  Divider,
-  Input,
-} from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
-import avatar from '../../assets/avatar.png';
+import { CommonAvatar } from '../components/common-avatar';
+import { CommonButton } from '../components/common-button';
+import { CommonInputForm } from '../components/common-input-form';
+import { CommonView } from '../components/common-view';
 import { USER_GENDERS } from '../constants/app';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { UPDATE_PROFILE } from '../redux/user/user.types';
 
 export const ProfileScreen = () => {
@@ -24,9 +22,9 @@ export const ProfileScreen = () => {
   );
 
   const handleUpdatePress = async () => {
+    console.log(updateUser);
     setLoading(true);
     try {
-      console.log('123');
       const result = await client.mutate({
         mutation: gql`
           mutation UpdateProfile(
@@ -34,7 +32,7 @@ export const ProfileScreen = () => {
             $displayName: String
             $email: String
             $phone: String
-            $gender: Gender
+            $gender: String
           ) {
             updateProfile(
               data: {
@@ -79,67 +77,104 @@ export const ProfileScreen = () => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.view}>
-        <Avatar
-          activeOpacity={0.7}
-          icon={{ name: 'user', type: 'font-awesome' }}
-          rounded
-          showEditButton="true"
-          size="xlarge"
-          source={avatar}
-        />
-
-        <Divider style={{ backgroundColor: 'black', height: 1 }} />
-
-        <Input
+      <CommonView>
+        <View style={styles.avatarContainer}>
+          <CommonAvatar
+            editable
+            label="string"
+            size="xxsmall"
+            uri="https://reactnative.dev/img/tiny_logo.png"
+          />
+        </View>
+        <CommonInputForm
           label="Username"
           onChangeText={text => {
             setUpdateUser({ ...updateUser, username: text });
           }}
+          placeholder="Enter your username"
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
+          }}
           value={updateUser.username}
         />
-        <Input
+        <CommonInputForm
           label="Display name"
           onChangeText={text => {
             setUpdateUser({ ...updateUser, displayName: text });
           }}
+          placeholder="Enter your display name"
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
+          }}
           value={updateUser.displayName}
         />
-        <Input
+        <CommonInputForm
           label="Email"
           onChangeText={text => {
             setUpdateUser({ ...updateUser, email: text });
           }}
+          placeholder="Enter your email"
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
+          }}
           value={updateUser.email}
         />
-        <Input
+        <CommonInputForm
           label="Phone"
           onChangeText={text => {
             setUpdateUser({ ...updateUser, phone: text });
           }}
+          placeholder="Enter your phone"
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
+          }}
           value={updateUser.phone}
         />
-        <Input label="Role" value={updateUser.role} />
-        <ButtonGroup
-          buttons={USER_GENDERS}
+
+        <CommonInputForm
+          defaultValue={updateUser.gender}
+          dropDownList={USER_GENDERS}
           label="Gender"
-          onPress={index => {
-            setUpdateUser({ ...updateUser, gender: USER_GENDERS[index] });
+          onChangeText={text => setUpdateUser({ ...updateUser, gender: text })}
+          placeholder="Choose gender"
+          style={{
+            alignItems: 'center',
+            backgroundColor: 'white',
+            flex: 1,
           }}
-          selectedIndex={USER_GENDERS.indexOf(updateUser.gender)}
+          type="dropdown"
         />
 
-        <Divider style={{ backgroundColor: 'black', height: 1 }} />
-
-        <Button loading={loading} onPress={handleUpdatePress} title="Update" />
-      </View>
+        <Divider style={{ backgroundColor: 'white', height: 40 }} />
+        <CommonButton
+          label="Update"
+          loading={loading}
+          onPress={handleUpdatePress}
+        />
+        <Divider style={{ backgroundColor: 'white', height: 40 }} />
+      </CommonView>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  avatarContainer: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: DIMENSIONS.PADDING,
+  },
+
   scrollView: {
-    padding: 30,
+    backgroundColor: 'white',
+    flex: 1,
   },
   view: {
     alignItems: 'center',
