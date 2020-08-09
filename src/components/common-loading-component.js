@@ -7,7 +7,7 @@ import { COLORS } from '../constants/colors';
 
 export const CommonLoadingComponent = () => (
   <View style={styles.container}>
-    <ActivityIndicator color={COLORS.white} />
+    <ActivityIndicator />
   </View>
 );
 

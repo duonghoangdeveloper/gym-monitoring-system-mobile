@@ -1,14 +1,20 @@
-// import { AppLoading } from 'expo';
-// import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-// import React, { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 // import { color } from 'react-native-reanimated';
 // import { CommonAvatar } from '../components/common-avatar';
 // import { CommonBadgeIcon } from '../components/common-badge-icon';
 import { CommonButton } from '../components/common-button';
-// import { NotificationItem } from '../components/notification-item';
 // import { CommonButtonGroup } from '../components/common-button-group';
 // import { CommonConfirmPopup } from '../components/common-confirm-popup';
 // import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
@@ -18,6 +24,7 @@ import { CommonButton } from '../components/common-button';
 // import { CommonInputForm } from '../components/common-input-form';
 // import { CommonListItem } from '../components/common-list-item';
 import { CommonLoadingComponent } from '../components/common-loading-component';
+import { NotificationItem } from '../components/notification-item';
 // import { CommonModalContainer } from '../components/common-modal-container';
 // import { CommonNotFoundComponent } from '../components/common-not-found-component';
 // import { CommonScaleImage } from '../components/common-scale-image';
@@ -27,173 +34,112 @@ import { CommonLoadingComponent } from '../components/common-loading-component';
 import { COLORS } from '../constants/colors';
 // import { DIMENSIONS } from '../constants/dimensions';
 
-export const SandboxScreen = () => {
+export const SandboxScreen = ({ navigation }) => {
+  const [selectedId, setSelectedId] = useState(null);
   const title = 'Sandbox';
+  const DATA = [
+    {
+      description: 'Lorem Ipsum Dolor...',
+      // image: 'https://reactnative.dev/img/tiny_logo.png',
+      // position: 'Area1',
+      time: '07/31/2020',
+      title: 'Lorem Ipsum Dolor',
+    },
+    {
+      description: 'Lorem Ipsum Dolor...',
+      // image: 'https://reactnative.dev/img/tiny_logo.png',
+      // position: 'Area2',
+      time: '07/30/2020',
+      title: 'Lorem Ipsum Dolor',
+    },
+    {
+      description: 'Lorem Ipsum Dolor...',
+      // image: 'https://reactnative.dev/img/tiny_logo.png',
+      // position: 'Area3',
+      time: '07/29/2020',
+      title: 'Lorem Ipsum Dolor',
+    },
+  ];
 
-  const content1 = {
-    description: 'Lorem Ipsum Dolor...',
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    note:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-    position: 'Area1',
-    time: '07/31/2020',
-    title: 'Lorem Ipsum Dolor',
-  };
-  return (
-    <ScrollView
-    // style={{ backgroundColor: 'black' }}
+  const Item = ({ item, onPress, style }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('NotificationDetail')}
+      style={style}
     >
-      <View
-        style={{
-          alignItems: 'center',
-          backgroundColor: 'white',
-        }}
-      >
-        <Text
+      <NotificationItem content={item} type="box" />
+    </TouchableOpacity>
+  );
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        style={{ backgroundColor }}
+      />
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View
           style={{
-            color: COLORS.dark,
-            fontSize: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          {title}
-        </Text>
+          <Text
+            style={{
+              color: COLORS.dark,
+              fontSize: 30,
+            }}
+          >
+            {title}
+          </Text>
 
-        <CommonButton
-          icon={<FontAwesome5 color="white" name="home" />}
-          // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
-          leftIcon={<CommonLoadingComponent />}
-          // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
-          // shape="rectangle"
-          // style={{ width: 380 }}
-          title="Click Me"
-        />
-      </View>
-    </ScrollView>
+          <FlatList
+            // ItemSeparatorComponent={
+            //   Platform.OS !== 'android' &&
+            //   (({ highlighted }) => (
+            //     <View
+            //       // style={[styles.separator, highlighted && { marginLeft: 0 }]}
+            //       style={{ backgroundColor: 'black', marginLeft: 0 }}
+            //     />
+            //   ))
+            // }
+            data={DATA}
+            extraData={selectedId}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+          <CommonButton
+            // icon={<FontAwesome5 color="white" name="home" />}
+            icon={<CommonLoadingComponent />}
+            // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
+            // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
+            // shape="rectangle"
+            // style={{ width: 380 }}
+            // title="Click Me"
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-//     <Text style={{ fontFamily: 'Quicksand-Bold', fontSize: 40 }}>
-//       Quicksand-Bold
-//     </Text>
-//     <Text style={{ fontFamily: 'Quicksand-Regular', fontSize: 40 }}>
-//       Quicksand-Regular
-//     </Text>
-//     <Text style={{ fontFamily: 'SFUIDisplay-Black', fontSize: 40 }}>
-//       SFUIDisplay-Black
-//     </Text>
-//     <Text style={{ fontFamily: 'SFUIDisplay-Bold', fontSize: 40 }}>
-//       SFUIDisplay-Bold
-//     </Text>
-//     <Text style={{ fontFamily: 'SFUIDisplay-Light', fontSize: 40 }}>
-//       SFUIDisplay-Light
-//     </Text>
-//     <Text style={{ fontFamily: 'SFUIDisplay-Regular', fontSize: 40 }}>
-//       SFUIDisplay-Regular
-//     </Text>
-//     <Text style={{ fontFamily: 'SFUIDisplay-Ultralight', fontSize: 40 }}>
-//       SFUIDisplay-Ultralight
-//     </Text>
-//     <Text style={{ fontSize: 40 }}>Platform Default</Text>
-
-// <CommonAvatar
-// editable
-// label="string"
-// // onAvatarPress
-// size="xxsmall"
-// uri="https://reactnative.dev/img/tiny_logo.png"
-// />
-
-// <CommonBadgeIcon />
-// <CommonBadgeIcon
-// badgeCount={5}
-// // iconProps={[(style = { fontSize: 12 })]}
-// name="home"
-// />
-
-// {/* <CommonButton
-//   buttonType="normal"
-//   // buttonType= 'popup'
-//   disable
-//   // disable= {false}
-//   // endColor="yellow"
-//   gradient
-//   // gradient= {false}
-//   icon="home"
-//   label="test"
-//   leftIcon="home"
-//   rightIcon="home"
-//   // startColor="red"
-//   // textColor="white"
-//   // theme="primary"
-//   // theme="secondary"
-//   // theme="success"
-//   // theme="error"
-//   theme="none"
-// />; */}
-
-// <CommonButtonGroup
-// activeIndex={0}
-// labels={['A', 'B', 'C', 'D']}
-// onItemPress
-// style
-// />
-
-// {/* <CommonPopUp
-//   cancelLabel="Decline"
-//   confirmLabel="Accept"
-//   // onClose= () => void
-//   // onConfirm= () => void
-//   // onDecline= () => void
-//   description="This is a test"
-//   grandResponder
-//   // grandResponder={false}
-//   modalVisible
-//   // modalVisible={false}
-//   popupType="error"
-//   title="TEST"
-// />; */}
-
-// <CommonImageSelector
-//   data={{
-//     key: 'avatar',
-//     uri: 'https://reactnative.dev/img/tiny_logo.png',
-//   }}
-//   // style
-//   // onRemovePress
-//   // onAddPress
-// />;
-
-// {/* <CommonInputForm
-//   dropDownList={dataSelector}
-//   label="aaaa"
-//   placeholder="Drop down"
-//   type="dropdown"
-// />
-// <CommonInputForm label="Input" placeholder="enter name" />
-// <CommonInputForm label="Calender" type="calendar" />
-// <CommonListItem
-//   detail={<CommonIcon name="angle-right" />}
-//   icon={<CommonIcon name="music" />}
-//   label="daaaa"
-//   pressable="true"
-//   showSeparator
-//   type="detail"
-// />
-// <CommonListItem
-//   detail="adsd"
-//   label="daaaa"
-//   showSeparator
-//   type="detail"
-// />
-// <CommonListItem detail="adsd" label="daaaa" type="toggle" /> */}
-
-// {/* <CommonModalContainer modalVisible>
-//   <CommonButtonGroup
-//     activeIndex={0}
-//     labels={['A', 'B', 'C', 'D']}
-//     onItemPress={n => console.log(n)}
-//     style
-//   />
-// </CommonModalContainer> */}
-// {/* <CommonNotFoundComponent /> */}
-// {/* <CommonTextItem /> */}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+  },
+});

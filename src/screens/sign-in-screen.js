@@ -132,10 +132,10 @@ export const SignInScreen = ({ navigation }) => {
 
           {/* <Divider style={{ backgroundColor: 'white', height: 40 }} /> */}
           <CommonButton
-            label="Sign in"
             loading={loading}
             onPress={handleSignInPress}
             style={{ marginTop: scaleV(40) }}
+            title="Sign in"
           />
           {/* <Divider style={{ backgroundColor: 'white', height: 100 }} /> */}
         </KeyboardAvoidingView>
