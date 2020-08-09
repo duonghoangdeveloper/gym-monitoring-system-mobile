@@ -1,7 +1,8 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Font from 'expo-font';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -12,6 +13,7 @@ import {
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { registerForPushNotificationsAsync } from '../../App';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { TOKEN_KEY } from '../constants/app';
 import { SIGN_IN } from '../redux/user/user.types';
@@ -23,14 +25,28 @@ export const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   const handleSignInPress = async () => {
     setLoading(true);
+    const expoPushToken = await registerForPushNotificationsAsync();
     try {
       const result = await client.mutate({
         mutation: gql`
-          mutation SignIn($username: String!, $password: String!) {
-            signIn(data: { username: $username, password: $password }) {
+          mutation SignIn(
+            $username: String!
+            $password: String!
+            $deviceToken: String!
+          ) {
+            signIn(
+              data: {
+                username: $username
+                password: $password
+                deviceToken: $deviceToken
+              }
+            ) {
               token
               data {
                 _id
@@ -45,6 +61,7 @@ export const SignInScreen = ({ navigation }) => {
           }
         `,
         variables: {
+          deviceToken: expoPushToken,
           password,
           username,
         },

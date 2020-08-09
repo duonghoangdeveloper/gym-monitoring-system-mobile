@@ -1,7 +1,10 @@
 // import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Platform, ScrollView, Text, View } from 'react-native';
 import { color } from 'react-native-reanimated';
 
 import { CommonAvatar } from '../components/common-avatar';
@@ -22,7 +25,121 @@ import { CommonTextItem } from '../components/common-text-item';
 import { COLORS } from '../constants/colors';
 import { DIMENSIONS } from '../constants/dimensions';
 
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//     shouldShowAlert: true,
+//   }),
+// });
+
 export const SandboxScreen = () => {
+  //   const [expoPushToken, setExpoPushToken] = useState('');
+  //   const [notification, setNotification] = useState(false);
+  //   const notificationListener = useRef();
+  //   const responseListener = useRef();
+
+  //   useEffect(() => {
+  //     registerForPushNotificationsAsync().then(token => {
+  //       setExpoPushToken(token);
+  //     });
+
+  //     notificationListener.current = Notifications.addNotificationReceivedListener(
+  //       notification => {
+  //         setNotification(notification);
+  //       }
+  //     );
+
+  //     responseListener.current = Notifications.addNotificationResponseReceivedListener(
+  //       response => {
+  //         console.log(response);
+  //       }
+  //     );
+
+  //     return () => {
+  //       Notifications.removeNotificationSubscription(notificationListener);
+  //       Notifications.removeNotificationSubscription(responseListener);
+  //     };
+  //   }, []);
+
+  //   return (
+  //     <View
+  //       style={{
+  //         alignItems: 'center',
+  //         flex: 1,
+  //         justifyContent: 'space-around',
+  //       }}
+  //     >
+  //       <Text>Your expo push token: {expoPushToken}</Text>
+  //       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+  //         <Text>
+  //           Title: {notification && notification.request.content.title}{' '}
+  //         </Text>
+  //         <Text>Body: {notification && notification.request.content.body}</Text>
+  //         <Text>
+  //           Data:{' '}
+  //           {notification && JSON.stringify(notification.request.content.data)}
+  //         </Text>
+  //       </View>
+  //       <Button
+  //         onPress={async () => {
+  //           await sendPushNotification(expoPushToken);
+  //         }}
+  //         title="sent notification"
+  //       />
+  //     </View>
+  //   );
+  // };
+
+  // async function sendPushNotification(expoPushToken) {
+  //   const message = {
+  //     body: 'And here is the body!',
+  //     data: { data: 'goes here' },
+  //     sound: 'default',
+  //     title: 'Original Title',
+  //     to: expoPushToken,
+  //   };
+
+  //   await fetch('https://exp.host/--/api/v2/push/send', {
+  //     body: JSON.stringify(message),
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Accept-encoding': 'gzip, deflate',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     method: 'POST',
+  //   });
+  // }
+
+  // async function registerForPushNotificationsAsync() {
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } = await Permissions.getAsync(
+  //       Permissions.NOTIFICATIONS
+  //     );
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== 'granted') {
+  //       alert('Failed to get push token for push notification!');
+  //       return;
+  //     }
+  //     const token = await (await Notifications.getExpoPushTokenAsync()).data;
+  //   } else {
+  //     alert('Must use physical device for Push Notifications');
+  //   }
+
+  //   if (Platform.OS === 'android') {
+  //     Notifications.createChannelAndroidAsync('default', {
+  //       name: 'default',
+  //       priority: 'max',
+  //       sound: true,
+  //       vibrate: [0, 250, 250, 250],
+  //     });
+  //   }
+  // }
+
   const title = 'Sandsasadsds box';
 
   const dataSelector = [
@@ -47,6 +164,7 @@ export const SandboxScreen = () => {
       value: 4,
     },
   ];
+
   return (
     <View>
       <ScrollView>
@@ -96,13 +214,13 @@ export const SandboxScreen = () => {
         />
         <CommonLoadingComponent />
         {/* <CommonModalContainer modalVisible>
-          <CommonButtonGroup
-            activeIndex={0}
-            labels={['A', 'B', 'C', 'D']}
-            onItemPress={n => console.log(n)}
-            style
-          />
-        </CommonModalContainer> */}
+        <CommonButtonGroup
+          activeIndex={0}
+          labels={['A', 'B', 'C', 'D']}
+          onItemPress={n => console.log(n)}
+          style
+        />
+      </CommonModalContainer> */}
         {/* <CommonNotFoundComponent /> */}
         {/* <CommonTextItem /> */}
         {/* </View> */}
