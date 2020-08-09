@@ -32,11 +32,8 @@ export const ALL_ROLES = [
 export const USER_GENDERS = ['MALE', 'FEMALE', 'OTHER'];
 
 export const DATE_FORMAT = 'DD/MM/YYYY';
-<<<<<<< HEAD
 export const PAGE_SIZE = 10;
-=======
 
 export const DATE_TIME_FORMAT = 'DD/MM/YYYY, HH:mm';
 
 export const TIME_FORMAT = 'HH:mm';
->>>>>>> master
