@@ -29,7 +29,7 @@ export const CommonScrollViewAwareScreenHeight = ({
   refreshControl,
   refreshable,
   refreshing,
-  showsVerticalScrollIndicator = true,
+  showsVerticalScrollIndicator = false,
 }: PropTypes) => {
   const [isFlex, setFlex] = useState(false);
   const contentHeight = useRef(0);
