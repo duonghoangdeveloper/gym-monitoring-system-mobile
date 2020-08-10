@@ -38,7 +38,7 @@ export const CommonPopupPromptDialogView = ({
 }: PropTypes) => {
   const [text, setText] = useState(defaultValue);
   const [error, setError] = useState('');
-  const headerHeight = useSelector(state => state.app.headerHeight);
+  // const headerHeight = useSelector(state => state.app.headerHeight);
 
   const handleConfirm = () => {
     if (regex) {
@@ -55,7 +55,7 @@ export const CommonPopupPromptDialogView = ({
   return (
     <KeyboardAvoidingView
       {...getBehavior()}
-      keyboardVerticalOffset={headerHeight + 80}
+      keyboardVerticalOffset={120120}
       style={{
         alignItems: 'center',
         height: 420,
@@ -97,16 +97,16 @@ export const CommonPopupPromptDialogView = ({
 
         <View style={styles.action}>
           <CommonButton
-            label={cancelLabel}
             onPress={onDecline}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
             theme="error"
+            title={cancelLabel}
           />
           <CommonButton
-            label={confirmLabel}
             onPress={handleConfirm}
             style={{ borderRadius: 4, height: 36, minWidth: 100 }}
             theme="success"
+            title={confirmLabel}
           />
         </View>
       </View>

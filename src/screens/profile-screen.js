@@ -61,7 +61,6 @@ export const ProfileScreen = () => {
           username: updateUser.username,
         },
       });
-      console.log('result: ', result);
       dispatch({
         payload: {
           me: updateUser,

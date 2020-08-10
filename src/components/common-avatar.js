@@ -76,14 +76,8 @@ export const CommonAvatar = ({
   return (
     <View
       style={{
-        // alignItems: 'center',
-
-        // flex: 1,
-
         height: scaleH(dimension),
-        // justifyContent: 'center',
-        // marginLeft: 110,
-
+        position: 'relative',
         width: scaleH(dimension),
       }}
     >

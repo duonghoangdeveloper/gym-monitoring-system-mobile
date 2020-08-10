@@ -1,6 +1,10 @@
 export const URI =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
+<<<<<<< HEAD
     ? 'http://192.168.1.89:7777'
+=======
+    ? 'http://192.168.1.244:7777'
+>>>>>>> master
     : 'https://gym-monitoring-system.herokuapp.com';
 
 export const TOKEN_KEY = 'gym-monitoring-system-token';

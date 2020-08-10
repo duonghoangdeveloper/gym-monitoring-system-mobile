@@ -28,6 +28,7 @@ export const CommonModalContainer = ({
       onClose();
     }
   };
+
   return (
     <Modal
       animationType={animationType}

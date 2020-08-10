@@ -1,6 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
+import { COLORS } from '../constants/colors';
+
 // import {} from '../constants/types';
 
 export const CommonLoadingComponent = () => (

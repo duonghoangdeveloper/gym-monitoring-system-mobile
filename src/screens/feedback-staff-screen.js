@@ -8,7 +8,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonButton } from '../components/common-button';
@@ -61,11 +60,6 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
           padding: 12,
         }}
       >
-        <AwesomeAlert
-          message="I have a message for you!"
-          show={alert}
-          title="AwesomeAlert"
-        />
         <View style={styles.container}>
           <View style={styles.avatar}>
             {user.avatar ? (

@@ -12,8 +12,6 @@ function scaleFont(fontSize) {
 const textStyle = StyleSheet.create({
   biggestTitle: {
     color: COLORS.dark20,
-
-    // fontSize: scaleFont(42),
     fontFamily: 'Quicksand-Regular',
     fontSize: scaleFont(42),
   },

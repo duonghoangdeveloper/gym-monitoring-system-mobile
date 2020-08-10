@@ -1,4 +1,3 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
@@ -12,23 +11,22 @@ import {
 
 // import { getSvg } from '../assets/svgs';
 import { COLORS } from '../constants/colors';
-import { DIMENSIONS, scaleH } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
 type PropTypes = {
   onPress?: () => void,
-  label?: string,
+  shape: 'round' | 'rectangle',
+  title?: string,
   gradient?: boolean,
   startColor?: string,
   endColor?: string,
   style?: StyleProp<ViewStyle>,
   textColor?: string,
-  icon?: string,
+  icon: React.Node,
   leftIcon?: string,
   rightIcon?: string,
   disable?: boolean,
-  buttonType?: 'normal' | 'popup',
-  containerStyle?: StyleProp<ViewStyle>,
   theme?: 'primary' | 'secondary' | 'success' | 'error' | 'none',
 };
 
@@ -64,87 +62,52 @@ const getColorTheme = (theme, startColor, endColor) => {
 
 export const CommonButton = ({
   onPress,
-  label = '',
+  shape = 'round',
+  title = '',
   gradient = true,
   startColor = COLORS.primaryLight,
   endColor = COLORS.primary,
   style,
   textColor = COLORS.white,
-  iconOnly = false,
-  icon = null,
+  icon,
   leftIcon = null,
   rightIcon = null,
   disable = false,
-  buttonType = 'normal',
-  containerStyle,
   theme = 'primary',
 }: PropTypes) => {
-  const buttonLabel = label.toUpperCase();
   const colorTheme = getColorTheme(theme, startColor, endColor);
 
-  const renderContent = () => (
-    <>
-      {leftIcon && (
-        <View style={styles.leftIcon}>
-          <FontAwesome5 color={textColor} name={leftIcon} />
-        </View>
-      )}
-      <View style={styles.center}>
-        {label ? (
-          <Text style={[textStyle.label, { color: textColor }]}>
-            {buttonLabel}
-          </Text>
-        ) : (
-          <FontAwesome5
-            color={textColor}
-            name={icon}
-            style={[styles.mainIcon, { color: textColor }]}
-          />
-        )}
-      </View>
-      {rightIcon && (
-        <View style={[styles.rightIcon, { color: textColor }]}>
-          <FontAwesome5 color={textColor} name={rightIcon} />
-        </View>
-      )}
-    </>
-  );
-
-  if (gradient) {
-    return (
-      <TouchableOpacity
-        disabled={disable}
-        onPress={onPress}
-        style={[{ alignSelf: 'stretch' }, containerStyle]}
-      >
-        <LinearGradient
-          colors={
-            disable
-              ? [COLORS.primary, COLORS.primaryLight]
-              : [colorTheme.startColor, colorTheme.endColor]
-          }
-          end={{ x: 0.5, y: 1 }}
-          locations={[0, 1]}
-          start={{ x: 0.5, y: 0 }}
-          style={[
-            styles.container,
-            style,
-            buttonType === 'popup' ? styles.popupButton : {},
-          ]}
-        >
-          {renderContent()}
-        </LinearGradient>
-      </TouchableOpacity>
-    );
-  }
-
   return (
-    <TouchableOpacity
-      disabled={disable}
-      onPress={onPress}
-      style={[{ alignSelf: 'stretch' }, containerStyle]}
-    >
-      <View style={[styles.container, style]}>{renderContent()}</View>
+    <TouchableOpacity disabled={disable} onPress={onPress}>
+      <LinearGradient
+        colors={
+          gradient || disable
+            ? [colorTheme.startColor, colorTheme.endColor]
+            : [COLORS.gray]
+        }
+        end={{ x: 0.5, y: 1 }}
+        locations={[0, 1]}
+        start={{ x: 0.5, y: 0 }}
+        style={[
+          styles.container,
+          shape === 'round'
+            ? styles.roundButton
+            : shape === 'rectangle'
+            ? styles.rectangleButton
+            : styles.roundButton,
+          style,
+        ]}
+      >
+        {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
+        <View style={styles.center}>
+          {title ? (
+            <Text style={[textStyle.label, { color: textColor }]}>{title}</Text>
+          ) : (
+            icon
+          )}
+        </View>
+        {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
+      </LinearGradient>
     </TouchableOpacity>
   );
 };
@@ -152,41 +115,45 @@ export const CommonButton = ({
 const styles = StyleSheet.create({
   center: {
     alignItems: 'center',
-    bottom: 0,
-    flex: 1,
+    alignSelf: 'center',
+    // backgroundColor: 'yellow',
     justifyContent: 'center',
-    top: 0,
+    paddingHorizontal: DIMENSIONS.DISTANCE_1,
   },
   container: {
+    alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
-    backgroundColor: 'grey',
-    borderRadius: DIMENSIONS.BORDER_RADIUS,
+    borderRadius: scaleH(22),
     flexDirection: 'row',
-    height: scaleH(44),
-    justifyContent: 'space-between',
-    paddingHorizontal: 30,
+    justifyContent: 'center',
+    minHeight: scaleH(44),
+    minWidth: scaleV(48),
+    paddingHorizontal: DIMENSIONS.DISTANCE_3,
+    position: 'relative',
   },
   leftIcon: {
     alignItems: 'center',
-    // zIndex: 100,
+    alignSelf: 'center',
     // backgroundColor: 'red',
-    bottom: 0,
     justifyContent: 'center',
-    left: scaleH(16),
+    left: DIMENSIONS.DISTANCE_2,
+    paddingHorizontal: DIMENSIONS.DISTANCE_2,
     position: 'absolute',
-    top: 0,
   },
-  mainLabel: {},
-  popupButton: {
+  rectangleButton: {
     borderRadius: DIMENSIONS.BORDER_RADIUS,
   },
   rightIcon: {
     alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
+    alignSelf: 'center',
+    // backgroundColor: 'green',
+    // justifyContent: 'flex-end',
+    paddingHorizontal: DIMENSIONS.DISTANCE_2,
     position: 'absolute',
-    right: scaleH(16),
-    top: 0,
+    right: DIMENSIONS.DISTANCE_2,
+  },
+  roundButton: {
+    borderRadius: DIMENSIONS.BORDER_RADIUS_CIRCLE,
   },
 });

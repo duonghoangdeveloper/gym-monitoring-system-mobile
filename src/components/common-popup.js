@@ -3,14 +3,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { COLORS } from '../constants/colors';
-import { dimension } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 import { CommonModalContainer } from './common-modal-container';
 import { CommonPopupConfirmView } from './common-popup-confirm-view';
 import { CommonPopupPromptDialogView } from './common-popup-prompt-dialog-view';
 import { CommonPopupStatusDialogView } from './common-popup-status-dialog-view';
 
 type PropTypes = {
-  popupType: String,
+  popupType: string,
   modalVisible: boolean,
   onClose: () => void,
   onConfirm: () => void,
@@ -19,7 +19,7 @@ type PropTypes = {
   description: string,
   cancelLabel?: string,
   confirmLabel?: string,
-  grandResponder: Boolean,
+  grandResponder: boolean,
 };
 
 const POPUP_TYPE = ['prompt', 'success', 'error', 'confirm'];
@@ -67,11 +67,11 @@ export const CommonPopUp = (props: PropTypes) => {
 const styles = StyleSheet.create({
   containerStyle: {
     alignItems: 'center',
-
+    alignSelf: 'center',
     borderRadius: 8,
-
+    height: '100%',
     justifyContent: 'space-between',
     padding: DIMENSIONS.DISTANCE_3,
-    width: '80%',
+    width: '100%',
   },
 });
