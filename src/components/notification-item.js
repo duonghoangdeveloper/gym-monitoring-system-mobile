@@ -7,8 +7,27 @@ import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
 type PropTypes = {
+  // _id
+  // customer {
+  //   _id
+  //   username
+  // }
+  // supporter {
+  //   _id
+  //   username
+  // }
+  // image {
+  //   url
+  // }
+  // content
+  // status
+  // createdAt
+  // updatedAt
+
   content: {
-    image: string,
+    image: {
+      url: string,
+    },
     content: string,
     createAt: string,
     status: string,
@@ -18,13 +37,17 @@ type PropTypes = {
 
 export const NotificationItem = ({ content, onPress }: PropTypes) => (
   <View style={styles.container}>
-    <Image source={{ uri: content.image }} style={styles.image} />
+    {content.image?.url && (
+      <Image source={{ uri: content.image?.url }} style={styles.image} />
+    )}
     <View style={styles.content}>
       <Text style={textStyle.bodyTextBold}>{content.content}</Text>
-      <View style={styles.subContent}>
-        <Text style={textStyle.bodyText}>{content.createdAt}</Text>
-        <Text style={textStyle.label}>{content.status}</Text>
-      </View>
+      {/* <View style={styles.subContent}> */}
+      <Text style={textStyle.bodyText}>
+        {new Date(content.createdAt).toUTCString()}
+      </Text>
+      <Text style={textStyle.label}>{content.status}</Text>
+      {/* </View> */}
     </View>
   </View>
 );
@@ -33,11 +56,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     alignSelf: 'stretch',
+    borderBottomColor: COLORS.dark80,
+    borderBottomWidth: 1,
     // backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-around',
     minHeight: 120,
-    paddingHorizontal: DIMENSIONS.DISTANCE_2,
+    paddingHorizontal: DIMENSIONS.DISTANCE_1,
   },
   content: {
     alignItems: 'flex-start',

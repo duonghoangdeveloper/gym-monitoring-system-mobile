@@ -1,37 +1,44 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Image, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
 import { CommonIcon } from '../components/common-icon';
+import { CommonLoadingComponent } from '../components/common-loading-component';
 import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { COLORS } from '../constants/colors';
-import { DIMENSIONS } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
-export const NotificationDetailScreen = () => {
+export const NotificationDetailScreen = ({ route }) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState({});
-
   useFocusEffect(() => {
-    fetchData();
+    fetchData(route.params.item);
   }, []);
 
   const fetchData = async () => {
+    const warningId = route.params.item._id;
     try {
       const result = await client.query({
         query: gql`
-          query {
-            warning(_id: "5f2a78a55b2aaf1eec5ed411") {
+          query($warningId: ID!) {
+            warning(_id: $warningId) {
               _id
               customer {
-                displayName
+                _id
+                username
               }
-              image
+              # supporter {
+              #   _id
+              #   username
+              # }
+              image {
+                url
+              }
               content
               status
               createdAt
@@ -39,6 +46,9 @@ export const NotificationDetailScreen = () => {
             }
           }
         `,
+        variables: {
+          warningId,
+        },
       });
       const fetchedWarning = result?.data?.warning ?? [];
       setWarning(fetchedWarning);
@@ -60,12 +70,13 @@ export const NotificationDetailScreen = () => {
             position: 'relative',
           }}
         >
+          {loading && <CommonLoadingComponent />}
           <Image
-            source={{ uri: warning.image }}
+            source={{ uri: warning.image?.url }}
             style={{
-              height: 300,
+              height: scaleV(300),
               marginBottom: DIMENSIONS.DISTANCE_5,
-              width: 300,
+              width: scaleH(300),
             }}
           />
           <View
@@ -80,9 +91,7 @@ export const NotificationDetailScreen = () => {
             }}
           >
             <Text style={textStyle.bodyBigTextBold}>Customer:</Text>
-            <Text style={textStyle.bodyText}>
-              {/* {warning.customer.displayName} */}
-            </Text>
+            <Text style={textStyle.bodyText}>{warning.customer?.username}</Text>
           </View>
           <View
             style={{
@@ -126,9 +135,11 @@ export const NotificationDetailScreen = () => {
             <Text style={textStyle.bodyBigTextBold}>Content:</Text>
             <View
               style={{
+                alignItems: 'flex-start',
                 borderColor: COLORS.dark90,
                 borderWidth: 1,
-                padding: DIMENSIONS.DISTANCE_2,
+                justifyContent: 'center',
+                padding: DIMENSIONS.DISTANCE_3,
               }}
             >
               <Text style={textStyle.bodyText}>{warning.content}</Text>
@@ -141,12 +152,12 @@ export const NotificationDetailScreen = () => {
               marginVertical: DIMENSIONS.DISTANCE_3,
             }}
           >
-            <CommonButton
+            {/* <CommonButton
               gradient
               // onPress={fetchData}
               rightIcon={<CommonIcon color="white" name="arrow-right" />}
               title="Feedback"
-            />
+            /> */}
           </View>
         </View>
       </View>
