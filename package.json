@@ -27,7 +27,6 @@
     "expo-notifications": "^0.3.3",
     "expo-permissions": "~9.0.1",
     "expo-status-bar": "^1.0.2",
-    "firebase": "^7.17.1",
     "graphql-tag": "^2.10.4",
     "lodash.isnil": "^4.0.0",
     "lottie-react-native": "^3.4.0",
@@ -59,8 +58,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.1.1",
-    "undefined": "expo-notifications\\"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
