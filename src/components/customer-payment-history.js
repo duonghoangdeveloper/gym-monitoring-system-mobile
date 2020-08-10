@@ -20,7 +20,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
               data {
                 _id
                 createdAt
-                package {
+                paymentPlan {
                   name
                   price
                   period
@@ -61,7 +61,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
         {payments.map(payment => (
           <CommonListItem
             detail={payment.date}
-            label={payment.package.name}
+            label={payment.paymentPlan.name}
             showSeparator="true"
             type="detail"
           />

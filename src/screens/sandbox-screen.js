@@ -63,7 +63,7 @@ export const SandboxScreen = ({ navigation }) => {
 
   const Item = ({ item, onPress, style }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('NotificationDetail')}
+      onPress={() => navigation.navigate('Notification Detail')}
       style={style}
     >
       <NotificationItem content={item} type="box" />
@@ -117,6 +117,7 @@ export const SandboxScreen = ({ navigation }) => {
           <CommonButton
             // icon={<FontAwesome5 color="white" name="home" />}
             icon={<CommonLoadingComponent />}
+            onPress={() => navigation.navigate('Notification Detail')}
             // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
             // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
             // shape="rectangle"
@@ -132,14 +133,14 @@ export const SandboxScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    marginHorizontal: 16,
-    marginVertical: 8,
-    padding: 20,
+    // marginHorizontal: 16,
+    // marginVertical: 8,
+    // padding: 20,
   },
   title: {
-    fontSize: 32,
+    // fontSize: 32,
   },
 });

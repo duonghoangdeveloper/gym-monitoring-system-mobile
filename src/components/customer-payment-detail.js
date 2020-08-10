@@ -22,7 +22,7 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
                 customer {
                   createdAt
                 }
-                package {
+                paymentPlan {
                   name
                   price
                   period
@@ -44,7 +44,7 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
         fetchedPaymentsData.map(payments => ({
           key: payments._id,
           ...payments,
-          totalPrice: payments.package.price,
+          totalPrice: payments.paymentPlan.price,
         }))
       );
 
@@ -59,8 +59,8 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
 
   let sum = 0;
   let sumPeriod = 0;
-  payments.forEach(p => (sum += p.package.price));
-  payments.forEach(p => (sumPeriod += p.package.period));
+  payments.forEach(p => (sum += p.paymentPlan.price));
+  payments.forEach(p => (sumPeriod += p.paymentPlan.period));
   let dateCreate = new Date();
   payments.forEach(p => (dateCreate = p.customer.createdAt));
   const expiredDateTemp = new Date(dateCreate).setDate(

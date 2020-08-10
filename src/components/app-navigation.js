@@ -128,6 +128,10 @@ const TrainerSandboxStack = createStackNavigator();
 const TrainerSandboxNavigation = () => (
   <TrainerSandboxStack.Navigator>
     <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
+    <TrainerNotificationStack.Screen
+      component={NotificationDetailScreen}
+      name="Notification Detail"
+    />
   </TrainerSandboxStack.Navigator>
 );
 
@@ -146,7 +150,7 @@ const TrainerNotificationNavigation = () => (
     />
     <TrainerNotificationStack.Screen
       component={NotificationDetailScreen}
-      name="NotificationDetail"
+      name="Notification Detail"
     />
   </TrainerNotificationStack.Navigator>
 );
@@ -264,7 +268,7 @@ const CustomerNotificationNavigation = () => (
     />
     <CustomerNotificationStack.Screen
       component={NotificationDetailScreen}
-      name="NotificationDetail"
+      name="Notification Detail"
     />
   </CustomerNotificationStack.Navigator>
 );

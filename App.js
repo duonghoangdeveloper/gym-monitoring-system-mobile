@@ -25,13 +25,15 @@ export default function App() {
   useEffect(() => {
     registerForPushNotificationsAsync();
     notificationListener.current = Notifications.addNotificationReceivedListener(
-      notification => {
-        setNotification(notification);
-      }
+      () => console.log('ABC')
+      // notification => {
+      //   console.log(56789);
+      //   setNotification(notification);
     );
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       response => {
-        console.log(response);
+        console.log(123456789);
+        // console.log(response);
       }
     );
 
