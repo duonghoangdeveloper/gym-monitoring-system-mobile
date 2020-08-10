@@ -2,7 +2,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Icon } from 'react-native-vector-icons';
 
 export const CommonBadgeIcon = ({ badgeCount, iconProps, name }) => (
   <View

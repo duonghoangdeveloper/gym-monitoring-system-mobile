@@ -33,9 +33,9 @@ export const CommonNotFoundComponent = ({
     {haveBackButton && (
       <CommonButton
         containerStyle={{ marginBottom: DIMENSIONS.DISTANCE_4 }}
-        label="Trở về"
         onPress={onBackPress}
         theme="secondary"
+        title="Back"
       />
     )}
   </View>

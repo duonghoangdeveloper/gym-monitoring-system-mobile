@@ -1,10 +1,8 @@
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-// import { ErrorTickIcon, SuccessTickIcon } from '../assets/svgs';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
-// import {colors} from '../constants/colors';
-import { DIMENSIONS, scaleV } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 import { CommonButton } from './common-button';
 
@@ -26,10 +24,10 @@ export const CommonPopupStatusDialogView = ({
   const getIcon = () => {
     if (popupType === 'success') {
       // return <SuccessTickIcon />;
-      return <Icon name="check-circle" />;
+      return <FontAwesome5 name="check-circle" />;
     }
     // return <ErrorTickIcon />;
-    return <Icon name="error" />;
+    return <MaterialIcons name="error" />;
   };
 
   const getTheme = () => {
@@ -57,10 +55,10 @@ export const CommonPopupStatusDialogView = ({
       </View>
 
       <CommonButton
-        label={confirmLabel}
         onPress={onConfirm}
         style={{ borderRadius: 4, marginTop: DIMENSIONS.DISTANCE_3 }}
         theme={getTheme()}
+        title={confirmLabel}
       />
     </>
   );

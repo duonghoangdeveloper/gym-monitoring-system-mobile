@@ -25,13 +25,15 @@ export default function App() {
   useEffect(() => {
     registerForPushNotificationsAsync();
     notificationListener.current = Notifications.addNotificationReceivedListener(
-      notification => {
-        setNotification(notification);
-      }
+      () => console.log('ABC')
+      // notification => {
+      //   console.log(56789);
+      //   setNotification(notification);
     );
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       response => {
-        console.log(response);
+        console.log(123456789);
+        // console.log(response);
       }
     );
 
@@ -71,14 +73,14 @@ export const registerForPushNotificationsAsync = async function registerForPushN
     alert('Must use physical device for Push Notifications');
   }
 
-  if (Platform.OS === 'android') {
-    Notifications.createChannelAndroidAsync('default', {
-      name: 'default',
-      priority: 'max',
-      sound: true,
-      vibrate: [0, 250, 250, 250],
-    });
-  }
+  // if (Platform.OS === 'android') {
+  //   Notifications.createChannelAndroidAsync('default', {
+  //     name: 'default',
+  //     priority: 'max',
+  //     sound: true,
+  //     vibrate: [0, 250, 250, 250],
+  //   });
+  // }
   console.log(expoPushToken);
   return expoPushToken.data;
 };

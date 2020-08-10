@@ -1,4 +1,3 @@
-// import { TickIcon } from '../assets/svgs';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';

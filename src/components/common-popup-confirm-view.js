@@ -13,17 +13,15 @@ type PropTypes = {
   cancelLabel?: string,
   confirmLabel?: string,
   onDecline: () => void,
-  acceptOnly?: boolean,
 };
 
 export const CommonPopupConfirmView = ({
-  acceptOnly,
-  cancelLabel = 'Huỷ',
-  confirmLabel = 'Đồng ý',
-  description = 'Test description',
+  cancelLabel,
+  confirmLabel,
+  description,
   onConfirm,
   onDecline,
-  title = 'TEST title',
+  title,
 }: PropTypes) => {
   // console.log('title: ', title);
   // console.log('description: ', description);
@@ -32,12 +30,12 @@ export const CommonPopupConfirmView = ({
   // console.log('acceptOnly: ', acceptOnly);
 
   const renderAction = () => {
-    if (acceptOnly) {
+    if (!cancelLabel) {
       return (
         <CommonButton
-          label={confirmLabel}
           onPress={onConfirm}
           style={{ borderRadius: 4, marginTop: scaleV(16) }}
+          title={confirmLabel}
         />
       );
     }
@@ -46,51 +44,62 @@ export const CommonPopupConfirmView = ({
         <CommonButton
           containerStyle={{ flex: 1 }}
           gradient={false}
-          label={cancelLabel}
           onPress={onDecline}
           style={{
+            borderColor: COLORS.primary,
+            borderRadius: DIMENSIONS.BORDER_RADIUS_CIRCLE,
+            borderWidth: 1,
             flex: 1,
-            margin: DIMENSIONS.DISTANCE_3,
+            marginHorizontal: DIMENSIONS.DISTANCE_3,
+            // padding: DIMENSIONS.PADDING_CONTENT,
           }}
-          textColor={COLORS.white}
+          textColor={COLORS.primary}
+          title={cancelLabel}
         />
         <CommonButton
           containerStyle={{ flex: 1 }}
           gradient
-          label={confirmLabel}
           onPress={onConfirm}
           style={{
+            borderColor: COLORS.primary,
+            borderRadius: DIMENSIONS.BORDER_RADIUS_CIRCLE,
+            borderWidth: 1,
             flex: 1,
-            margin: DIMENSIONS.DISTANCE_3,
+            marginHorizontal: DIMENSIONS.DISTANCE_3,
+            // padding: DIMENSIONS.PADDING_CONTENT,
           }}
-          textColor={COLORS.white}
+          title={confirmLabel}
+          // textColor={COLORS.white}
         />
       </View>
     );
   };
   return (
-    <>
-      <Text style={[textStyle.widgetItem, { textAlign: 'center' }]}>
+    <View style={{ alignSelf: 'stretch' }}>
+      <Text
+        style={[
+          textStyle.widgetItem,
+          { margin: scaleV(12), textAlign: 'center' },
+        ]}
+      >
         {title}
       </Text>
-      <Text style={[textStyle.bodyText, { marginTop: scaleV(12) }]}>
+      {/* <Text style={[textStyle.bodyText, { marginTop: scaleV(12) }]}> */}
+      <Text style={[textStyle.bodyText, { textAlign: 'center' }]}>
         {description}
       </Text>
-
       {renderAction()}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   action: {
     alignSelf: 'stretch',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: DIMENSIONS.DISTANCE_3,
-  },
-  item: {
-    marginEnd: 4,
-    padding: 4,
+    margin: DIMENSIONS.DISTANCE_3,
+    paddingHorizontal: DIMENSIONS.DISTANCE_3,
   },
 });

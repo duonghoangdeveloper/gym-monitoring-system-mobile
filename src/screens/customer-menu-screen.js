@@ -1,10 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Avatar, Icon, Text } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
-import avatar from '../../assets/avatar.png';
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonListItem } from '../components/common-list-item';
 
@@ -36,7 +35,6 @@ export const CustomerMenuScreen = ({ navigation }) => {
                   name="ios-arrow-forward"
                   size={18}
                   style={styles.rightIcon}
-                  type="font-awesome"
                 />
               }
               icon={icon}

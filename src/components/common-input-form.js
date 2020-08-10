@@ -1,4 +1,3 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
   StyleProp,
