@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  Text,
+  StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -13,7 +13,9 @@ import { ListItem } from 'react-native-elements';
 import { PAGE_SIZE } from '../common/constants';
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonInputForm } from '../components/common-input-form';
 import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
+import { CommonSearchBar } from '../components/common-search-bar';
 import { CommonTextItem } from '../components/common-text-item';
 import { DIMENSIONS } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
@@ -42,7 +44,9 @@ export const ChooseStaffScreen = ({ navigation, route }) => {
               data {
                 _id
                 displayName
-                avatar
+                avatar {
+                  url
+                }
               }
               total
             }
@@ -79,97 +83,86 @@ export const ChooseStaffScreen = ({ navigation, route }) => {
   }, [skip, sort, search]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        width: DIMENSIONS.SCREEN_WIDTH,
-      }}
-    >
-      <CommonTextItem
-        content={header}
-        haveTick={false}
-        labelStyle={textStyle.bodyTextBold}
-      />
-      <CommonScrollViewAwareScreenHeight
-        onRefresh={fetchUsersData}
-        refreshable
-        refreshing
+    <CommonDismissKeyboardWrapper>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={{
+          alignItems: 'center',
+          flex: 1,
+          padding: 12,
+        }}
       >
-        {staffs.map(staff =>
-          staff.avatar ? (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(pageToNavigate, {
-                  pageTitle,
-                  staff,
-                })
-              }
-            >
-              <ListItem
-                bottomDivider
-                key={staff._id}
-                leftAvatar={
-                  <CommonAvatar
-                    editable={false}
-                    size="small"
-                    uri={staff.avatar}
+        <View style={styles.container}>
+          <View style={styles.viewTitle}>
+            <CommonTextItem
+              content={header}
+              haveTick={false}
+              labelStyle={textStyle.bodyTextBold}
+            />
+            <CommonInputForm onChangeText={() => {}} />
+          </View>
+          <CommonScrollViewAwareScreenHeight
+            onRefresh={fetchUsersData}
+            style={styles.scrollView}
+          >
+            {staffs.map(staff =>
+              staff.avatar.url ? (
+                <TouchableOpacity
+                  key={staff._id}
+                  onPress={() =>
+                    navigation.navigate(pageToNavigate, {
+                      pageTitle,
+                      staff,
+                    })
+                  }
+                >
+                  <ListItem
+                    bottomDivider
+                    key={staff._id}
+                    leftAvatar={
+                      <CommonAvatar
+                        editable={false}
+                        size="small"
+                        uri={staff.avatar.url}
+                      />
+                    }
+                    style={{
+                      width: DIMENSIONS.SCREEN_WIDTH,
+                    }}
+                    title={staff.displayName}
                   />
-                }
-                style={{
-                  width: DIMENSIONS.SCREEN_WIDTH,
-                }}
-                title={staff.displayName}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(pageToNavigate, { pageTitle, staff })
-              }
-            >
-              <ListItem
-                bottomDivider
-                key={staff._id}
-                leftAvatar={
-                  <CommonAvatar
-                    editable={false}
-                    size="small"
-                    uri="https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg"
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  key={staff._id}
+                  onPress={() =>
+                    navigation.navigate(pageToNavigate, { pageTitle, staff })
+                  }
+                >
+                  <ListItem
+                    bottomDivider
+                    key={staff._id}
+                    leftAvatar={
+                      <CommonAvatar
+                        editable={false}
+                        size="small"
+                        uri="https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg"
+                      />
+                    }
+                    style={{
+                      width: DIMENSIONS.SCREEN_WIDTH,
+                    }}
+                    title={staff.displayName}
                   />
-                }
-                style={{
-                  width: DIMENSIONS.SCREEN_WIDTH,
-                }}
-                title={staff.displayName}
-              />
-            </TouchableOpacity>
-          )
-        )}
-      </CommonScrollViewAwareScreenHeight>
-    </View>
+                </TouchableOpacity>
+              )
+            )}
+          </CommonScrollViewAwareScreenHeight>
+        </View>
+      </KeyboardAvoidingView>
+    </CommonDismissKeyboardWrapper>
   );
 };
-
-const Users = [
-  {
-    avatarUrl:
-      'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=9dpn--hlWcIAX_zCIaK&_nc_ht=scontent.fsgn2-1.fna&oh=9b432da36bc728831cdf878fd7b98acf&oe=5F478B03',
-    key: 'Trin',
-    name: 'Trin',
-  },
-  {
-    avatarUrl:
-      'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=9dpn--hlWcIAX_zCIaK&_nc_ht=scontent.fsgn2-1.fna&oh=9b432da36bc728831cdf878fd7b98acf&oe=5F478B03',
-    key: 'Trin 1',
-    name: 'Trin 1',
-  },
-  {
-    avatarUrl:
-      'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/106999191_1328572663997611_2027261738219258471_o.jpg?_nc_cat=111&_nc_sid=09cbfe&_nc_ohc=9dpn--hlWcIAX_zCIaK&_nc_ht=scontent.fsgn2-1.fna&oh=9b432da36bc728831cdf878fd7b98acf&oe=5F478B03',
-    key: 'Trin 2',
-    name: 'Trin 2',
-  },
-];
 
 const generateTitle = pageTitle => {
   if (pageTitle === 'trainer') {
@@ -196,3 +189,25 @@ const INIT_SEARCH = {
   email: '',
   username: '',
 };
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    height: DIMENSIONS.SCREEN_HEIGHT,
+    justifyContent: 'center',
+    width: DIMENSIONS.SCREEN_WIDTH,
+  },
+  scrollView: {
+    height: DIMENSIONS.SCREEN_HEIGHT,
+  },
+  viewTitle: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingBottom: DIMENSIONS.DISTANCE_4,
+    paddingLeft: DIMENSIONS.DISTANCE_4,
+    paddingRight: DIMENSIONS.DISTANCE_4,
+    width: DIMENSIONS.SCREEN_WIDTH,
+  },
+});
