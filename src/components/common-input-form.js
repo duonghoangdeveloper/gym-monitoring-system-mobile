@@ -27,7 +27,7 @@ type PropTypes = {
   containerStyle: StyleProp<ViewStyle>,
   textInputStyle: StyleProp<ViewStyle>,
   placeholder?: string,
-
+  rightIcon: string,
   type: 'textinput' | 'calendar' | 'dropdown' | 'password',
   dropDownList?: [{ value: string, label: string }],
   // selectedItem: string,

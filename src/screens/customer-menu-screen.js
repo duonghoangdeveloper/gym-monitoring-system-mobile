@@ -26,12 +26,13 @@ export const CustomerMenuScreen = ({ navigation }) => {
       </View>
 
       <View style={{ width: 351 }}>
-        {list.map(({ icon, label, to }) => (
-          <TouchableOpacity onPress={() => navigation.navigate(to)}>
+        {list.map(({ icon, key, label, to }) => (
+          <TouchableOpacity key={key} onPress={() => navigation.navigate(to)}>
             <CommonListItem
               detail={
                 <Ionicons
                   color="black"
+                  key={key}
                   name="ios-arrow-forward"
                   size={18}
                   style={styles.rightIcon}
