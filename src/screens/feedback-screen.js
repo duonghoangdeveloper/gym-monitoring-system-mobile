@@ -10,6 +10,7 @@ export const FeedbackScreen = ({ navigation }) => (
     <View style={{ width: 351 }}>
       {list.map(({ icon, key, label, to }) => (
         <TouchableOpacity
+          key={key}
           onPress={() => {
             navigation.navigate(to, { name: key });
           }}
@@ -18,6 +19,7 @@ export const FeedbackScreen = ({ navigation }) => (
             detail={
               <Ionicons
                 color="black"
+                key={key}
                 name="ios-arrow-forward"
                 size={18}
                 style={styles.rightIcon}
@@ -25,6 +27,7 @@ export const FeedbackScreen = ({ navigation }) => (
               />
             }
             icon={icon}
+            key={key}
             label={label}
             showSeparator="true"
             type="detail"

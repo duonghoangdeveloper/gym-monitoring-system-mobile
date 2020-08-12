@@ -32,6 +32,7 @@ export const CommonPopUp = (props: PropTypes) => {
       case 'confirm':
         return <CommonPopupConfirmView {...props} />;
       case 'success':
+        return <CommonPopupStatusDialogView {...props} />;
       case 'error':
         return <CommonPopupStatusDialogView {...props} />;
       case 'prompt':
@@ -69,9 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 8,
-    height: '100%',
+    height: '30%',
     justifyContent: 'space-between',
-    padding: DIMENSIONS.DISTANCE_3,
-    width: '100%',
+    padding: DIMENSIONS.PADDING_CONTENT,
+    width: '80%',
   },
 });

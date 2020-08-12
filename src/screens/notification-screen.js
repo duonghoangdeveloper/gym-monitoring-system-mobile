@@ -132,7 +132,6 @@ export const NotificationScreen = ({ navigation }) => {
       const fetchedWarnings = result?.data?.warnings?.data ?? [];
       const fetchedTotalWarnings = result?.data?.warnings?.total ?? 0;
       setWarnings(fetchedWarnings);
-      console.log(warnings);
       setTotal(fetchedTotalWarnings);
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);

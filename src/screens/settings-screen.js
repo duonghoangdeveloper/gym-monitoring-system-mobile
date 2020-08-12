@@ -3,8 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import gql from 'graphql-tag';
 import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Avatar, Icon } from 'react-native-elements';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { TOKEN_KEY } from '../common/constants';
@@ -17,7 +16,6 @@ export const SettingsScreen = ({ navigation }) => {
 
   const handleSignOutPress = async () => {
     try {
-      // console.log('asdas');
       await client.mutate({
         mutation: gql`
           mutation {
@@ -27,8 +25,8 @@ export const SettingsScreen = ({ navigation }) => {
           }
         `,
       });
-    } catch (_) {
-      // Do nothing
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
     }
 
     await AsyncStorage.removeItem(TOKEN_KEY);

@@ -2,25 +2,29 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import Textarea from 'react-native-textarea';
 
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { CommonInputForm } from '../components/common-input-form';
+import { CommonPopUp } from '../components/common-popup';
 import { CommonTextItem } from '../components/common-text-item';
-import { DIMENSIONS } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 
 export const FeedbackStaffScreen = ({ navigation, route }) => {
   const user = route.params.staff;
   const client = useApolloClient();
   const [content, setContent] = useState('');
-  const [alert, setAlert] = useState(false);
+  const [popUpVisible, setPopUpVisible] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const feedbackStaff = async (staffIds, content) => {
     try {
@@ -39,15 +43,12 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
           },
         });
 
-        setAlert(true);
-        setTimeout(function() {
-          setAlert(false);
-        }, 1500);
+        setPopUpVisible(true);
       } else {
-        console.log('ERROR');
+        setErrorVisible(true);
       }
     } catch (e) {
-      console.log(e.message);
+      Alert.alert(`${e.message.split(': ')[1]}!`);
     }
   };
   return (
@@ -61,9 +62,31 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
         }}
       >
         <View style={styles.container}>
+          <CommonPopUp
+            description="Thanks you so much for the feedback"
+            modalVisible={popUpVisible}
+            onClose={() => {
+              setPopUpVisible(false);
+              navigation.goBack();
+            }}
+            onConfirm={() => {
+              setPopUpVisible(false);
+              navigation.goBack();
+            }}
+            popupType="success"
+            title="Send Feedback Successfully"
+          />
+          <CommonPopUp
+            description="Please input your feedback"
+            modalVisible={errorVisible}
+            onClose={() => setErrorVisible(false)}
+            onConfirm={() => setErrorVisible(false)}
+            popupType="error"
+            title="Send Feedback Error"
+          />
           <View style={styles.avatar}>
-            {user.avatar ? (
-              <CommonAvatar editable={false} uri={user.avatar} />
+            {user.avatar.url ? (
+              <CommonAvatar editable={false} uri={user.avatar.url} />
             ) : (
               <CommonAvatar
                 editable={false}
@@ -78,12 +101,16 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
             <CommonTextItem
               content="Chúng tôi cần cải thiện điều gì?"
               haveTick={false}
+              style={styles.title}
             />
-            <CommonInputForm
+            <Textarea
+              containerStyle={styles.textareaContainer}
+              maxLength={500}
               onChangeText={text => setContent(text)}
-              style={{
-                height: DIMENSIONS.MULTI_TEXT_HEIGHT,
-              }}
+              placeholder="Please enter your feedback . . ."
+              placeholderTextColor="#c7c7c7"
+              style={styles.textarea}
+              underlineColorAndroid="transparent"
             />
           </View>
           <View style={styles.view}>
@@ -93,9 +120,9 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
               labelStyle={styles.text}
             />
             <CommonButton
-              label="SEND YOUR FEEDBACK"
               onPress={() => feedbackStaff([user._id], content)}
               style={styles.button}
+              title="SEND YOUR FEEDBACK"
             />
           </View>
         </View>
@@ -113,6 +140,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 24,
+    width: scaleH(270),
   },
   container: {
     height: DIMENSIONS.SCREEN_HEIGHT,
@@ -121,9 +149,10 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.SCREEN_WIDTH,
   },
   inputView: {
+    alignItems: 'center',
     display: 'flex',
-    justifyContent: 'flex-start',
-    padding: DIMENSIONS.PADDING_CONTENT,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   name: {
     padding: DIMENSIONS.PADDING_CONTENT,
@@ -133,17 +162,30 @@ const styles = StyleSheet.create({
     height: 60,
     padding: DIMENSIONS.PADDING_CONTENT,
     textAlign: 'center',
-    width: '65%',
+    width: scaleH(220),
+  },
+  textarea: {
+    color: '#333',
+    fontSize: 14,
+    // hack android
+    height: DIMENSIONS.MULTI_TEXT_HEIGHT * 1.5,
+    textAlignVertical: 'top',
+  },
+  textareaContainer: {
+    backgroundColor: '#FFFF',
+    height: DIMENSIONS.MULTI_TEXT_HEIGHT * 1.5,
+    marginTop: DIMENSIONS.MARGIN,
+    padding: 5,
   },
   title: {
     marginTop: DIMENSIONS.MARGIN_TOP,
+    textAlign: 'center',
   },
   view: {
     alignItems: 'center',
     display: 'flex',
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: DIMENSIONS.PADDING_CONTENT,
+    padding: DIMENSIONS.PADDING,
   },
 });
