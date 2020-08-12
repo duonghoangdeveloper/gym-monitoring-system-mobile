@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 import { DATE_TIME_FORMAT } from '../common/constants';
 import { CommonListItem } from './common-list-item';
@@ -48,7 +48,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
 
       setTotal(fetchedPaymentsTotal);
     } catch (e) {
-      // Do something
+      Alert.alert(`${e.message.split(': ')[1]}!`);
     }
   };
   useEffect(() => {

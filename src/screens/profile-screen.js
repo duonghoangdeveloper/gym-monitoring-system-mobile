@@ -22,10 +22,9 @@ export const ProfileScreen = () => {
   );
 
   const handleUpdatePress = async () => {
-    console.log(updateUser);
     setLoading(true);
     try {
-      const result = await client.mutate({
+      await client.mutate({
         mutation: gql`
           mutation UpdateProfile(
             $username: String
@@ -154,9 +153,9 @@ export const ProfileScreen = () => {
 
         <Divider style={{ backgroundColor: 'white', height: 40 }} />
         <CommonButton
-          label="Update"
           loading={loading}
           onPress={handleUpdatePress}
+          title="Update"
         />
         <Divider style={{ backgroundColor: 'white', height: 40 }} />
       </CommonView>

@@ -1,52 +1,107 @@
 import { useApolloClient } from '@apollo/react-hooks';
-import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
-  Platform,
+  RefreshControl,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
-import { CommonAvatar } from '../components/common-avatar';
-import { CommonLoadingComponent } from '../components/common-loading-component';
-import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
+import { CommonButtonGroup } from '../components/common-button-group';
 import { CommonView } from '../components/common-view';
 import { NotificationItem } from '../components/notification-item';
 import { COLORS } from '../constants/colors';
 import { DIMENSIONS } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
-import { NotificationDetailScreen } from './notification-detail-screen';
 
 export const NotificationScreen = ({ navigation }) => {
   const client = useApolloClient();
-  const [loading, setLoading] = useState(true);
-  const [selectedId, setSelectedId] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const me = useSelector(state => state.user.me);
+  let warningStatus = 'PENDING';
+  let warningSupporter = null;
   const [warnings, setWarnings] = useState([]);
   const [total, setTotal] = useState(0);
-  const me = useSelector(state => state.user.me);
-
-  useFocusEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const sampleHistoryWarning = {
+    data: {
+      warnings: {
+        data: [
+          {
+            _id: '5f30284a63a8f1276cfed6d6',
+            content: 'Wrong barbell shoulder3',
+            createdAt: '2020-04-09T16:46:02.523Z',
+            image: {
+              url:
+                'https://i.pinimg.com/originals/df/a6/e6/dfa6e62d42775848a01048ed114f23b0.jpg',
+            },
+            status: 'SUCCEEDED',
+            updatedAt: '2020-08-09T16:46:11.686Z',
+          },
+        ],
+        total: 1,
+      },
+    },
+  };
+  const samplePendingWarning = {
+    data: {
+      warnings: {
+        data: [
+          {
+            _id: '5f2a78a55b2aaf1eec5ed411',
+            content: 'Wrong barbell shoulder',
+            createdAt: '2020-07-05T09:15:18.213Z',
+            image: {
+              url:
+                'https://i.pinimg.com/originals/df/a6/e6/dfa6e62d42775848a01048ed114f23b0.jpg',
+            },
+            status: 'PEDNING',
+            updatedAt: '2020-08-09T16:40:28.488Z',
+          },
+          {
+            _id: '5f30284a63a8f1276cfed6d6',
+            content: 'Wrong barbell shoulder3',
+            createdAt: '2020-04-09T16:46:02.523Z',
+            image: {
+              url:
+                'https://i.pinimg.com/originals/df/a6/e6/dfa6e62d42775848a01048ed114f23b0.jpg',
+            },
+            status: 'PEDNING',
+            updatedAt: '2020-08-09T16:46:11.686Z',
+          },
+        ],
+        total: 2,
+      },
+    },
+  };
+  const fetchData = async index => {
+    setRefreshing(true);
+    setActiveIndex(index);
+    if (index === 0) {
+      warningStatus = 'PENDING';
+      // warningStatus = 'FAILED';
+      warningSupporter = null;
+    } else if (index === 1) {
+      warningStatus = 'SUCCEEDED';
+      warningSupporter = me._id;
+    }
     try {
       const result = await client.query({
         query: gql`
-          query # ($supporterId: [ID])
-          {
-            warnings(query: { limit: 5, filter: { status: "PENDING" } }) {
+          query($supporterId: [ID], $status: [String]) {
+            warnings(
+              query: {
+                limit: 10
+                filter: { status: $status, supporter: $supporterId }
+              }
+            ) {
               total
               data {
                 _id
@@ -69,9 +124,10 @@ export const NotificationScreen = ({ navigation }) => {
             }
           }
         `,
-        // variables: {
-        //   supporterId: 'PENDING',
-        // },
+        variables: {
+          status: warningStatus,
+          supporterId: warningSupporter,
+        },
       });
       const fetchedWarnings = result?.data?.warnings?.data ?? [];
       const fetchedTotalWarnings = result?.data?.warnings?.total ?? 0;
@@ -80,7 +136,16 @@ export const NotificationScreen = ({ navigation }) => {
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
-    setLoading(false);
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, [warningStatus, warningSupporter]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData(activeIndex);
   };
 
   const renderItem = ({ item }) => (
@@ -90,13 +155,12 @@ export const NotificationScreen = ({ navigation }) => {
       <NotificationItem content={item} type="box" />
     </TouchableOpacity>
   );
+
   return (
     <SafeAreaView style={styles.container}>
-      <CommonScrollViewAwareScreenHeight>
-        {loading && <CommonLoadingComponent />}
+      <View style={styles.container}>
         <CommonView
           style={{
-            alignItems: 'stretch',
             justifyContent: 'center',
           }}
         >
@@ -110,15 +174,40 @@ export const NotificationScreen = ({ navigation }) => {
               Total: {total}
             </Text>
           </View>
-
-          <FlatList
-            data={warnings}
-            extraData={selectedId}
-            keyExtractor={item => item._id}
-            renderItem={renderItem}
+          <CommonButtonGroup
+            activeIndex={activeIndex}
+            labels={['Pending', 'History']}
+            onItemPress={index => {
+              fetchData(index);
+            }}
+            style={{ marginBottom: DIMENSIONS.MARGIN }}
           />
+          {warnings.length > 0 ? (
+            <FlatList
+              data={warnings}
+              keyExtractor={item => item._id}
+              refreshControl={
+                <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+              }
+              renderItem={renderItem}
+            />
+          ) : (
+            <View
+              style={{
+                alignContent: 'center',
+                alignItems: 'center',
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <Text>No data</Text>
+            </View>
+          )}
         </CommonView>
-      </CommonScrollViewAwareScreenHeight>
+      </View>
     </SafeAreaView>
   );
 };
@@ -127,13 +216,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  item: {
-    // marginHorizontal: 16,
-    // marginVertical: 8,
-    // padding: 20,
+  scrollView: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
   },
   titleContainer: {
-    borderBottomColor: COLORS.gray,
-    borderBottomWidth: 1,
+    // borderBottomColor: COLORS.gray,
+    // borderBottomWidth: 1,
+    // margin: DIMENSIONS.MARGIN,
   },
 });

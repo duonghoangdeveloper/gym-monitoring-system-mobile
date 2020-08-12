@@ -2,6 +2,7 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -47,7 +48,7 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
         setErrorVisible(true);
       }
     } catch (e) {
-      console.log(e.message);
+      Alert.alert(`${e.message.split(': ')[1]}!`);
     }
   };
   return (

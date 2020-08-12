@@ -23,12 +23,6 @@ export const CommonPopupConfirmView = ({
   onDecline,
   title,
 }: PropTypes) => {
-  // console.log('title: ', title);
-  // console.log('description: ', description);
-  // console.log('cancelLabel: ', cancelLabel);
-  // console.log('confirmLabel: ', confirmLabel);
-  // console.log('acceptOnly: ', acceptOnly);
-
   const renderAction = () => {
     if (!cancelLabel) {
       return (

@@ -1,7 +1,9 @@
+// import Constants from 'expo-constants';
 import React, { useState } from 'react';
 import {
   FlatList,
   Platform,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,7 +26,11 @@ import { CommonButton } from '../components/common-button';
 // import { CommonInputForm } from '../components/common-input-form';
 // import { CommonListItem } from '../components/common-list-item';
 import { CommonLoadingComponent } from '../components/common-loading-component';
-import { NotificationItem } from '../components/notification-item';
+// import { DIMENSIONS } from '../constants/dimensions';
+import { CommonTab } from '../components/common-tab';
+import { CustomerPaymentDetailScreen } from '../components/customer-payment-detail';
+import { CustomerPaymentHistoryScreen } from '../components/customer-payment-history';
+// import { NotificationItem } from '../components/notification-item';
 // import { CommonModalContainer } from '../components/common-modal-container';
 // import { CommonNotFoundComponent } from '../components/common-not-found-component';
 // import { CommonScaleImage } from '../components/common-scale-image';
@@ -32,115 +38,66 @@ import { NotificationItem } from '../components/notification-item';
 // import { CommonPopUp } from '../components/common-popup';
 // import { CommonTab } from '../components/common-tab';
 import { COLORS } from '../constants/colors';
-// import { DIMENSIONS } from '../constants/dimensions';
 
 export const SandboxScreen = ({ navigation }) => {
-  const [selectedId, setSelectedId] = useState(null);
   const title = 'Sandbox';
-  const DATA = [
-    {
-      description: 'Lorem Ipsum Dolor...',
-      // image: 'https://reactnative.dev/img/tiny_logo.png',
-      // position: 'Area1',
-      time: '07/31/2020',
-      title: 'Lorem Ipsum Dolor',
-    },
-    {
-      description: 'Lorem Ipsum Dolor...',
-      // image: 'https://reactnative.dev/img/tiny_logo.png',
-      // position: 'Area2',
-      time: '07/30/2020',
-      title: 'Lorem Ipsum Dolor',
-    },
-    {
-      description: 'Lorem Ipsum Dolor...',
-      // image: 'https://reactnative.dev/img/tiny_logo.png',
-      // position: 'Area3',
-      time: '07/29/2020',
-      title: 'Lorem Ipsum Dolor',
-    },
+  const [refreshing, setRefreshing] = useState(false);
+  const labels = ['Details', 'History'];
+  const screens = [
+    <CustomerPaymentDetailScreen />,
+    <CustomerPaymentHistoryScreen />,
   ];
 
-  const Item = ({ item, onPress, style }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('Notification Detail')}
-      style={style}
-    >
-      <NotificationItem content={item} type="box" />
-    </TouchableOpacity>
-  );
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        style={{ backgroundColor }}
-      />
-    );
-  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: COLORS.dark,
-              fontSize: 30,
-            }}
-          >
-            {title}
-          </Text>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+        }
+      >
+        <Text style={styles.title}>{title}</Text>
+        <CommonTab labels={labels} screens={screens} />
 
-          <FlatList
-            // ItemSeparatorComponent={
-            //   Platform.OS !== 'android' &&
-            //   (({ highlighted }) => (
-            //     <View
-            //       // style={[styles.separator, highlighted && { marginLeft: 0 }]}
-            //       style={{ backgroundColor: 'black', marginLeft: 0 }}
-            //     />
-            //   ))
-            // }
-            data={DATA}
-            extraData={selectedId}
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
-          />
-          <CommonButton
-            // icon={<FontAwesome5 color="white" name="home" />}
-            icon={<CommonLoadingComponent />}
-            onPress={() => navigation.navigate('Notification Detail')}
-            // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
-            // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
-            // shape="rectangle"
-            // style={{ width: 380 }}
-            // title="Click Me"
-          />
-        </View>
+        <CommonButton
+          // icon={<FontAwesome5 color="white" name="home" />}
+          icon={<CommonLoadingComponent />}
+          // onPress={() => navigation.navigate('Notification Detail')}
+          // leftIcon={<FontAwesome5 color="white" name="arrow-left" />}
+          // rightIcon={<FontAwesome5 color="white" name="arrow-right" />}
+          // shape="rectangle"
+          // style={{ width: 380 }}
+          // title="Click Me"
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
+const wait = timeout =>
+  new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
+    // marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
   },
-  item: {
-    // marginHorizontal: 16,
-    // marginVertical: 8,
-    // padding: 20,
+  scrollView: {
+    alignItems: 'center',
+    backgroundColor: 'pink',
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
-    // fontSize: 32,
+    color: COLORS.dark,
+    fontSize: 30,
   },
 });
