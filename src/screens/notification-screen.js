@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import { PAGE_SIZE } from '../common/constants';
 import { CommonButtonGroup } from '../components/common-button-group';
 import { CommonView } from '../components/common-view';
 import { NotificationItem } from '../components/notification-item';
@@ -98,7 +99,7 @@ export const NotificationScreen = ({ navigation }) => {
           query($supporterId: [ID], $status: [String]) {
             warnings(
               query: {
-                limit: 10
+                limit: PAGE_SIZE
                 filter: { status: $status, supporter: $supporterId }
               }
             ) {
