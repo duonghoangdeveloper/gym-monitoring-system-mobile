@@ -54,6 +54,7 @@ export const SignInScreen = ({ navigation }) => {
                 email
                 phone
                 role
+                isOnline
               }
             }
           }

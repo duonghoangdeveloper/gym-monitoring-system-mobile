@@ -1,47 +1,65 @@
+import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
+  Alert,
   Modal,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
-// export const TrainerHomeScreen = ({ navigation }) => (
-//   <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-//     <Text>Trainer</Text>
-//   </View>
-// );
+import { CommonButton } from '../components/common-button';
+import { UPDATE_STATUS } from '../redux/user/user.types';
 
 export const TrainerHomeScreen = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const client = useApolloClient();
+  const dispatch = useDispatch();
+  const [updateUser, setUpdateUser] = useState(
+    useSelector(state => state.user.me)
+  );
+
+  const changeOnlineStatus = async (_id, isOnline) => {
+    console.log(updateUser);
+    console.log(isOnline);
+    console.log(updateUser.isOnline);
+    console.log('--------------------------------------');
+    try {
+      const result = await client.query({
+        query: gql`
+          mutation ChangeOnlineStatus($_id: ID!, $status: Boolean) {
+            changeOnlineStatus(_id: $_id, status: $status) {
+              isOnline
+            }
+          }
+        `,
+        variables: {
+          _id,
+          status: isOnline,
+        },
+      });
+      console.log(result.data.changeOnlineStatus.isOnline);
+      setUpdateUser({ ...updateUser, isOnline });
+      dispatch({
+        payload: {
+          me: updateUser,
+        },
+        type: UPDATE_STATUS,
+      });
+      Alert.alert('Update working status to succeed!');
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
+    }
+  };
   return (
     <View style={styles.centeredView}>
-      <Modal animationType="slide" transparent visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-              style={{ ...styles.openButton, backgroundColor: 'red' }}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
-
-      <TouchableHighlight
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        style={styles.openButton}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </TouchableHighlight>
+      <Text>Trainer working status: {updateUser.isOnline.toString()}</Text>
+      <CommonButton
+        onPress={() => changeOnlineStatus(updateUser._id, !updateUser.isOnline)}
+        title="Change online status"
+      />
     </View>
   );
 };
