@@ -1,17 +1,11 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import React, { useLayoutEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
+import { CommonIcon } from '../components/common-icon';
 import { UPDATE_STATUS } from '../redux/user/user.types';
 
 export const TrainerHomeScreen = ({ navigation }) => {
@@ -22,12 +16,9 @@ export const TrainerHomeScreen = ({ navigation }) => {
   );
 
   const changeOnlineStatus = async (_id, isOnline) => {
-    console.log(updateUser);
-    console.log(isOnline);
-    console.log(updateUser.isOnline);
-    console.log('--------------------------------------');
     try {
-      const result = await client.query({
+      // const result =
+      await client.query({
         query: gql`
           mutation ChangeOnlineStatus($_id: ID!, $status: Boolean) {
             changeOnlineStatus(_id: $_id, status: $status) {
@@ -40,7 +31,7 @@ export const TrainerHomeScreen = ({ navigation }) => {
           status: isOnline,
         },
       });
-      console.log(result.data.changeOnlineStatus.isOnline);
+      // console.log(result.data.changeOnlineStatus.isOnline);
       setUpdateUser({ ...updateUser, isOnline });
       dispatch({
         payload: {
@@ -53,8 +44,20 @@ export const TrainerHomeScreen = ({ navigation }) => {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <CommonButton
+          icon={<CommonIcon color="white" name="bell" />}
+          onPress={() => navigation.navigate('Notification')}
+        />
+      ),
+    });
+  }, [navigation]);
+
   return (
-    <View style={styles.centeredView}>
+    <View style={styles.view}>
       <Text>Trainer working status: {updateUser.isOnline.toString()}</Text>
       <CommonButton
         onPress={() => changeOnlineStatus(updateUser._id, !updateUser.isOnline)}
@@ -65,40 +68,10 @@ export const TrainerHomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+  view: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
     marginTop: 22,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalView: {
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    elevation: 5,
-    margin: 20,
-    padding: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    elevation: 2,
-    padding: 10,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
