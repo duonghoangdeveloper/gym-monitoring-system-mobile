@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { PAGE_SIZE } from '../common/constants';
+// import { PAGE_SIZE } from '../common/constants';
 import { CommonButtonGroup } from '../components/common-button-group';
 import { CommonView } from '../components/common-view';
 import { NotificationItem } from '../components/notification-item';
@@ -96,11 +96,19 @@ export const NotificationScreen = ({ navigation }) => {
     try {
       const result = await client.query({
         query: gql`
-          query($supporterId: [ID], $status: [String]) {
+          query(
+            $customerId: [ID]
+            #  $supporterId: [ID],
+            $status: [String]
+          ) {
             warnings(
               query: {
-                limit: PAGE_SIZE
-                filter: { status: $status, supporter: $supporterId }
+                limit: 10
+                filter: {
+                  status: $status
+                  customer: $customerId
+                  # supporter: $supporterId
+                }
               }
             ) {
               total
@@ -126,8 +134,9 @@ export const NotificationScreen = ({ navigation }) => {
           }
         `,
         variables: {
+          customerId: warningSupporter,
           status: warningStatus,
-          supporterId: warningSupporter,
+          // supporterId: warningSupporter,
         },
       });
       const fetchedWarnings = result?.data?.warnings?.data ?? [];
