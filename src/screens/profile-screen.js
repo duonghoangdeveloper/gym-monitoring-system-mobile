@@ -29,9 +29,9 @@ export const ProfileScreen = () => {
           mutation UpdateProfile(
             $username: String
             $displayName: String
-            $email: String
             $phone: String
-            $gender: String
+            $email: String
+            $gender: Gender
           ) {
             updateProfile(
               data: {

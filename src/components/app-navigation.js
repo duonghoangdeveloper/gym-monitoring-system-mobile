@@ -15,7 +15,6 @@ import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
 import { FeedbackGymScreen } from '../screens/feedback-gym-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
 import { FeedbackStaffScreen } from '../screens/feedback-staff-screen';
-import { NotificationDetailScreen } from '../screens/notification-detail-screen';
 import { NotificationScreen } from '../screens/notification-screen';
 import { ProfileScreen } from '../screens/profile-screen';
 import { SandboxScreen } from '../screens/sandbox-screen';
@@ -23,6 +22,8 @@ import { SettingsScreen } from '../screens/settings-screen';
 import { SignInScreen } from '../screens/sign-in-screen';
 import { TrainerHomeScreen } from '../screens/trainer-home-screen';
 import { TrainerMenuScreen } from '../screens/trainer-menu-screen';
+import { WarningDetailScreen } from '../screens/warning-detail-screen';
+import { WarningScreen } from '../screens/warning-screen';
 
 export const AppNavigation = () => {
   const role = useSelector(state => state.user.me.role);
@@ -38,9 +39,9 @@ export const AppNavigation = () => {
 //      |-- SandboxScreen
 //    |-- TrainerHomeNavigation
 //      |-- TrainerHome
-//    |-- TrainerNotificationNavigation
-//      |-- NotificationScreen
-//        |-- NotificationDetailScreen
+//    |-- TrainerWarningNavigation
+//      |-- WarningScreen
+//        |-- WarningDetailScreen
 //    |-- TrainerMenuNavigation
 //      |-- TrainerMenu
 //      |-- ProfileScreen
@@ -51,9 +52,7 @@ export const AppNavigation = () => {
 //      |-- SandboxScreen
 //    |-- CustomerHomeNavigation
 //      |-- CustomerHome
-//    |-- CustomerNotificationNavigation
-//      |-- NotificationScreen
-//        |-- NotificationDetailScreen
+//        |-- CustomerNotification
 //    |-- CustomerPaymentNavigation
 //      |-- CustomerPayment
 //    |-- CustomerMenuNavigation
@@ -108,8 +107,8 @@ const TrainerBottomTabNavigation = () => (
       }}
     />
     <TrainerBottomTabStack.Screen
-      component={TrainerNotificationNavigation}
-      name="Notification"
+      component={TrainerWarningNavigation}
+      name="Warning"
       options={{
         tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
       }}
@@ -128,9 +127,9 @@ const TrainerSandboxStack = createStackNavigator();
 const TrainerSandboxNavigation = () => (
   <TrainerSandboxStack.Navigator>
     <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
-    <TrainerNotificationStack.Screen
-      component={NotificationDetailScreen}
-      name="Notification Detail"
+    <TrainerWarningStack.Screen
+      component={WarningDetailScreen}
+      name="Warning Detail"
     />
   </TrainerSandboxStack.Navigator>
 );
@@ -139,20 +138,21 @@ const TrainerHomeStack = createStackNavigator();
 const TrainerHomeNavigation = () => (
   <TrainerHomeStack.Navigator>
     <TrainerHomeStack.Screen component={TrainerHomeScreen} name="Home" />
-  </TrainerHomeStack.Navigator>
-);
-const TrainerNotificationStack = createStackNavigator();
-const TrainerNotificationNavigation = () => (
-  <TrainerNotificationStack.Navigator>
-    <TrainerNotificationStack.Screen
+    <TrainerHomeStack.Screen
       component={NotificationScreen}
       name="Notification"
     />
-    <TrainerNotificationStack.Screen
-      component={NotificationDetailScreen}
-      name="Notification Detail"
+  </TrainerHomeStack.Navigator>
+);
+const TrainerWarningStack = createStackNavigator();
+const TrainerWarningNavigation = () => (
+  <TrainerWarningStack.Navigator>
+    <TrainerWarningStack.Screen component={WarningScreen} name="Warning" />
+    <TrainerWarningStack.Screen
+      component={WarningDetailScreen}
+      name="Warning Detail"
     />
-  </TrainerNotificationStack.Navigator>
+  </TrainerWarningStack.Navigator>
 );
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
@@ -170,6 +170,11 @@ const TrainerMenuNavigation = () => (
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <CustomerMenuStack.Screen
+      component={ChangePasswordScreen}
+      name="Change Password"
+    />
+    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
   </TrainerMenuStack.Navigator>
 );
 
@@ -188,13 +193,6 @@ const CustomerBottomTabNavigation = () => (
       name="Home"
       options={{
         tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
-      }}
-    />
-    <CustomerBottomTabStack.Screen
-      component={CustomerNotificationNavigation}
-      name="Notification"
-      options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
       }}
     />
     <CustomerBottomTabStack.Screen
@@ -236,6 +234,10 @@ const CustomerHomeNavigation = () => (
     }}
   >
     <CustomerHomeStack.Screen component={CustomerHomeScreen} name="Home" />
+    <CustomerHomeStack.Screen
+      component={NotificationScreen}
+      name="Notification"
+    />
   </CustomerHomeStack.Navigator>
 );
 
@@ -259,27 +261,13 @@ const CustomerPaymentNavigation = () => (
   </CustomerPaymentStack.Navigator>
 );
 
-const CustomerNotificationStack = createStackNavigator();
-const CustomerNotificationNavigation = () => (
-  <CustomerNotificationStack.Navigator>
-    <CustomerPaymentStack.Screen
-      component={NotificationScreen}
-      name="Notification"
-    />
-    <CustomerNotificationStack.Screen
-      component={NotificationDetailScreen}
-      name="Notification Detail"
-    />
-  </CustomerNotificationStack.Navigator>
-);
-
-const CustomerFeedbackStack = createStackNavigator();
-const CustomerFeedbackNavigation = () => (
-  <CustomerFeedbackStack.Navigator>
-    <FeedbackScreen.Screen component={FeedbackScreen} name="Feedback" />
-    <FeedbackScreen.Screen component={FeedbackGymScreen} name="FeedbackGym" />
-  </CustomerFeedbackStack.Navigator>
-);
+// const CustomerFeedbackStack = createStackNavigator();
+// const CustomerFeedbackNavigation = () => (
+//   <CustomerFeedbackStack.Navigator>
+//     <FeedbackScreen.Screen component={FeedbackScreen} name="Feedback" />
+//     <FeedbackScreen.Screen component={FeedbackGymScreen} name="FeedbackGym" />
+//   </CustomerFeedbackStack.Navigator>
+// );
 
 const CustomerMenuStack = createStackNavigator();
 const CustomerMenuNavigation = () => (

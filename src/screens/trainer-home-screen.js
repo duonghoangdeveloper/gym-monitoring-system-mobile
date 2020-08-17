@@ -1,86 +1,112 @@
-import React, { useState } from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import React, { useLayoutEffect, useState } from 'react';
 import {
-  Modal,
+  ActivityIndicator,
+  Alert,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
-// export const TrainerHomeScreen = ({ navigation }) => (
-//   <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-//     <Text>Trainer</Text>
-//   </View>
-// );
+import { CommonButton } from '../components/common-button';
+import { CommonIcon } from '../components/common-icon';
+import { DIMENSIONS } from '../constants/dimensions';
+import { UPDATE_STATUS } from '../redux/user/user.types';
 
 export const TrainerHomeScreen = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const client = useApolloClient();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [updateUser, setUpdateUser] = useState(
+    useSelector(state => state.user.me)
+  );
+
+  const changeOnlineStatus = async (_id, isOnline) => {
+    setLoading(true);
+    try {
+      await client.query({
+        query: gql`
+          mutation ChangeOnlineStatus($_id: ID!, $status: Boolean) {
+            changeOnlineStatus(_id: $_id, status: $status) {
+              isOnline
+            }
+          }
+        `,
+        variables: {
+          _id,
+          status: isOnline,
+        },
+      });
+      setUpdateUser({ ...updateUser, isOnline });
+      dispatch({
+        payload: {
+          me: updateUser,
+        },
+        type: UPDATE_STATUS,
+      });
+      // Alert.alert('Update working status to succeed!');
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
+    }
+    setLoading(false);
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <CommonButton
+          icon={<CommonIcon color="white" name="bell" />}
+          onPress={() => navigation.navigate('Notification')}
+        />
+      ),
+    });
+  }, [navigation]);
+
   return (
-    <View style={styles.centeredView}>
-      <Modal animationType="slide" transparent visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-              style={{ ...styles.openButton, backgroundColor: 'red' }}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </Modal>
-
-      <TouchableHighlight
-        onPress={() => {
-          setModalVisible(true);
-        }}
-        style={styles.openButton}
+    <View style={styles.view}>
+      <Text>Press to work</Text>
+      <TouchableOpacity
+        onPress={() => changeOnlineStatus(updateUser._id, !updateUser.isOnline)}
       >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </TouchableHighlight>
+        <View style={updateUser.isOnline ? styles.abc : styles.def}>
+          {loading && <ActivityIndicator color="white" />}
+
+          {updateUser.isOnline ? (
+            <Text>WORKING</Text>
+          ) : (
+            <Text>NOT WORKING</Text>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+  abc: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    borderRadius: 100,
+    height: 150,
+    justifyContent: 'center',
+    width: 150,
+  },
+
+  def: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderRadius: 100,
+    height: 150,
+    justifyContent: 'center',
+    width: 150,
+  },
+  view: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
     marginTop: 22,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalView: {
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    elevation: 5,
-    margin: 20,
-    padding: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    elevation: 2,
-    padding: 10,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
