@@ -155,7 +155,6 @@ export const ChangePasswordScreen = ({ navigation }) => {
               style={{ backgroundColor: 'white', height: scaleV(250) }}
             />
             <CommonButton
-              label="Change Password"
               onPress={() =>
                 onFinish(oldPassword, newPassword, confirmPassword)
               }
@@ -164,6 +163,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
                 width: scaleH(311),
               }}
+              title="Change Password"
             />
           </KeyboardAvoidingView>
         </View>

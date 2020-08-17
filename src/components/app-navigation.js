@@ -170,6 +170,11 @@ const TrainerMenuNavigation = () => (
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
     <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
     <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <CustomerMenuStack.Screen
+      component={ChangePasswordScreen}
+      name="Change Password"
+    />
+    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
   </TrainerMenuStack.Navigator>
 );
 

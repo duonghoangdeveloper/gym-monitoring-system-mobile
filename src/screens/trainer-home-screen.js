@@ -1,23 +1,32 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { useLayoutEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
 import { CommonIcon } from '../components/common-icon';
+import { DIMENSIONS } from '../constants/dimensions';
 import { UPDATE_STATUS } from '../redux/user/user.types';
 
 export const TrainerHomeScreen = ({ navigation }) => {
   const client = useApolloClient();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [updateUser, setUpdateUser] = useState(
     useSelector(state => state.user.me)
   );
 
   const changeOnlineStatus = async (_id, isOnline) => {
+    setLoading(true);
     try {
-      // const result =
       await client.query({
         query: gql`
           mutation ChangeOnlineStatus($_id: ID!, $status: Boolean) {
@@ -31,7 +40,6 @@ export const TrainerHomeScreen = ({ navigation }) => {
           status: isOnline,
         },
       });
-      // console.log(result.data.changeOnlineStatus.isOnline);
       setUpdateUser({ ...updateUser, isOnline });
       dispatch({
         payload: {
@@ -39,10 +47,11 @@ export const TrainerHomeScreen = ({ navigation }) => {
         },
         type: UPDATE_STATUS,
       });
-      Alert.alert('Update working status to succeed!');
+      // Alert.alert('Update working status to succeed!');
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
+    setLoading(false);
   };
 
   useLayoutEffect(() => {
@@ -58,16 +67,42 @@ export const TrainerHomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.view}>
-      <Text>Trainer working status: {updateUser.isOnline.toString()}</Text>
-      <CommonButton
+      <Text>Press to work</Text>
+      <TouchableOpacity
         onPress={() => changeOnlineStatus(updateUser._id, !updateUser.isOnline)}
-        title="Change online status"
-      />
+      >
+        <View style={updateUser.isOnline ? styles.abc : styles.def}>
+          {loading && <ActivityIndicator color="white" />}
+
+          {updateUser.isOnline ? (
+            <Text>WORKING</Text>
+          ) : (
+            <Text>NOT WORKING</Text>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  abc: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    borderRadius: 100,
+    height: 150,
+    justifyContent: 'center',
+    width: 150,
+  },
+
+  def: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderRadius: 100,
+    height: 150,
+    justifyContent: 'center',
+    width: 150,
+  },
   view: {
     alignItems: 'center',
     flex: 1,
