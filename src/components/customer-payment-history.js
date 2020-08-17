@@ -13,6 +13,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
   const [total, setTotal] = useState(0);
   const fetchPaymentsData = async () => {
     try {
+      console.log('123');
       const result = await client.query({
         query: gql`
           query {
@@ -34,10 +35,10 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
           total,
         },
       });
-
+      console.log(123);
       const fetchedPaymentsData = result?.data?.payments?.data ?? [];
       const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
-
+      console.log(fetchedPaymentsData);
       setPayment(
         fetchedPaymentsData.map(payment => ({
           key: payment._id,
@@ -54,7 +55,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
   useEffect(() => {
     fetchPaymentsData();
   }, []);
-
+  console.log(payments);
   return (
     <>
       <View>
