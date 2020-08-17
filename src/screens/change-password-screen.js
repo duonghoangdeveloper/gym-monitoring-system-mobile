@@ -164,6 +164,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
                 width: scaleH(311),
               }}
+              title="Update"
             />
           </KeyboardAvoidingView>
         </View>
