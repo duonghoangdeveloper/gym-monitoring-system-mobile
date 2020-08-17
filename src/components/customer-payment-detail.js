@@ -64,7 +64,7 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
   let dateCreate = new Date();
   payments.forEach(p => (dateCreate = p.customer.createdAt));
   const expiredDateTemp = new Date(dateCreate).setDate(
-    new Date(dateCreate).getDate() + sumPeriod * 30
+    new Date(dateCreate).getDate() + sumPeriod
   );
   const expiredDate = moment(expiredDateTemp).format(DATE_FORMAT);
   const msDiff = new Date(expiredDateTemp).getTime() - new Date().getTime(); // Future date - current date

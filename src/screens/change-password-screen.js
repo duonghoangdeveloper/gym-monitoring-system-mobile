@@ -3,11 +3,9 @@ import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
   Alert,
-  Button,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -163,7 +161,7 @@ export const ChangePasswordScreen = ({ navigation }) => {
 
                 width: scaleH(311),
               }}
-              title="Change Password"
+              title="Update"
             />
           </KeyboardAvoidingView>
         </View>

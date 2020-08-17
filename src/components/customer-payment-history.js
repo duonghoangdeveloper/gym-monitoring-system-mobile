@@ -34,10 +34,9 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
           total,
         },
       });
-
       const fetchedPaymentsData = result?.data?.payments?.data ?? [];
       const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
-
+      console.log(fetchedPaymentsData);
       setPayment(
         fetchedPaymentsData.map(payment => ({
           key: payment._id,
@@ -54,7 +53,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
   useEffect(() => {
     fetchPaymentsData();
   }, []);
-
+  console.log(payments);
   return (
     <>
       <View>
