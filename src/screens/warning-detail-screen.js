@@ -12,7 +12,7 @@ import { COLORS } from '../constants/colors';
 import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
-export const NotificationDetailScreen = ({ route }) => {
+export const WarningDetailScreen = ({ route }) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState({});
@@ -152,12 +152,7 @@ export const NotificationDetailScreen = ({ route }) => {
               marginVertical: DIMENSIONS.DISTANCE_3,
             }}
           >
-            {/* <CommonButton
-              gradient
-              // onPress={fetchData}
-              rightIcon={<CommonIcon color="white" name="arrow-right" />}
-              title="Feedback"
-            /> */}
+            <CommonButton gradient title="Feedback" />
           </View>
         </View>
       </View>
