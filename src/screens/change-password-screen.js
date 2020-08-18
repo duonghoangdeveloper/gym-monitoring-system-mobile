@@ -3,11 +3,9 @@ import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
   Alert,
-  Button,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -155,7 +153,6 @@ export const ChangePasswordScreen = ({ navigation }) => {
               style={{ backgroundColor: 'white', height: scaleV(250) }}
             />
             <CommonButton
-              label="Change Password"
               onPress={() =>
                 onFinish(oldPassword, newPassword, confirmPassword)
               }

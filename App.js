@@ -68,6 +68,14 @@ export const registerForPushNotificationsAsync = async function registerForPushN
   } else {
     alert('Must use physical device for Push Notifications');
   }
+  // if (Platform.OS === 'android') {
+  //   Notifications.createChannelAndroidAsync('default', {
+  //     name: 'default',
+  //     priority: 'max',
+  //     sound: true,
+  //     vibrate: [0, 250, 250, 250],
+  //   });
+  // }
 
   return expoPushToken.data;
 };

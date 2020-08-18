@@ -10,7 +10,7 @@ import { CommonButton } from '../components/common-button';
 import { CommonInputForm } from '../components/common-input-form';
 import { CommonView } from '../components/common-view';
 import { USER_GENDERS } from '../constants/app';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 import { UPDATE_PROFILE } from '../redux/user/user.types';
 
 export const ProfileScreen = () => {
@@ -29,9 +29,9 @@ export const ProfileScreen = () => {
           mutation UpdateProfile(
             $username: String
             $displayName: String
-            $email: String
             $phone: String
-            $gender: String
+            $email: String
+            $gender: Gender
           ) {
             updateProfile(
               data: {

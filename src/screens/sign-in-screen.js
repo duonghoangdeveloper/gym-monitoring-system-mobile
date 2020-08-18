@@ -5,18 +5,24 @@ import gql from 'graphql-tag';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { registerForPushNotificationsAsync } from '../../App';
+import eGMSnoText from '../../assets/eGMSnoText.png';
+// import { eGMSnoText } from '../assets/picture/eGMSnoText.png';
+import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonView } from '../components/common-view';
 import { TOKEN_KEY } from '../constants/app';
-import { scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { SIGN_IN } from '../redux/user/user.types';
 
 export const SignInScreen = ({ navigation }) => {
@@ -28,7 +34,6 @@ export const SignInScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignInPress = async () => {
-    setLoading(true);
     const expoPushToken = await registerForPushNotificationsAsync();
     try {
       const result = await client.mutate({
@@ -54,6 +59,7 @@ export const SignInScreen = ({ navigation }) => {
                 email
                 phone
                 role
+                isOnline
               }
             }
           }
@@ -86,72 +92,103 @@ export const SignInScreen = ({ navigation }) => {
       // message.error('Wrong username or password!');
     }
   };
+  console.log(eGMSnoText);
 
   return (
-    <CommonDismissKeyboardWrapper>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={styles.container}
+    <CommonView>
+      <View
+        style={{
+          display: 'flex',
+          displayDirection: 'column',
+          flex: 1,
+          justifyContent: 'flex-start',
+        }}
       >
-        <Text h3 style={styles.title}>
-          Sign In
-        </Text>
-        <Input
-          leftIcon={
-            <Icon
-              color="#7f7f7f"
-              name="user"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
-            />
-          }
-          onChangeText={setUsername}
-          placeholder="Enter username"
-          value={username}
-        />
-        <Input
-          leftIcon={
-            <Icon
-              color="#7f7f7f"
-              name="lock"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
-            />
-          }
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          rightIcon={
-            <TouchableOpacity
-              onPress={() => setVisible(!visible)}
-              style={styles.passwordVisibleToggleButton}
-            >
+        <View
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Image
+            source={{
+              uri:
+                'https://drive.google.com/uc?id=1Glrj5Kfh1dtu6VTp6PlvS7vxHCu35ctP',
+            }}
+            style={{
+              height: scaleV(180),
+              width: scaleH(180),
+            }}
+          />
+          <Text style={{ fontSize: 32, fontWeight: 'bold' }}>eGMS</Text>
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            displayDirection: 'column',
+            flex: 1,
+            justifyContent: 'center',
+          }}
+        >
+          <Input
+            leftIcon={
               <Icon
                 color="#7f7f7f"
-                name={visible ? 'eye' : 'eye-slash'}
-                size={20}
-                type="font-awesome-5"
+                name="user"
+                size={24}
+                style={styles.inputIcon}
+                type="font-awesome"
               />
-            </TouchableOpacity>
-          }
-          secureTextEntry={!visible}
-          type="password"
-        />
-        <Button
-          containerStyle={styles.signInButton}
-          loading={loading}
-          onPress={handleSignInPress}
-          title="Sign in"
-        />
-      </KeyboardAvoidingView>
-    </CommonDismissKeyboardWrapper>
+            }
+            onChangeText={setUsername}
+            placeholder="Enter username"
+            value={username}
+          />
+          <Input
+            leftIcon={
+              <Icon
+                color="#7f7f7f"
+                name="lock"
+                size={24}
+                style={styles.inputIcon}
+                type="font-awesome"
+              />
+            }
+            onChangeText={setPassword}
+            placeholder="Enter password"
+            rightIcon={
+              <TouchableOpacity
+                onPress={() => setVisible(!visible)}
+                style={styles.passwordVisibleToggleButton}
+              >
+                <Icon
+                  color="#7f7f7f"
+                  name={visible ? 'eye' : 'eye-slash'}
+                  size={20}
+                  type="font-awesome-5"
+                />
+              </TouchableOpacity>
+            }
+            secureTextEntry={!visible}
+            type="password"
+          />
+          <CommonButton
+            loading={loading}
+            onPress={() => {
+              setLoading(true);
+              handleSignInPress();
+            }}
+            title="Sign In"
+          />
+        </View>
+      </View>
+    </CommonView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
     padding: 12,
