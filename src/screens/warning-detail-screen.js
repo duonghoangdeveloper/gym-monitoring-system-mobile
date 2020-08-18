@@ -1,26 +1,25 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  Image,
-  RefreshControl,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
-import { COLORS } from '../constants/colors';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
-import { textStyle } from '../constants/text-styles';
+import { CommonListItem } from '../components/common-list-item';
+import { CommonLoadingComponent } from '../components/common-loading-component';
+import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
+import { CommonView } from '../components/common-view';
+import { DIMENSIONS, scaleH } from '../constants/dimensions';
 
 export const WarningDetailScreen = ({ navigation, route }) => {
   const client = useApolloClient();
   const [refreshing, setRefreshing] = useState(false);
-  const me = useSelector(state => state.user.me);
   const [warning, setWarning] = useState({});
+  const me = useSelector(state => state.user.me);
+  useEffect(() => {
+    fetchData(route.params.item);
+  }, []);
 
   const fetchData = async () => {
     setRefreshing(true);
@@ -82,7 +81,7 @@ export const WarningDetailScreen = ({ navigation, route }) => {
         },
       });
       const fetchedWarning = result?.data?.acceptWarning ?? [];
-      if (fetchedWarning.status === 'SUCCEEDED')
+      if (fetchedWarning.status === 'ACCEPTED')
         Alert.alert('Accept succeeded!');
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
@@ -100,137 +99,65 @@ export const WarningDetailScreen = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-      }
-    >
-      <View style={{ alignItems: 'stretch', justifyContent: 'center' }}>
+    <CommonScrollViewAwareScreenHeight>
+      <Image
+        source={{
+          uri:
+            warning.image?.url ??
+            'https://drive.google.com/uc?id=1Glrj5Kfh1dtu6VTp6PlvS7vxHCu35ctP',
+        }}
+        style={{
+          height: (DIMENSIONS.SCREEN_WIDTH / 16) * 9,
+          width: DIMENSIONS.SCREEN_WIDTH,
+        }}
+      />
+      <CommonView>
+        <CommonListItem
+          detail={warning.customer?.username ?? 'N/A'}
+          label="Customer"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={warning.status}
+          label="Status"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={moment(warning.createdAt).format('DD/MM/YYYY, HH:mm')}
+          label="Time"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={warning.content}
+          label="Content"
+          showSeparator="true"
+          type="detail"
+        />
+        {me.role === 'CUSTOMER' && (
+          <CommonListItem
+            detail={warning.supporter?.username ?? 'N/A'}
+            label="Supporter"
+            showSeparator="true"
+            type="detail"
+          />
+        )}
+      </CommonView>
+      {warning.status === 'PENDING' && me.role === 'TRAINER' && (
         <View
           style={{
-            alignItems: 'center',
+            display: 'flex',
             flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            position: 'relative',
+            justifyContent: 'flex-end',
+            marginTop: 40,
+            padding: 12,
           }}
         >
-          <Image
-            source={{ uri: warning.image?.url }}
-            style={{
-              height: scaleV(300),
-              marginBottom: DIMENSIONS.DISTANCE_5,
-              width: scaleH(300),
-            }}
-          />
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Customer:</Text>
-            <Text style={textStyle.bodyText}>{warning.customer?.username}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Supporter:</Text>
-            <Text style={textStyle.bodyText}>
-              {warning.supporter?.username}
-            </Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Status:</Text>
-            <Text style={textStyle.bodyText}>{warning.status}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Time:</Text>
-            <Text style={textStyle.bodyText}>{warning.createdAt}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Content:</Text>
-            <View
-              style={{
-                alignItems: 'flex-start',
-                borderColor: COLORS.dark90,
-                borderWidth: 1,
-                justifyContent: 'center',
-                padding: DIMENSIONS.DISTANCE_3,
-              }}
-            >
-              <Text style={textStyle.bodyText}>{warning.content}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              alignItems: 'stretch',
-              alignSelf: 'stretch',
-              marginVertical: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            {me.role === 'CUSTOMER' && warning.status === 'SUCCEEDED' && (
-              <CommonButton
-                gradient
-                // onPress={() => {
-                //   navigation.navigate('Feedback Trainer', { name: 'trainer' });
-                // }}
-                title="Feedback"
-              />
-            )}
-            {me.role === 'TRAINER' && warning.status === 'PENDING' && (
-              <CommonButton
-                gradient
-                onPress={() => acceptWarning()}
-                title="Accept"
-              />
-            )}
-          </View>
+          <CommonButton onPress={() => acceptWarning()} title="Accept" />
         </View>
-      </View>
-    </ScrollView>
+      )}
+    </CommonScrollViewAwareScreenHeight>
   );
 };

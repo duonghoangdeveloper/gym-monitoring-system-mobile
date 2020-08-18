@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, UPDATE_PROFILE, UPDATE_STATUS } from './user.types';
+import { SIGN_IN, SIGN_OUT, UPDATE_PROFILE } from './user.types';
 
 const INITIAL_STATE = {
   me: {
@@ -25,11 +25,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         me: INITIAL_STATE.me,
       };
     case UPDATE_PROFILE:
-      return {
-        ...state,
-        me: { ...INITIAL_STATE.me, ...action.payload.me },
-      };
-    case UPDATE_STATUS:
       return {
         ...state,
         me: { ...INITIAL_STATE.me, ...action.payload.me },

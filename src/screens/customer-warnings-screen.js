@@ -12,52 +12,22 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-// import { PAGE_SIZE } from '../common/constants';
-import { CommonButtonGroup } from '../components/common-button-group';
 import { CommonView } from '../components/common-view';
 import { NotificationItem } from '../components/notification-item';
-import { DIMENSIONS } from '../constants/dimensions';
 
-export const WarningScreen = ({ navigation }) => {
+export const CustomerWarningScreen = ({ navigation }) => {
   const client = useApolloClient();
   const [refreshing, setRefreshing] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
   const me = useSelector(state => state.user.me);
   const [warnings, setWarnings] = useState([]);
 
-  const fetchData = async index => {
+  const fetchData = async () => {
     setRefreshing(true);
-    setActiveIndex(index);
-
-    let status = null;
-    let customerId = null;
-    const supporterId = null;
-    if (index === 0) {
-      status = 'PENDING';
-    } else if (index === 1) {
-      status = ['ACCEPTED', 'FAILED'];
-      if (me.role === 'CUSTOMER') {
-        customerId = me._id;
-      }
-    }
     try {
       const result = await client.query({
         query: gql`
-          query(
-            $customerId: [ID]
-            $supporterId: [ID]
-            $status: [WarningStatus]
-          ) {
-            warnings(
-              query: {
-                limit: 10
-                filter: {
-                  status: $status
-                  customer: $customerId
-                  supporter: $supporterId
-                }
-              }
-            ) {
+          query($customerId: [ID]) {
+            warnings(query: { limit: 10, filter: { customer: $customerId } }) {
               total
               data {
                 _id
@@ -68,14 +38,16 @@ export const WarningScreen = ({ navigation }) => {
                 status
                 createdAt
                 updatedAt
+                supporter {
+                  _id
+                  displayName
+                }
               }
             }
           }
         `,
         variables: {
-          customerId,
-          status,
-          supporterId,
+          customerId: me._id,
         },
       });
       const fetchedWarnings = result?.data?.warnings?.data ?? [];
@@ -87,11 +59,12 @@ export const WarningScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetchData(activeIndex);
-  }, [activeIndex]);
+    fetchData();
+    console.log(warnings);
+  }, []);
 
   const onRefresh = () => {
-    fetchData(activeIndex);
+    fetchData();
   };
 
   const renderItem = ({ item }) => (
@@ -108,14 +81,6 @@ export const WarningScreen = ({ navigation }) => {
         justifyContent: 'center',
       }}
     >
-      <CommonButtonGroup
-        activeIndex={activeIndex}
-        labels={['Pending', 'History']}
-        onItemPress={index => {
-          fetchData(index);
-        }}
-        style={{ marginBottom: DIMENSIONS.MARGIN }}
-      />
       {warnings.length > 0 ? (
         <FlatList
           data={warnings}

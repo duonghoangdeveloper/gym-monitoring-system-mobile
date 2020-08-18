@@ -11,10 +11,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { registerForPushNotificationsAsync } from '../../App';
+import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
+import { CommonView } from '../components/common-view';
 import { TOKEN_KEY } from '../constants/app';
 import { scaleH, scaleV } from '../constants/dimensions';
 import { SIGN_IN } from '../redux/user/user.types';
@@ -89,70 +91,66 @@ export const SignInScreen = ({ navigation }) => {
   };
 
   return (
-    <CommonDismissKeyboardWrapper>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={styles.container}
-      >
-        <Text h3 style={styles.title}>
-          Sign In
-        </Text>
-        <Input
-          leftIcon={
-            <Icon
-              color="#7f7f7f"
-              name="user"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
-            />
-          }
-          onChangeText={setUsername}
-          placeholder="Enter username"
-          value={username}
-        />
-        <Input
-          leftIcon={
-            <Icon
-              color="#7f7f7f"
-              name="lock"
-              size={24}
-              style={styles.inputIcon}
-              type="font-awesome"
-            />
-          }
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          rightIcon={
-            <TouchableOpacity
-              onPress={() => setVisible(!visible)}
-              style={styles.passwordVisibleToggleButton}
-            >
+    <CommonView>
+      <CommonDismissKeyboardWrapper>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+        >
+          <Input
+            leftIcon={
               <Icon
                 color="#7f7f7f"
-                name={visible ? 'eye' : 'eye-slash'}
-                size={20}
-                type="font-awesome-5"
+                name="user"
+                size={24}
+                style={styles.inputIcon}
+                type="font-awesome"
               />
-            </TouchableOpacity>
-          }
-          secureTextEntry={!visible}
-          type="password"
-        />
-        <Button
-          containerStyle={styles.signInButton}
-          loading={loading}
-          onPress={handleSignInPress}
-          title="Sign in"
-        />
-      </KeyboardAvoidingView>
-    </CommonDismissKeyboardWrapper>
+            }
+            onChangeText={setUsername}
+            placeholder="Enter username"
+            value={username}
+          />
+          <Input
+            leftIcon={
+              <Icon
+                color="#7f7f7f"
+                name="lock"
+                size={24}
+                style={styles.inputIcon}
+                type="font-awesome"
+              />
+            }
+            onChangeText={setPassword}
+            placeholder="Enter password"
+            rightIcon={
+              <TouchableOpacity
+                onPress={() => setVisible(!visible)}
+                style={styles.passwordVisibleToggleButton}
+              >
+                <Icon
+                  color="#7f7f7f"
+                  name={visible ? 'eye' : 'eye-slash'}
+                  size={20}
+                  type="font-awesome-5"
+                />
+              </TouchableOpacity>
+            }
+            secureTextEntry={!visible}
+            type="password"
+          />
+          <CommonButton
+            loading={loading}
+            onPress={handleSignInPress}
+            title="Sign In"
+          />
+        </KeyboardAvoidingView>
+      </CommonDismissKeyboardWrapper>
+    </CommonView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
     padding: 12,

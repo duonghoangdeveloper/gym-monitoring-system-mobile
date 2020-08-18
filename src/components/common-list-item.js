@@ -79,6 +79,7 @@ export const CommonListItem = ({
         return null;
     }
   };
+
   return (
     <TouchableOpacity
       disabled={!pressable}
