@@ -16,6 +16,7 @@ import { ChooseStaffScreen } from '../screens/choose-staff-screen';
 import { CustomerHomeScreen } from '../screens/customer-home-screen';
 import { CustomerMenuScreen } from '../screens/customer-menu-screen';
 import { CustomerPaymentScreen } from '../screens/customer-payment-screen';
+import { CustomerWarningScreen } from '../screens/customer-warnings-screen';
 import { FeedbackGymScreen } from '../screens/feedback-gym-screen';
 import { FeedbackScreen } from '../screens/feedback-screen';
 import { FeedbackStaffScreen } from '../screens/feedback-staff-screen';
@@ -163,6 +164,7 @@ const TrainerHomeNavigation = () => (
     />
   </TrainerHomeStack.Navigator>
 );
+
 const TrainerWarningStack = createStackNavigator();
 const TrainerWarningNavigation = () => (
   <TrainerWarningStack.Navigator {...stackNavigatorProps}>
@@ -171,8 +173,13 @@ const TrainerWarningNavigation = () => (
       component={WarningDetailScreen}
       name="Warning Detail"
     />
+    <TrainerWarningStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
   </TrainerWarningStack.Navigator>
 );
+
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
   <TrainerMenuStack.Navigator
@@ -188,13 +195,13 @@ const TrainerMenuNavigation = () => (
     }}
   >
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
-    <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
-    <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
-    <CustomerMenuStack.Screen
+    <TrainerMenuStack.Screen component={ProfileScreen} name="Profile" />
+    <TrainerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <TrainerMenuStack.Screen
       component={ChangePasswordScreen}
       name="Change Password"
     />
-    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
+    <TrainerMenuStack.Screen component={AboutScreen} name="About" />
   </TrainerMenuStack.Navigator>
 );
 
@@ -216,6 +223,15 @@ const CustomerBottomTabNavigation = () => (
       options={{
         tabBarIcon: ({ color }) => (
           <FontAwesome5 color={color} name="home" size={20} />
+        ),
+      }}
+    />
+    <CustomerBottomTabStack.Screen
+      component={CustomerWarningNavigation}
+      name="Warning"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="bell" size={20} />
         ),
       }}
     />
@@ -265,6 +281,34 @@ const CustomerHomeNavigation = () => (
       name="Notification"
     />
   </CustomerHomeStack.Navigator>
+);
+
+const CustomerWarningStack = createStackNavigator();
+const CustomerWarningNavigation = () => (
+  <CustomerWarningStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
+    <CustomerWarningStack.Screen
+      component={CustomerWarningScreen}
+      name="Warning"
+    />
+    <CustomerWarningStack.Screen
+      component={WarningDetailScreen}
+      name="Warning Detail"
+    />
+    <CustomerWarningStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
+  </CustomerWarningStack.Navigator>
 );
 
 const CustomerPaymentStack = createStackNavigator();

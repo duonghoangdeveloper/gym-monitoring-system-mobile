@@ -99,7 +99,7 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.inputView}>
             <CommonTextItem
-              content="Chúng tôi cần cải thiện điều gì?"
+              content="What do we need to improve the service?"
               haveTick={false}
               style={styles.title}
             />
@@ -115,7 +115,7 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.view}>
             <CommonTextItem
-              content="Ý kiến đóng góp của bạn rất quý giá đối với chúng tôi"
+              content="Your feedbacks are very valuable to us"
               haveTick={false}
               labelStyle={styles.text}
             />

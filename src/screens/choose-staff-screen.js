@@ -176,7 +176,6 @@ const generatePageToNavigate = pageTitle => {
   }
   return 'Feedback Manager';
 };
-
 const generatePageRole = pageTitle => {
   if (pageTitle === 'trainer') {
     return 'TRAINER';

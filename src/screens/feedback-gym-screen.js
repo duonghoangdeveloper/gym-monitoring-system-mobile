@@ -62,7 +62,7 @@ export const FeedbackGymScreen = ({ navigation }) => {
             />
             <Text>eGMS</Text>
             <CommonTextItem
-              content="Chúng tôi cần cải thiện điều gì?"
+              content="What do we need to improve the service?"
               haveTick={false}
               labelStyle={styles.title}
             />
@@ -78,7 +78,7 @@ export const FeedbackGymScreen = ({ navigation }) => {
           />
           <View style={styles.view}>
             <CommonTextItem
-              content="Ý kiến đóng góp của bạn rất quý giá đối với chúng tôi"
+              content="Your feedbacks are very valuable to us"
               haveTick={false}
               labelStyle={styles.text}
             />
