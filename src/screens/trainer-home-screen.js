@@ -72,9 +72,9 @@ export const TrainerHomeScreen = ({ navigation }) => {
         onPress={() => changeOnlineStatus(updateUser._id, !updateUser.isOnline)}
       >
         <View style={updateUser.isOnline ? styles.abc : styles.def}>
-          {loading && <ActivityIndicator color="white" />}
-
-          {updateUser.isOnline ? (
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : updateUser.isOnline ? (
             <Text>WORKING</Text>
           ) : (
             <Text>NOT WORKING</Text>
