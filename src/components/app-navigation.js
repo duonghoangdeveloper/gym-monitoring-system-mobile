@@ -144,6 +144,7 @@ const TrainerHomeNavigation = () => (
     />
   </TrainerHomeStack.Navigator>
 );
+
 const TrainerWarningStack = createStackNavigator();
 const TrainerWarningNavigation = () => (
   <TrainerWarningStack.Navigator>
@@ -152,8 +153,13 @@ const TrainerWarningNavigation = () => (
       component={WarningDetailScreen}
       name="Warning Detail"
     />
+    <TrainerWarningStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
   </TrainerWarningStack.Navigator>
 );
+
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
   <TrainerMenuStack.Navigator
@@ -168,13 +174,13 @@ const TrainerMenuNavigation = () => (
     }}
   >
     <TrainerMenuStack.Screen component={TrainerMenuScreen} name="Menu" />
-    <CustomerMenuStack.Screen component={ProfileScreen} name="Profile" />
-    <CustomerMenuStack.Screen component={SettingsScreen} name="Settings" />
-    <CustomerMenuStack.Screen
+    <TrainerMenuStack.Screen component={ProfileScreen} name="Profile" />
+    <TrainerMenuStack.Screen component={SettingsScreen} name="Settings" />
+    <TrainerMenuStack.Screen
       component={ChangePasswordScreen}
       name="Change Password"
     />
-    <CustomerMenuStack.Screen component={AboutScreen} name="About" />
+    <TrainerMenuStack.Screen component={AboutScreen} name="About" />
   </TrainerMenuStack.Navigator>
 );
 
@@ -193,6 +199,13 @@ const CustomerBottomTabNavigation = () => (
       name="Home"
       options={{
         tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
+      }}
+    />
+    <CustomerBottomTabStack.Screen
+      component={CustomerWarningNavigation}
+      name="Warning"
+      options={{
+        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
       }}
     />
     <CustomerBottomTabStack.Screen
@@ -239,6 +252,21 @@ const CustomerHomeNavigation = () => (
       name="Notification"
     />
   </CustomerHomeStack.Navigator>
+);
+
+const CustomerWarningStack = createStackNavigator();
+const CustomerWarningNavigation = () => (
+  <CustomerWarningStack.Navigator>
+    <CustomerWarningStack.Screen component={WarningScreen} name="Warning" />
+    <CustomerWarningStack.Screen
+      component={WarningDetailScreen}
+      name="Warning Detail"
+    />
+    <CustomerWarningStack.Screen
+      component={FeedbackStaffScreen}
+      name="Feedback Trainer"
+    />
+  </CustomerWarningStack.Navigator>
 );
 
 const CustomerPaymentStack = createStackNavigator();

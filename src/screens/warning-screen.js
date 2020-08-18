@@ -6,6 +6,7 @@ import {
   FlatList,
   RefreshControl,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -93,11 +94,10 @@ export const WarningScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    onRefresh();
+    fetchData(activeIndex);
   }, [activeIndex]);
 
   const onRefresh = () => {
-    setRefreshing(true);
     fetchData(activeIndex);
   };
 
@@ -114,6 +114,7 @@ export const WarningScreen = ({ navigation }) => {
       <View style={styles.container}>
         <CommonView
           style={{
+            alignItems: 'stretch',
             justifyContent: 'center',
           }}
         >
@@ -135,30 +136,33 @@ export const WarningScreen = ({ navigation }) => {
             }}
             style={{ marginBottom: DIMENSIONS.MARGIN }}
           />
-          {warnings.length > 0 ? (
-            <FlatList
-              data={warnings}
-              keyExtractor={item => item._id}
-              refreshControl={
-                <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-              }
-              renderItem={renderItem}
-            />
-          ) : (
-            <View
-              style={{
-                alignContent: 'center',
-                alignItems: 'center',
-                display: 'flex',
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              <Text>No data</Text>
-            </View>
-          )}
+          <ScrollView
+            refreshControl={
+              <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+            }
+          >
+            {warnings.length > 0 ? (
+              <FlatList
+                data={warnings}
+                keyExtractor={item => item._id}
+                renderItem={renderItem}
+              />
+            ) : (
+              <View
+                style={{
+                  alignContent: 'center',
+                  alignItems: 'center',
+                  display: 'flex',
+                  flex: 1,
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                <Text>No data</Text>
+              </View>
+            )}
+          </ScrollView>
         </CommonView>
       </View>
     </SafeAreaView>

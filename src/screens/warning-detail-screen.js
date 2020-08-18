@@ -1,8 +1,9 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
 import { CommonIcon } from '../components/common-icon';
@@ -12,15 +13,21 @@ import { COLORS } from '../constants/colors';
 import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
-export const WarningDetailScreen = ({ route }) => {
+export const WarningDetailScreen = ({ navigation, route }) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
+  const me = useSelector(state => state.user.me);
   const [warning, setWarning] = useState({});
-  useFocusEffect(() => {
-    fetchData(route.params.item);
+  // useFocusEffect(() => {
+  //   fetchData(route.params.item);
+  // }, []);
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     const warningId = route.params.item._id;
     try {
       const result = await client.query({
@@ -52,6 +59,35 @@ export const WarningDetailScreen = ({ route }) => {
       });
       const fetchedWarning = result?.data?.warning ?? [];
       setWarning(fetchedWarning);
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
+    }
+    setLoading(false);
+  };
+
+  const acceptWarning = async () => {
+    setLoading(true);
+    const warningId = route.params.item._id;
+    try {
+      const result = await client.query({
+        query: gql`
+          mutation($warningId: ID!) {
+            acceptWarning(_id: $warningId) {
+              _id
+              supporter {
+                username
+              }
+              status
+            }
+          }
+        `,
+        variables: {
+          warningId,
+        },
+      });
+      const fetchedWarning = result?.data?.acceptWarning ?? [];
+      if (fetchedWarning.status === 'SUCCEEDED')
+        Alert.alert('Accept succeeded!');
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
@@ -152,7 +188,25 @@ export const WarningDetailScreen = ({ route }) => {
               marginVertical: DIMENSIONS.DISTANCE_3,
             }}
           >
-            <CommonButton gradient title="Feedback" />
+            {me.role === 'CUSTOMER' && warning.status === 'SUCCEEDED' && (
+              <CommonButton
+                gradient
+                // onPress={() => {
+                //   navigation.navigate('Feedback Trainer', { name: 'trainer' });
+                // }}
+                title="Feedback"
+              />
+            )}
+            {me.role === 'TRAINER' && warning.status === 'PENDING' && (
+              <CommonButton
+                gradient
+                onPress={() => acceptWarning()}
+                // onPress={() => {
+                //   navigation.navigate('Feedback Trainer', { name: 'trainer' });
+                // }}
+                title="Accept"
+              />
+            )}
           </View>
         </View>
       </View>
