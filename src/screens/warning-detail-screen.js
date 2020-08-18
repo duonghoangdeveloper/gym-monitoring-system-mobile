@@ -115,7 +115,6 @@ export const WarningDetailScreen = ({ navigation, route }) => {
             position: 'relative',
           }}
         >
-          {/* {loading && <CommonLoadingComponent />} */}
           <Image
             source={{ uri: warning.image?.url }}
             style={{

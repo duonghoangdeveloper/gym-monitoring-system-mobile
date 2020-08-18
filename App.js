@@ -26,7 +26,6 @@ export default function App() {
     registerForPushNotificationsAsync();
     notificationListener.current = Notifications.addNotificationReceivedListener(
       notification => {
-        console.log(notification.request.content);
         setNotification(notification);
       }
     );
