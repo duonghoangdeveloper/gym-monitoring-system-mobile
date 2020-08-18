@@ -30,6 +30,5 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     flex: 1,
     justifyContent: 'center',
-    padding: 12,
   },
 });

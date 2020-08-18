@@ -1,22 +1,20 @@
 import { useApolloClient } from '@apollo/react-hooks';
-import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
-import { Alert, Image, Text, View } from 'react-native';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Alert, Image } from 'react-native';
 
-import { CommonButton } from '../components/common-button';
-import { CommonIcon } from '../components/common-icon';
+import { CommonListItem } from '../components/common-list-item';
 import { CommonLoadingComponent } from '../components/common-loading-component';
 import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
-import { COLORS } from '../constants/colors';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
-import { textStyle } from '../constants/text-styles';
+import { CommonView } from '../components/common-view';
+import { DIMENSIONS } from '../constants/dimensions';
 
 export const WarningDetailScreen = ({ route }) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const [warning, setWarning] = useState({});
-  useFocusEffect(() => {
+  useEffect(() => {
     fetchData(route.params.item);
   }, []);
 
@@ -32,10 +30,6 @@ export const WarningDetailScreen = ({ route }) => {
                 _id
                 username
               }
-              # supporter {
-              #   _id
-              #   username
-              # }
               image {
                 url
               }
@@ -60,102 +54,40 @@ export const WarningDetailScreen = ({ route }) => {
 
   return (
     <CommonScrollViewAwareScreenHeight>
-      <View style={{ alignItems: 'stretch', justifyContent: 'center' }}>
-        <View
-          style={{
-            alignItems: 'center',
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            position: 'relative',
-          }}
-        >
-          {loading && <CommonLoadingComponent />}
-          <Image
-            source={{ uri: warning.image?.url }}
-            style={{
-              height: scaleV(300),
-              marginBottom: DIMENSIONS.DISTANCE_5,
-              width: scaleH(300),
-            }}
-          />
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Customer:</Text>
-            <Text style={textStyle.bodyText}>{warning.customer?.username}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Status:</Text>
-            <Text style={textStyle.bodyText}>{warning.status}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Time:</Text>
-            <Text style={textStyle.bodyText}>{warning.createdAt}</Text>
-          </View>
-          <View
-            style={{
-              alignSelf: 'stretch',
-              borderBottomColor: COLORS.dark80,
-              borderBottomWidth: 1,
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              padding: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <Text style={textStyle.bodyBigTextBold}>Content:</Text>
-            <View
-              style={{
-                alignItems: 'flex-start',
-                borderColor: COLORS.dark90,
-                borderWidth: 1,
-                justifyContent: 'center',
-                padding: DIMENSIONS.DISTANCE_3,
-              }}
-            >
-              <Text style={textStyle.bodyText}>{warning.content}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              alignItems: 'stretch',
-              alignSelf: 'stretch',
-              marginVertical: DIMENSIONS.DISTANCE_3,
-            }}
-          >
-            <CommonButton gradient title="Feedback" />
-          </View>
-        </View>
-      </View>
+      <Image
+        source={{ uri: warning.image?.url ?? '' }}
+        style={{
+          height: (DIMENSIONS.SCREEN_WIDTH / 16) * 9,
+          width: DIMENSIONS.SCREEN_WIDTH,
+        }}
+      />
+      <CommonView>
+        {loading && <CommonLoadingComponent />}
+        <CommonListItem
+          detail={warning.customer?.username ?? 'N/A'}
+          label="Customer"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={warning.status}
+          label="Status"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={moment(warning.createdAt).format('DD/MM/YYYY, HH:mm')}
+          label="Time"
+          showSeparator="true"
+          type="detail"
+        />
+        <CommonListItem
+          detail={warning.content}
+          label="Content"
+          showSeparator="true"
+          type="detail"
+        />
+      </CommonView>
     </CommonScrollViewAwareScreenHeight>
   );
 };

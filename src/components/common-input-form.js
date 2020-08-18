@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     ...textStyleObject.label,
     color: COLORS.dark20,
     marginBottom: scaleV(12),
-    marginLeft: scaleH(10),
+    // marginLeft: scaleH(10),
     marginTop: scaleV(12),
   },
   selectedContainer: {

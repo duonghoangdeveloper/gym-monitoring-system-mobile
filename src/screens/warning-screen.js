@@ -35,23 +35,27 @@ export const WarningScreen = ({ navigation }) => {
 
     let status = null;
     let customerId = null;
-    let supporterId = null;
+    const supporterId = null;
     if (index === 0) {
       status = 'PENDING';
       // status = 'FAILED';
     } else if (index === 1) {
-      status = 'SUCCEEDED';
+      status = ['SUCCEEDED', 'FAILED'];
       if (me.role === 'CUSTOMER') {
         customerId = me._id;
       }
       if (me.role === 'TRAINER') {
-        supporterId = me._id;
+        // supporterId = me._id;
       }
     }
     try {
       const result = await client.query({
         query: gql`
-          query($customerId: [ID], $supporterId: [ID], $status: [String]) {
+          query(
+            $customerId: [ID]
+            $supporterId: [ID]
+            $status: [WarningStatus]
+          ) {
             warnings(
               query: {
                 limit: 10
@@ -110,58 +114,57 @@ export const WarningScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <CommonView
+    // <SafeAreaView style={styles.container}>
+    //   <View style={styles.container}>
+    <CommonView
+      style={{
+        justifyContent: 'center',
+      }}
+    >
+      {/* // <View style={styles.titleContainer}>
+      //   <Text style={textStyle.sectionHeadingBold}>Pending</Text>
+      //   <Text
+      //     style={{
+      //       alignSelf: 'flex-end',
+      //     }}
+      //   >
+      //   </Text>
+    // </View> */}
+      <CommonButtonGroup
+        activeIndex={activeIndex}
+        labels={['Pending', 'History']}
+        onItemPress={index => {
+          fetchData(index);
+        }}
+        style={{ marginBottom: DIMENSIONS.MARGIN }}
+      />
+      {warnings.length > 0 ? (
+        <FlatList
+          data={warnings}
+          keyExtractor={item => item._id}
+          refreshControl={
+            <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+          }
+          renderItem={renderItem}
+        />
+      ) : (
+        <View
           style={{
+            alignContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
             justifyContent: 'center',
+            textAlign: 'center',
           }}
         >
-          <View style={styles.titleContainer}>
-            <Text style={textStyle.sectionHeadingBold}>Pending</Text>
-            <Text
-              style={{
-                alignSelf: 'flex-end',
-              }}
-            >
-              Total: {total}
-            </Text>
-          </View>
-          <CommonButtonGroup
-            activeIndex={activeIndex}
-            labels={['Pending', 'History']}
-            onItemPress={index => {
-              fetchData(index);
-            }}
-            style={{ marginBottom: DIMENSIONS.MARGIN }}
-          />
-          {warnings.length > 0 ? (
-            <FlatList
-              data={warnings}
-              keyExtractor={item => item._id}
-              refreshControl={
-                <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-              }
-              renderItem={renderItem}
-            />
-          ) : (
-            <View
-              style={{
-                alignContent: 'center',
-                alignItems: 'center',
-                display: 'flex',
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              <Text>No data</Text>
-            </View>
-          )}
-        </CommonView>
-      </View>
-    </SafeAreaView>
+          <Text>No data</Text>
+        </View>
+      )}
+    </CommonView>
+    //   </View>
+    // </SafeAreaView>
   );
 };
 

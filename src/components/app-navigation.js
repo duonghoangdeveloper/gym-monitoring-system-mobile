@@ -1,11 +1,15 @@
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  TouchableOpacity,
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { COLORS } from '../constants/colors';
+import { DIMENSIONS } from '../constants/dimensions';
 import { AboutScreen } from '../screens/about-screen';
 import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { ChooseStaffScreen } from '../screens/choose-staff-screen';
@@ -74,50 +78,52 @@ const renderNavigation = role => {
 
 const AuthStack = createStackNavigator();
 const AuthStackNavigation = () => (
-  <AuthStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: COLORS.primary,
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }}
-  >
+  <AuthStack.Navigator {...stackNavigatorProps}>
     <AuthStack.Screen component={SignInScreen} name="Sign In" />
   </AuthStack.Navigator>
 );
 
 const TrainerBottomTabStack = createBottomTabNavigator();
 const TrainerBottomTabNavigation = () => (
-  <TrainerBottomTabStack.Navigator>
-    <TrainerBottomTabStack.Screen
-      component={TrainerSandboxNavigation}
-      name="Sandbox"
-      options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="box" />,
-      }}
-    />
+  <TrainerBottomTabStack.Navigator
+    tabBarOptions={{
+      activeTintColor: COLORS.primary,
+    }}
+  >
+    {/* <TrainerBottomTabStack.Screen
+    //   component={TrainerSandboxNavigation}
+    //   name="Sandbox"
+    //   options={{
+    //     tabBarIcon: ({ color }) => (
+    //       <FontAwesome5 color={color} name="box" size={20} />
+    //     ),
+    //   }}
+     /> */}
     <TrainerBottomTabStack.Screen
       component={TrainerHomeNavigation}
       name="Home"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="home" size={20} />
+        ),
       }}
     />
     <TrainerBottomTabStack.Screen
       component={TrainerWarningNavigation}
       name="Warning"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bell" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome color={color} name="warning" size={20} />
+        ),
       }}
     />
     <TrainerBottomTabStack.Screen
       component={TrainerMenuNavigation}
       name="Menu"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bars" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="bars" size={20} />
+        ),
       }}
     />
   </TrainerBottomTabStack.Navigator>
@@ -125,7 +131,7 @@ const TrainerBottomTabNavigation = () => (
 
 const TrainerSandboxStack = createStackNavigator();
 const TrainerSandboxNavigation = () => (
-  <TrainerSandboxStack.Navigator>
+  <TrainerSandboxStack.Navigator {...stackNavigatorProps}>
     <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
     <TrainerWarningStack.Screen
       component={WarningDetailScreen}
@@ -136,8 +142,21 @@ const TrainerSandboxNavigation = () => (
 
 const TrainerHomeStack = createStackNavigator();
 const TrainerHomeNavigation = () => (
-  <TrainerHomeStack.Navigator>
-    <TrainerHomeStack.Screen component={TrainerHomeScreen} name="Home" />
+  <TrainerHomeStack.Navigator {...stackNavigatorProps}>
+    <TrainerHomeStack.Screen
+      component={TrainerHomeScreen}
+      name="Home"
+      // options={({ navigation, route }) => ({
+      //   headerRight: () => (
+      //     <TouchableOpacity
+      //       onPress={() => navigation.navigate('Notification')}
+      //       style={{ marginRight: DIMENSIONS.DISTANCE_2 }}
+      //     >
+      //       <FontAwesome5 color="#fff" name="bell" size={22} />
+      //     </TouchableOpacity>
+      //   ),
+      // })}
+    />
     <TrainerHomeStack.Screen
       component={NotificationScreen}
       name="Notification"
@@ -146,7 +165,7 @@ const TrainerHomeNavigation = () => (
 );
 const TrainerWarningStack = createStackNavigator();
 const TrainerWarningNavigation = () => (
-  <TrainerWarningStack.Navigator>
+  <TrainerWarningStack.Navigator {...stackNavigatorProps}>
     <TrainerWarningStack.Screen component={WarningScreen} name="Warning" />
     <TrainerWarningStack.Screen
       component={WarningDetailScreen}
@@ -157,6 +176,7 @@ const TrainerWarningNavigation = () => (
 const TrainerMenuStack = createStackNavigator();
 const TrainerMenuNavigation = () => (
   <TrainerMenuStack.Navigator
+    {...stackNavigatorProps}
     options={{
       headerStyle: {
         backgroundColor: '#f4511e',
@@ -181,18 +201,22 @@ const TrainerMenuNavigation = () => (
 const CustomerBottomTabStack = createBottomTabNavigator();
 const CustomerBottomTabNavigation = () => (
   <CustomerBottomTabStack.Navigator>
-    <CustomerBottomTabStack.Screen
+    {/* <CustomerBottomTabStack.Screen
       component={CustomerSandboxNavigation}
       name="Sandbox"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="box" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="box" size={20} />
+        ),
       }}
-    />
+    /> */}
     <CustomerBottomTabStack.Screen
       component={CustomerHomeNavigation}
       name="Home"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="home" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="home" size={20} />
+        ),
       }}
     />
     <CustomerBottomTabStack.Screen
@@ -200,7 +224,7 @@ const CustomerBottomTabNavigation = () => (
       name="Payment"
       options={{
         tabBarIcon: ({ color }) => (
-          <FontAwesome5 color={color} name="dollar-sign" />
+          <FontAwesome5 color={color} name="dollar-sign" size={20} />
         ),
       }}
     />
@@ -208,7 +232,9 @@ const CustomerBottomTabNavigation = () => (
       component={CustomerMenuNavigation}
       name="Menu"
       options={{
-        tabBarIcon: ({ color }) => <FontAwesome5 color={color} name="bars" />,
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="bars" size={20} />
+        ),
       }}
     />
   </CustomerBottomTabStack.Navigator>
@@ -313,3 +339,15 @@ const CustomerMenuNavigation = () => (
     />
   </CustomerMenuStack.Navigator>
 );
+
+const stackNavigatorProps = {
+  screenOptions: {
+    headerStyle: {
+      backgroundColor: COLORS.primary,
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  },
+};
