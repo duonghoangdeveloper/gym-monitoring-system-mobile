@@ -74,7 +74,7 @@ export const ChooseStaffScreen = ({ navigation, route }) => {
       );
       setTotal(fetchedStaffsTotal);
     } catch (e) {
-      // Do something
+      console.log(e);
     }
   };
 
