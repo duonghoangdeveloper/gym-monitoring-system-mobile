@@ -11,6 +11,9 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
   const client = useApolloClient();
   const [payments, setPayment] = useState([]);
   const [total, setTotal] = useState(0);
+  let [expiryDate, setExpiryDate] = useState(0);
+
+  let [dayleftTemp, setDayLeftTemp] = useState(0);
   const fetchPaymentsData = async () => {
     try {
       const result = await client.query({
@@ -21,6 +24,7 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
                 createdAt
                 customer {
                   createdAt
+                  expiryDate
                 }
                 paymentPlan {
                   name
@@ -39,6 +43,7 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
       });
 
       const fetchedPaymentsData = result?.data?.payments?.data ?? [];
+
       const fetchedPaymentsTotal = result?.data?.payments?.total ?? 0;
       setPayment(
         fetchedPaymentsData.map(payments => ({
@@ -58,34 +63,27 @@ export const CustomerPaymentDetailScreen = ({ navigation }) => {
   }, []);
 
   let sum = 0;
-  let sumPeriod = 0;
   payments.forEach(p => (sum += p.paymentPlan.price));
-  payments.forEach(p => (sumPeriod += p.paymentPlan.period));
-  let dateCreate = new Date();
-  payments.forEach(p => (dateCreate = p.customer.createdAt));
-  const expiredDateTemp = new Date(dateCreate).setDate(
-    new Date(dateCreate).getDate() + sumPeriod
-  );
-  const expiredDate = moment(expiredDateTemp).format(DATE_FORMAT);
-  const msDiff = new Date(expiredDateTemp).getTime() - new Date().getTime(); // Future date - current date
-  let dayleftTemp = Math.floor(msDiff / (1000 * 60 * 60 * 24));
-  let dayLeft = 0;
-  if (dayleftTemp < 0) {
-    dayleftTemp = 0;
-  } else {
-    dayLeft = dayleftTemp;
-  }
+  payments.forEach(p => {
+    expiryDate = moment(p.customer.expiryDate).format(DATE_FORMAT);
+    dayleftTemp = Math.round(
+      (moment(p.customer.expiryDate) - moment(new Date())) /
+        (24 * 60 * 60 * 1000)
+    );
+  });
+
+  console.log(dayleftTemp);
   return (
     <View>
       <CommonListItem
         detail={`
-        ${dayLeft} days`}
+        ${dayleftTemp} days`}
         label="Days Left"
         showSeparator="true"
         type="detail"
       />
       <CommonListItem
-        detail={expiredDate}
+        detail={expiryDate}
         label="Expired Date"
         showSeparator="true"
         type="detail"

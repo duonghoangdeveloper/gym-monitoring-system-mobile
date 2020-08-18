@@ -7,9 +7,16 @@ import { CommonView } from '../components/common-view';
 export const AboutScreen = ({ navigation }) => (
   <>
     <CommonView>
-      <View>
+      <View
+        style={{
+          alignSelf: 'center',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
         <Text>About gym</Text>
         <Text>Gym Monitoring System</Text>
+        <Text>eGMS</Text>
       </View>
     </CommonView>
   </>
