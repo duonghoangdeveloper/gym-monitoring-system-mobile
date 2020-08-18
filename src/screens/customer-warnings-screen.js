@@ -38,10 +38,6 @@ export const CustomerWarningScreen = ({ navigation }) => {
                 status
                 createdAt
                 updatedAt
-                supporter {
-                  _id
-                  displayName
-                }
               }
             }
           }

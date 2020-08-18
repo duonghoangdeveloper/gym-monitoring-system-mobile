@@ -84,6 +84,7 @@ export const WarningDetailScreen = ({ navigation, route }) => {
       if (fetchedWarning.status === 'ACCEPTED')
         Alert.alert('Accept succeeded!');
     } catch (e) {
+      console.log(e);
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
     fetchData();
@@ -156,6 +157,19 @@ export const WarningDetailScreen = ({ navigation, route }) => {
           }}
         >
           <CommonButton onPress={() => acceptWarning()} title="Accept" />
+        </View>
+      )}
+      {me.role === 'CUSTOMER' && (
+        <View
+          style={{
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'flex-end',
+            marginTop: 40,
+            padding: 12,
+          }}
+        >
+          <CommonButton title="FEEDBACK" />
         </View>
       )}
     </CommonScrollViewAwareScreenHeight>
