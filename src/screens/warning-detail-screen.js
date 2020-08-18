@@ -1,26 +1,29 @@
 import { useApolloClient } from '@apollo/react-hooks';
-import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
-import { Alert, Image, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
-import { CommonIcon } from '../components/common-icon';
-import { CommonLoadingComponent } from '../components/common-loading-component';
-import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { COLORS } from '../constants/colors';
 import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
-export const WarningDetailScreen = ({ route }) => {
+export const WarningDetailScreen = ({ navigation, route }) => {
   const client = useApolloClient();
-  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const me = useSelector(state => state.user.me);
   const [warning, setWarning] = useState({});
-  useFocusEffect(() => {
-    fetchData(route.params.item);
-  }, []);
 
   const fetchData = async () => {
+    setRefreshing(true);
     const warningId = route.params.item._id;
     try {
       const result = await client.query({
@@ -32,10 +35,10 @@ export const WarningDetailScreen = ({ route }) => {
                 _id
                 username
               }
-              # supporter {
-              #   _id
-              #   username
-              # }
+              supporter {
+                _id
+                username
+              }
               image {
                 url
               }
@@ -55,11 +58,53 @@ export const WarningDetailScreen = ({ route }) => {
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
-    setLoading(false);
+    setRefreshing(false);
+  };
+
+  const acceptWarning = async () => {
+    setRefreshing(true);
+    const warningId = route.params.item._id;
+    try {
+      const result = await client.query({
+        query: gql`
+          mutation($warningId: ID!) {
+            acceptWarning(_id: $warningId) {
+              _id
+              supporter {
+                username
+              }
+              status
+            }
+          }
+        `,
+        variables: {
+          warningId,
+        },
+      });
+      const fetchedWarning = result?.data?.acceptWarning ?? [];
+      if (fetchedWarning.status === 'SUCCEEDED')
+        Alert.alert('Accept succeeded!');
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
+    }
+    fetchData();
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onRefresh = () => {
+    fetchData();
   };
 
   return (
-    <CommonScrollViewAwareScreenHeight>
+    <ScrollView
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }
+    >
       <View style={{ alignItems: 'stretch', justifyContent: 'center' }}>
         <View
           style={{
@@ -70,7 +115,6 @@ export const WarningDetailScreen = ({ route }) => {
             position: 'relative',
           }}
         >
-          {loading && <CommonLoadingComponent />}
           <Image
             source={{ uri: warning.image?.url }}
             style={{
@@ -92,6 +136,22 @@ export const WarningDetailScreen = ({ route }) => {
           >
             <Text style={textStyle.bodyBigTextBold}>Customer:</Text>
             <Text style={textStyle.bodyText}>{warning.customer?.username}</Text>
+          </View>
+          <View
+            style={{
+              alignSelf: 'stretch',
+              borderBottomColor: COLORS.dark80,
+              borderBottomWidth: 1,
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              padding: DIMENSIONS.DISTANCE_3,
+            }}
+          >
+            <Text style={textStyle.bodyBigTextBold}>Supporter:</Text>
+            <Text style={textStyle.bodyText}>
+              {warning.supporter?.username}
+            </Text>
           </View>
           <View
             style={{
@@ -152,10 +212,25 @@ export const WarningDetailScreen = ({ route }) => {
               marginVertical: DIMENSIONS.DISTANCE_3,
             }}
           >
-            <CommonButton gradient title="Feedback" />
+            {me.role === 'CUSTOMER' && warning.status === 'SUCCEEDED' && (
+              <CommonButton
+                gradient
+                // onPress={() => {
+                //   navigation.navigate('Feedback Trainer', { name: 'trainer' });
+                // }}
+                title="Feedback"
+              />
+            )}
+            {me.role === 'TRAINER' && warning.status === 'PENDING' && (
+              <CommonButton
+                gradient
+                onPress={() => acceptWarning()}
+                title="Accept"
+              />
+            )}
           </View>
         </View>
       </View>
-    </CommonScrollViewAwareScreenHeight>
+    </ScrollView>
   );
 };
