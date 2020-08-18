@@ -5,20 +5,24 @@ import gql from 'graphql-tag';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import { registerForPushNotificationsAsync } from '../../App';
+import eGMSnoText from '../../assets/eGMSnoText.png';
+// import { eGMSnoText } from '../assets/picture/eGMSnoText.png';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
 import { CommonView } from '../components/common-view';
 import { TOKEN_KEY } from '../constants/app';
-import { scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
 import { SIGN_IN } from '../redux/user/user.types';
 
 export const SignInScreen = ({ navigation }) => {
@@ -30,7 +34,6 @@ export const SignInScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignInPress = async () => {
-    setLoading(true);
     const expoPushToken = await registerForPushNotificationsAsync();
     try {
       const result = await client.mutate({
@@ -89,12 +92,44 @@ export const SignInScreen = ({ navigation }) => {
       // message.error('Wrong username or password!');
     }
   };
+  console.log(eGMSnoText);
 
   return (
     <CommonView>
-      <CommonDismissKeyboardWrapper>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
+      <View
+        style={{
+          display: 'flex',
+          displayDirection: 'column',
+          flex: 1,
+          justifyContent: 'flex-start',
+        }}
+      >
+        <View
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Image
+            source={{
+              uri:
+                'https://drive.google.com/uc?id=1Glrj5Kfh1dtu6VTp6PlvS7vxHCu35ctP',
+            }}
+            style={{
+              height: scaleV(180),
+              width: scaleH(180),
+            }}
+          />
+          <Text style={{ fontSize: 32, fontWeight: 'bold' }}>eGMS</Text>
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            displayDirection: 'column',
+            flex: 1,
+            justifyContent: 'center',
+          }}
         >
           <Input
             leftIcon={
@@ -140,11 +175,14 @@ export const SignInScreen = ({ navigation }) => {
           />
           <CommonButton
             loading={loading}
-            onPress={handleSignInPress}
+            onPress={() => {
+              setLoading(true);
+              handleSignInPress();
+            }}
             title="Sign In"
           />
-        </KeyboardAvoidingView>
-      </CommonDismissKeyboardWrapper>
+        </View>
+      </View>
     </CommonView>
   );
 };
