@@ -1,27 +1,53 @@
+import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
 import Textarea from 'react-native-textarea';
 
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-import { CommonInputForm } from '../components/common-input-form';
 import { CommonPopUp } from '../components/common-popup';
 import { CommonTextItem } from '../components/common-text-item';
 import { COLORS } from '../constants/colors';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleH } from '../constants/dimensions';
 
 export const FeedbackGymScreen = ({ navigation }) => {
+  const client = useApolloClient();
   const [content, setContent] = useState('');
   const [popUpVisible, setPopUpVisible] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
+  const feedbackGym = async content => {
+    try {
+      if (content.length >= 1 && content.length <= 1000) {
+        await client.mutate({
+          mutation: gql`
+            mutation CreateFeedback($content: String!) {
+              createFeedback(data: { content: $content }) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            content,
+          },
+        });
+
+        setPopUpVisible(true);
+      } else {
+        setErrorVisible(true);
+      }
+    } catch (e) {
+      Alert.alert(`${e.message.split(': ')[1]}!`);
+    }
+  };
   return (
     <CommonDismissKeyboardWrapper>
       <KeyboardAvoidingView
@@ -82,7 +108,11 @@ export const FeedbackGymScreen = ({ navigation }) => {
               haveTick={false}
               labelStyle={styles.text}
             />
-            <CommonButton style={styles.button} title="SEND YOUR FEEDBACK" />
+            <CommonButton
+              onPress={() => feedbackGym(content)}
+              style={styles.button}
+              title="SEND YOUR FEEDBACK"
+            />
           </View>
         </View>
       </KeyboardAvoidingView>

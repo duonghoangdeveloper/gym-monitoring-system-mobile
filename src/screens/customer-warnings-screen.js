@@ -5,7 +5,6 @@ import {
   Alert,
   FlatList,
   RefreshControl,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -38,10 +37,6 @@ export const CustomerWarningScreen = ({ navigation }) => {
                 status
                 createdAt
                 updatedAt
-                supporter {
-                  _id
-                  displayName
-                }
               }
             }
           }

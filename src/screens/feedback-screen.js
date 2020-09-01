@@ -1,12 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { CommonListItem } from '../components/common-list-item';
+import { CommonView } from '../components/common-view';
 
 export const FeedbackScreen = ({ navigation }) => (
-  <View style={styles.container}>
+  <CommonView>
     <View style={{ width: 351 }}>
       {list.map(({ icon, key, label, to }) => (
         <TouchableOpacity
@@ -35,7 +35,7 @@ export const FeedbackScreen = ({ navigation }) => (
         </TouchableOpacity>
       ))}
     </View>
-  </View>
+  </CommonView>
 );
 
 const list = [

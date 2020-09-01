@@ -1,9 +1,11 @@
 import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
+import Constants from 'expo-constants';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import React, { useState } from 'react';
 import {
   Image,
   StyleProp,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -20,33 +22,50 @@ import { textStyleObject } from '../constants/text-styles';
 type PropTypes = {
   style: StyleProp<ViewStyle>,
   data?: { uri: string, key: string },
-  onRemovePress?: () => void,
-  onAddPress: () => void,
+  getImage: string => void,
 };
 
-export const CommonImageSelector = ({
-  data,
-  onAddPress,
-  onRemovePress,
-  style,
-}: PropTypes) => {
-  const handleRemovePress = () => {
-    onRemovePress(data.key);
+export const CommonImageSelector = ({ data, getImage, style }: PropTypes) => {
+  const [image, setImage] = useState('');
+  // const getPermissionAsync = async () => {
+  //   if (Constants.platform.ios) {
+  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  //     if (status !== 'granted') {
+  //       alert('Sorry, we need camera roll permissions to make this work!');
+  //     }
+  //   }
+  // };
+  const _pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        setImage(result.uri);
+        getImage(result.uri);
+      }
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
   };
-  if (!data?.uri) {
+  if (image.length === 0) {
     return (
       <View
         style={[
           {
-            height: 100,
+            height: 200,
             position: 'relative',
-            width: 100,
+            width: 200,
           },
           style,
         ]}
       >
         <TouchableOpacity
-          onPress={onAddPress}
+          onPress={_pickImage}
           style={{
             alignItems: 'center',
             backgroundColor: COLORS.dark80,
@@ -55,23 +74,40 @@ export const CommonImageSelector = ({
             justifyContent: 'center',
           }}
         >
-          <FontAwesome
-            name="photo"
-            style={{
-              color: 'white',
-              fontSize: 24,
-            }}
-          />
-          <Text
-            style={{
-              ...textStyleObject.bodyTextBold,
-              color: COLORS.white,
-              fontSize: 12,
-              marginTop: scaleV(8),
-            }}
-          >
-            ADD IMAGE
-          </Text>
+          {!data.uri ? (
+            <View>
+              <FontAwesome
+                name="photo"
+                style={{
+                  color: 'white',
+                  fontSize: 24,
+                }}
+              />
+              <Text
+                style={{
+                  ...textStyleObject.bodyTextBold,
+                  color: COLORS.white,
+                  fontSize: 12,
+                  marginTop: scaleV(8),
+                }}
+              >
+                ADD IMAGE
+              </Text>
+            </View>
+          ) : (
+            <Image
+              resizeMode="contain"
+              source={{ uri: data.uri }}
+              style={[
+                {
+                  height: 200,
+                  overflow: 'hidden',
+                  width: 200,
+                },
+                style,
+              ]}
+            />
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -80,10 +116,10 @@ export const CommonImageSelector = ({
     <View
       style={[
         {
-          height: 100,
+          height: 200,
           margin: 10,
           position: 'relative',
-          width: 100,
+          width: 200,
         },
         style,
       ]}
@@ -100,43 +136,18 @@ export const CommonImageSelector = ({
           position: 'absolute',
         }}
       >
-        <Image
-          resizeMode="contain"
-          source={{ uri: data.uri }}
-          style={[
-            {
-              height: 95,
-              overflow: 'hidden',
-              width: 95,
-            },
-            style,
-          ]}
-        />
-      </View>
-
-      <View
-        style={{
-          alignItems: 'center',
-          backgroundColor: COLORS.primary,
-          borderColor: COLORS.white,
-          borderRadius: 50,
-          borderWidth: 3,
-          color: COLORS.white,
-          height: 28,
-          justifyContent: 'center',
-          position: 'absolute',
-          right: -12,
-          top: -12,
-          width: 28,
-        }}
-      >
-        <TouchableOpacity onPress={handleRemovePress}>
-          <FontAwesome
-            name="remove"
-            style={{
-              color: 'white',
-              fontSize: 12,
-            }}
+        <TouchableOpacity onPress={_pickImage}>
+          <Image
+            resizeMode="contain"
+            source={{ uri: image }}
+            style={[
+              {
+                height: 200,
+                overflow: 'hidden',
+                width: 200,
+              },
+              style,
+            ]}
           />
         </TouchableOpacity>
       </View>

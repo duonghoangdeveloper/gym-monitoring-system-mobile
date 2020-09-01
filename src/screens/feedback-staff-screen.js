@@ -14,10 +14,9 @@ import Textarea from 'react-native-textarea';
 import { CommonAvatar } from '../components/common-avatar';
 import { CommonButton } from '../components/common-button';
 import { CommonDismissKeyboardWrapper } from '../components/common-dismiss-keyboard-wrapper';
-import { CommonInputForm } from '../components/common-input-form';
 import { CommonPopUp } from '../components/common-popup';
 import { CommonTextItem } from '../components/common-text-item';
-import { DIMENSIONS, scaleH, scaleV } from '../constants/dimensions';
+import { DIMENSIONS, scaleH } from '../constants/dimensions';
 
 export const FeedbackStaffScreen = ({ navigation, route }) => {
   const user = route.params.staff;
@@ -31,7 +30,7 @@ export const FeedbackStaffScreen = ({ navigation, route }) => {
       if (content.length >= 1 && content.length <= 1000) {
         await client.mutate({
           mutation: gql`
-            mutation CreateFeedback($staffIds: [ID!]!, $content: String!) {
+            mutation CreateFeedback($staffIds: [ID!], $content: String!) {
               createFeedback(data: { staffIds: $staffIds, content: $content }) {
                 _id
               }

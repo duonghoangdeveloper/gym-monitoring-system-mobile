@@ -4,7 +4,7 @@ export const PLAT_FORM: 'android' | 'ios' = Platform.OS;
 
 export const URI =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-    ? 'http://192.168.1.167:7777'
+    ? 'http://192.168.1.104:7777'
     : 'https://gym-monitoring-system.herokuapp.com';
 
 export const TOKEN_KEY = 'gym-monitoring-system-token';
