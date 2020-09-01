@@ -9,7 +9,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { COLORS } from '../constants/colors';
-import { DIMENSIONS } from '../constants/dimensions';
 import { AboutScreen } from '../screens/about-screen';
 import { ChangePasswordScreen } from '../screens/change-password-screen';
 import { ChooseStaffScreen } from '../screens/choose-staff-screen';
@@ -25,6 +24,9 @@ import { ProfileScreen } from '../screens/profile-screen';
 import { SandboxScreen } from '../screens/sandbox-screen';
 import { SettingsScreen } from '../screens/settings-screen';
 import { SignInScreen } from '../screens/sign-in-screen';
+import { TrainerDangerousPosture } from '../screens/trainer-dangerous-posture';
+import { TrainerDangerousPostureDetail } from '../screens/trainer-dangerous-posture-detail';
+import { TrainerDangerousPostureType } from '../screens/trainer-dangerous-posture-type';
 import { TrainerHomeScreen } from '../screens/trainer-home-screen';
 import { TrainerMenuScreen } from '../screens/trainer-menu-screen';
 import { WarningDetailScreen } from '../screens/warning-detail-screen';
@@ -119,6 +121,15 @@ const TrainerBottomTabNavigation = () => (
       }}
     />
     <TrainerBottomTabStack.Screen
+      component={TrainerDangerousPostureTypeNavigation}
+      name="Posture"
+      options={{
+        tabBarIcon: ({ color }) => (
+          <FontAwesome5 color={color} name="bars" size={20} />
+        ),
+      }}
+    />
+    <TrainerBottomTabStack.Screen
       component={TrainerMenuNavigation}
       name="Menu"
       options={{
@@ -203,6 +214,34 @@ const TrainerMenuNavigation = () => (
     />
     <TrainerMenuStack.Screen component={AboutScreen} name="About" />
   </TrainerMenuStack.Navigator>
+);
+const TrainerDangerousPostureTypeStack = createStackNavigator();
+const TrainerDangerousPostureTypeNavigation = () => (
+  <TrainerDangerousPostureTypeStack.Navigator
+    {...stackNavigatorProps}
+    options={{
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+  >
+    <TrainerDangerousPostureTypeStack.Screen
+      component={TrainerDangerousPostureType}
+      name="Dangerous Posture Type"
+    />
+    <TrainerDangerousPostureTypeStack.Screen
+      component={TrainerDangerousPosture}
+      name="Dangerous Posture"
+    />
+    <TrainerDangerousPostureTypeStack.Screen
+      component={TrainerDangerousPostureDetail}
+      name="Dangerous Posture Detail"
+    />
+  </TrainerDangerousPostureTypeStack.Navigator>
 );
 
 const CustomerBottomTabStack = createBottomTabNavigator();

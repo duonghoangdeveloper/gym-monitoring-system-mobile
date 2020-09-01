@@ -137,14 +137,13 @@ export const WarningDetailScreen = ({ navigation, route }) => {
           showSeparator="true"
           type="detail"
         />
-        {me.role === 'CUSTOMER' && (
-          <CommonListItem
-            detail={warning.supporter?.username ?? 'N/A'}
-            label="Supporter"
-            showSeparator="true"
-            type="detail"
-          />
-        )}
+
+        <CommonListItem
+          detail={warning.supporter?.username ?? 'N/A'}
+          label="Supporter"
+          showSeparator="true"
+          type="detail"
+        />
       </CommonView>
       {warning.status === 'PENDING' && me.role === 'TRAINER' && (
         <View

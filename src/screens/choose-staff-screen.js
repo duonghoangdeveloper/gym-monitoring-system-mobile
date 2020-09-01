@@ -17,6 +17,7 @@ import { CommonInputForm } from '../components/common-input-form';
 import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { CommonSearchBar } from '../components/common-search-bar';
 import { CommonTextItem } from '../components/common-text-item';
+import { CommonView } from '../components/common-view';
 import { DIMENSIONS } from '../constants/dimensions';
 import { textStyle } from '../constants/text-styles';
 
@@ -83,84 +84,69 @@ export const ChooseStaffScreen = ({ navigation, route }) => {
   }, [skip, sort, search]);
 
   return (
-    <CommonDismissKeyboardWrapper>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={{
-          alignItems: 'center',
-          flex: 1,
-          padding: 12,
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.viewTitle}>
-            <CommonTextItem
-              content={header}
-              haveTick={false}
-              labelStyle={textStyle.bodyTextBold}
-            />
-            <CommonInputForm onChangeText={() => {}} />
-          </View>
-          <CommonScrollViewAwareScreenHeight
-            onRefresh={fetchUsersData}
-            style={styles.scrollView}
-          >
-            {staffs.map(staff =>
-              staff.avatar.url ? (
-                <TouchableOpacity
-                  key={staff._id}
-                  onPress={() =>
-                    navigation.navigate(pageToNavigate, {
-                      pageTitle,
-                      staff,
-                    })
-                  }
-                >
-                  <ListItem
-                    bottomDivider
-                    key={staff._id}
-                    leftAvatar={
-                      <CommonAvatar
-                        editable={false}
-                        size="small"
-                        uri={staff.avatar.url}
-                      />
-                    }
-                    style={{
-                      width: DIMENSIONS.SCREEN_WIDTH,
-                    }}
-                    title={staff.displayName}
+    <CommonView>
+      <CommonTextItem
+        content={header}
+        haveTick={false}
+        labelStyle={textStyle.bodyTextBold}
+      />
+      <CommonInputForm onChangeText={() => {}} placeholder="Search trainer" />
+
+      <CommonScrollViewAwareScreenHeight onRefresh={fetchUsersData}>
+        {staffs.map(staff =>
+          staff.avatar.url ? (
+            <TouchableOpacity
+              key={staff._id}
+              onPress={() =>
+                navigation.navigate(pageToNavigate, {
+                  pageTitle,
+                  staff,
+                })
+              }
+            >
+              <ListItem
+                bottomDivider
+                key={staff._id}
+                leftAvatar={
+                  <CommonAvatar
+                    editable={false}
+                    size="small"
+                    uri={staff.avatar.url}
                   />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  key={staff._id}
-                  onPress={() =>
-                    navigation.navigate(pageToNavigate, { pageTitle, staff })
-                  }
-                >
-                  <ListItem
-                    bottomDivider
-                    key={staff._id}
-                    leftAvatar={
-                      <CommonAvatar
-                        editable={false}
-                        size="small"
-                        uri="https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg"
-                      />
-                    }
-                    style={{
-                      width: DIMENSIONS.SCREEN_WIDTH,
-                    }}
-                    title={staff.displayName}
+                }
+                style={{
+                  width: DIMENSIONS.SCREEN_WIDTH,
+                }}
+                title={staff.displayName}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              key={staff._id}
+              onPress={() =>
+                navigation.navigate(pageToNavigate, { pageTitle, staff })
+              }
+            >
+              <ListItem
+                bottomDivider
+                key={staff._id}
+                leftAvatar={
+                  <CommonAvatar
+                    editable={false}
+                    size="small"
+                    uri="https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg"
                   />
-                </TouchableOpacity>
-              )
-            )}
-          </CommonScrollViewAwareScreenHeight>
-        </View>
-      </KeyboardAvoidingView>
-    </CommonDismissKeyboardWrapper>
+                }
+                style={{
+                  width: DIMENSIONS.SCREEN_WIDTH,
+                }}
+                title={staff.displayName}
+              />
+            </TouchableOpacity>
+          )
+        )}
+      </CommonScrollViewAwareScreenHeight>
+    </CommonView>
   );
 };
 
@@ -188,25 +174,3 @@ const INIT_SEARCH = {
   email: '',
   username: '',
 };
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    height: DIMENSIONS.SCREEN_HEIGHT,
-    justifyContent: 'center',
-    width: DIMENSIONS.SCREEN_WIDTH,
-  },
-  scrollView: {
-    height: DIMENSIONS.SCREEN_HEIGHT,
-  },
-  viewTitle: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingBottom: DIMENSIONS.DISTANCE_4,
-    paddingLeft: DIMENSIONS.DISTANCE_4,
-    paddingRight: DIMENSIONS.DISTANCE_4,
-    width: DIMENSIONS.SCREEN_WIDTH,
-  },
-});

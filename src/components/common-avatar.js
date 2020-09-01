@@ -36,6 +36,8 @@ export const CommonAvatar = ({
         return 48;
       case 'xsmall':
         return 24;
+      case 'medium':
+        return 64;
       default:
         return 100;
     }

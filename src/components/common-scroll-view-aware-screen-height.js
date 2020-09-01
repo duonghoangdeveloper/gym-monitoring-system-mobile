@@ -27,8 +27,8 @@ export const CommonScrollViewAwareScreenHeight = ({
   containerStyle,
   onRefresh,
   refreshControl,
-  refreshable,
-  refreshing,
+  refreshable = false,
+  refreshing = false,
   showsVerticalScrollIndicator = false,
 }: PropTypes) => {
   const [isFlex, setFlex] = useState(false);

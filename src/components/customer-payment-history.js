@@ -60,6 +60,7 @@ export const CustomerPaymentHistoryScreen = ({ navigation }) => {
         {payments.map(payment => (
           <CommonListItem
             detail={payment.date}
+            key={payment._id}
             label={payment.paymentPlan.name}
             showSeparator="true"
             type="detail"

@@ -4,12 +4,13 @@ import { Avatar, Icon, ListItem, Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import avatar from '../../assets/avatar.png';
+import { CommonView } from '../components/common-view';
 
 export const TrainerMenuScreen = ({ navigation }) => {
   const displayName = useSelector(state => state.user.me.displayName);
 
   return (
-    <View style={styles.container}>
+    <CommonView>
       <View style={styles.avatarContainer}>
         <Avatar rounded showEditButton size={128} source={avatar} />
         <Text h4 style={styles.name}>
@@ -39,7 +40,7 @@ export const TrainerMenuScreen = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </CommonView>
   );
 };
 
@@ -64,10 +65,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  container: { flex: 1 },
-
   leftIcon: {
-    // alignItems: 'flex-start',
     width: 24,
   },
 

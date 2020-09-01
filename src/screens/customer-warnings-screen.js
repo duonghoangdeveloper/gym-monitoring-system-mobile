@@ -5,7 +5,6 @@ import {
   Alert,
   FlatList,
   RefreshControl,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
