@@ -128,7 +128,9 @@ export const TrainerDangerousPosture = ({ navigation, route }) => {
         `,
         variables: {
           query: {
-            filter: { dangerousPostureType: [dangerousPostureTypeId] },
+            filter: {
+              dangerousPostureType: [dangerousPostureTypeId.toString()],
+            },
             limit: 10,
           },
         },
