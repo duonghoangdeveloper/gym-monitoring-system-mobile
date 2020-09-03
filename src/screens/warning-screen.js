@@ -5,15 +5,14 @@ import {
   Alert,
   FlatList,
   RefreshControl,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
-// import { PAGE_SIZE } from '../common/constants';
 import { CommonButtonGroup } from '../components/common-button-group';
+import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { CommonView } from '../components/common-view';
 import { NotificationItem } from '../components/notification-item';
 import { DIMENSIONS } from '../constants/dimensions';
@@ -50,7 +49,7 @@ export const WarningScreen = ({ navigation }) => {
           ) {
             warnings(
               query: {
-                limit: 10
+                # limit: 10
                 filter: {
                   status: $status
                   customer: $customerId
@@ -116,32 +115,33 @@ export const WarningScreen = ({ navigation }) => {
         }}
         style={{ marginBottom: DIMENSIONS.MARGIN }}
       />
-      {warnings.length > 0 ? (
-        <FlatList
-          data={warnings}
-          keyExtractor={item => item._id}
-          refreshControl={
-            <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
-          }
-          renderItem={renderItem}
-        />
-      ) : (
-        <View
-          style={{
-            alignContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            textAlign: 'center',
-          }}
-        >
-          <Text>No data</Text>
-        </View>
-      )}
+      <CommonScrollViewAwareScreenHeight
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+        }
+      >
+        {warnings.length > 0 ? (
+          <FlatList
+            data={warnings}
+            keyExtractor={item => item._id}
+            renderItem={renderItem}
+          />
+        ) : (
+          <View
+            style={{
+              alignContent: 'center',
+              alignItems: 'center',
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <Text>No data</Text>
+          </View>
+        )}
+      </CommonScrollViewAwareScreenHeight>
     </CommonView>
-    //   </View>
-    // </SafeAreaView>
   );
 };

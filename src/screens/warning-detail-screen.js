@@ -2,15 +2,14 @@ import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Alert, Image, View } from 'react-native';
+import { Alert, Image, RefreshControl, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { CommonButton } from '../components/common-button';
 import { CommonListItem } from '../components/common-list-item';
-import { CommonLoadingComponent } from '../components/common-loading-component';
 import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 import { CommonView } from '../components/common-view';
-import { DIMENSIONS, scaleH } from '../constants/dimensions';
+import { DIMENSIONS } from '../constants/dimensions';
 
 export const WarningDetailScreen = ({ navigation, route }) => {
   const client = useApolloClient();
@@ -36,10 +35,21 @@ export const WarningDetailScreen = ({ navigation, route }) => {
               }
               supporter {
                 _id
+                avatar {
+                  url
+                }
                 username
               }
               image {
                 url
+              }
+              dangerousPosture {
+                title
+                description
+                dangerousPostureType {
+                  title
+                  description
+                }
               }
               content
               status
@@ -84,7 +94,6 @@ export const WarningDetailScreen = ({ navigation, route }) => {
       if (fetchedWarning.status === 'ACCEPTED')
         Alert.alert('Accept succeeded!');
     } catch (e) {
-      console.log(e);
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
     fetchData();
@@ -100,7 +109,11 @@ export const WarningDetailScreen = ({ navigation, route }) => {
   };
 
   return (
-    <CommonScrollViewAwareScreenHeight>
+    <CommonScrollViewAwareScreenHeight
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }
+    >
       <Image
         source={{
           uri:
@@ -112,7 +125,7 @@ export const WarningDetailScreen = ({ navigation, route }) => {
           width: DIMENSIONS.SCREEN_WIDTH,
         }}
       />
-      <CommonView>
+      <CommonView style={{ flex: 1 }}>
         <CommonListItem
           detail={warning.customer?.username ?? 'N/A'}
           label="Customer"
@@ -137,40 +150,83 @@ export const WarningDetailScreen = ({ navigation, route }) => {
           showSeparator="true"
           type="detail"
         />
-
         <CommonListItem
-          detail={warning.supporter?.username ?? 'N/A'}
-          label="Supporter"
+          detail={
+            warning.dangerousPosture?.dangerousPostureType?.title ?? 'N/A'
+          }
+          label="Dangerous posture type"
           showSeparator="true"
           type="detail"
         />
+        <CommonListItem
+          detail={warning.dangerousPosture?.title ?? 'N/A'}
+          label="Dangerous posture"
+          showSeparator="true"
+          type="detail"
+        />
+        {me.role === 'CUSTOMER' && (
+          <CommonListItem
+            detail={warning.supporter?.username ?? 'N/A'}
+            label="Supporter"
+            showSeparator="true"
+            type="detail"
+          />
+        )}
+        {warning.status === 'PENDING' && me.role === 'TRAINER' ? (
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'flex-end',
+              marginTop: 40,
+              padding: 12,
+            }}
+          >
+            <CommonButton onPress={() => acceptWarning()} title="Accept" />
+          </View>
+        ) : warning.status === 'ACCEPTED' && me.role === 'TRAINER' ? (
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'flex-end',
+              marginTop: 40,
+              padding: 12,
+            }}
+          >
+            <CommonButton
+              onPress={() =>
+                navigation.navigate('Choose Posture', {
+                  warningId: warning._id,
+                })
+              }
+              title="Select Dangerous Posture"
+            />
+          </View>
+        ) : (
+          warning.status === 'ACCEPTED' &&
+          me.role === 'CUSTOMER' && (
+            <View
+              style={{
+                display: 'flex',
+                flex: 1,
+                justifyContent: 'flex-end',
+                marginTop: 40,
+                padding: 12,
+              }}
+            >
+              <CommonButton
+                onPress={() =>
+                  navigation.navigate('Feedback Trainer', {
+                    staff: warning.supporter,
+                  })
+                }
+                title="Feedback"
+              />
+            </View>
+          )
+        )}
       </CommonView>
-      {warning.status === 'PENDING' && me.role === 'TRAINER' && (
-        <View
-          style={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginTop: 40,
-            padding: 12,
-          }}
-        >
-          <CommonButton onPress={() => acceptWarning()} title="Accept" />
-        </View>
-      )}
-      {me.role === 'CUSTOMER' && (
-        <View
-          style={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginTop: 40,
-            padding: 12,
-          }}
-        >
-          <CommonButton title="FEEDBACK" />
-        </View>
-      )}
     </CommonScrollViewAwareScreenHeight>
   );
 };
