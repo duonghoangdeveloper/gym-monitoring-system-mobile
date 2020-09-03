@@ -1,9 +1,9 @@
 import { useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
-  FlatList,
   RefreshControl,
   SafeAreaView,
   StyleSheet,
@@ -13,12 +13,11 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import { DATE_TIME_FORMAT } from '../common/constants';
+import { CommonListItem } from '../components/common-list-item';
+import { CommonScrollViewAwareScreenHeight } from '../components/common-scroll-view-aware-screen-height';
 // import { PAGE_SIZE } from '../common/constants';
 import { CommonView } from '../components/common-view';
-import { NotificationItem } from '../components/notification-item';
-import { COLORS } from '../constants/colors';
-import { DIMENSIONS } from '../constants/dimensions';
-import { textStyle } from '../constants/text-styles';
 
 export const NotificationScreen = ({ navigation }) => {
   const client = useApolloClient();
@@ -27,7 +26,7 @@ export const NotificationScreen = ({ navigation }) => {
   const [notifications, setNotifications] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const fetchData = async index => {
+  const fetchData = async () => {
     setRefreshing(true);
     const user = me._id;
     try {
@@ -50,10 +49,16 @@ export const NotificationScreen = ({ navigation }) => {
           user,
         },
       });
-      const fetchedNotifications = result?.data?.notifications?.data ?? [];
+      const fetchedDataNotifications = result?.data?.notifications?.data ?? [];
       const fetchedTotalNotifications = result?.data?.notifications?.total ?? 0;
-      setNotifications(fetchedNotifications);
       setTotal(fetchedTotalNotifications);
+      setNotifications(
+        fetchedDataNotifications.map(payment => ({
+          key: payment._id,
+          ...payment,
+          date: moment(payment.createdAt).format(DATE_TIME_FORMAT),
+        }))
+      );
     } catch (e) {
       Alert.alert(`${e.message.split(': ')[1]}!`);
     }
@@ -69,36 +74,37 @@ export const NotificationScreen = ({ navigation }) => {
     fetchData();
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity>
-      <NotificationItem content={item} type="box" />
-    </TouchableOpacity>
-  );
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <CommonScrollViewAwareScreenHeight
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+        }
+        style={styles.container}
+      >
         <CommonView
           style={{
             justifyContent: 'center',
           }}
         >
-          <View>
-            <Text>Total: {total}</Text>
-          </View>
           {notifications.length > 0 ? (
             <View style={styles.list}>
-              <FlatList
-                data={notifications}
-                keyExtractor={item => item._id}
-                refreshControl={
-                  <RefreshControl
-                    onRefresh={onRefresh}
-                    refreshing={refreshing}
+              {notifications.map(notification => (
+                <TouchableOpacity>
+                  <CommonListItem
+                    detail={notification.date}
+                    label={notification.content}
+                    refreshControl={
+                      <RefreshControl
+                        onRefresh={onRefresh}
+                        refreshing={refreshing}
+                      />
+                    }
+                    showSeparator="true"
+                    type="detail"
                   />
-                }
-                renderItem={renderItem}
-              />
+                </TouchableOpacity>
+              ))}
             </View>
           ) : (
             <View style={styles.list}>
@@ -106,22 +112,20 @@ export const NotificationScreen = ({ navigation }) => {
             </View>
           )}
         </CommonView>
-      </View>
+      </CommonScrollViewAwareScreenHeight>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
     flex: 1,
+    justifyContent: 'center',
   },
   list: {
-    alignContent: 'center',
-    alignItems: 'stretch',
-    display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
-    textAlign: 'center',
   },
 });

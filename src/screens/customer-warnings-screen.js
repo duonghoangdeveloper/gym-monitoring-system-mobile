@@ -55,7 +55,6 @@ export const CustomerWarningScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(warnings);
   }, []);
 
   const onRefresh = () => {

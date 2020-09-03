@@ -31,6 +31,7 @@ import { TrainerHomeScreen } from '../screens/trainer-home-screen';
 import { TrainerMenuScreen } from '../screens/trainer-menu-screen';
 import { WarningDetailScreen } from '../screens/warning-detail-screen';
 import { WarningScreen } from '../screens/warning-screen';
+import { WarningUpdatePostureScreen } from '../screens/warning-update-posture-screen';
 
 export const AppNavigation = () => {
   const role = useSelector(state => state.user.me.role);
@@ -49,6 +50,8 @@ export const AppNavigation = () => {
 //    |-- TrainerWarningNavigation
 //      |-- WarningScreen
 //        |-- WarningDetailScreen
+//        |-- WarningUpdatePostureScreen
+//        |-- FeedbackStaffScreen
 //    |-- TrainerMenuNavigation
 //      |-- TrainerMenu
 //      |-- ProfileScreen
@@ -141,17 +144,6 @@ const TrainerBottomTabNavigation = () => (
   </TrainerBottomTabStack.Navigator>
 );
 
-const TrainerSandboxStack = createStackNavigator();
-const TrainerSandboxNavigation = () => (
-  <TrainerSandboxStack.Navigator {...stackNavigatorProps}>
-    <TrainerSandboxStack.Screen component={SandboxScreen} name="Sandbox" />
-    <TrainerWarningStack.Screen
-      component={WarningDetailScreen}
-      name="Warning Detail"
-    />
-  </TrainerSandboxStack.Navigator>
-);
-
 const TrainerHomeStack = createStackNavigator();
 const TrainerHomeNavigation = () => (
   <TrainerHomeStack.Navigator {...stackNavigatorProps}>
@@ -183,6 +175,10 @@ const TrainerWarningNavigation = () => (
     <TrainerWarningStack.Screen
       component={WarningDetailScreen}
       name="Warning Detail"
+    />
+    <TrainerWarningStack.Screen
+      component={WarningUpdatePostureScreen}
+      name="Choose Posture"
     />
     <TrainerWarningStack.Screen
       component={FeedbackStaffScreen}

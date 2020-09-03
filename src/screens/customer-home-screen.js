@@ -1,9 +1,6 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useLayoutEffect } from 'react';
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { CommonButton } from '../components/common-button';
 import { CommonIcon } from '../components/common-icon';
 import { DIMENSIONS } from '../constants/dimensions';
 
@@ -15,7 +12,7 @@ export const CustomerHomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Notification')}
           style={{ marginRight: DIMENSIONS.DISTANCE_2 }}
         >
-          <FontAwesome5 color="#fff" name="bell" size={22} />
+          <CommonIcon color="white" name="bell" size={22} />
         </TouchableOpacity>
       ),
     });
